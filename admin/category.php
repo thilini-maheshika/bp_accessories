@@ -11,15 +11,15 @@
 		
 		<div class="col-sm-4 cat-form">
 			<h3>Add New Category</h3>
-			<form method="post" enctype="multipart/form-data">
+			<form method="post" novalidateenctype="multipart/form-data" id="fileinfo">
 				<div class="form-group">
 					<label>Name</label>
-					<input type="text" name="category_name" id="category_name" class="form-control">
+					<input type="text" name="cat_name" id="cat_name" class="form-control">
 				</div>
 
 				<div class="form-group">
 					<label>Description</label>
-					<textarea class="form-control" id="category_des" name="category_des" rows="5"></textarea>
+					<textarea class="form-control" id="cat_des" name="cat_des" rows="5"></textarea>
 				</div>
 
 				<div class="form-group">
@@ -28,42 +28,10 @@
 				</div>
 
 				<div class="form-group">
-					<button type="submit" name="submit" class="btn btn-primary">Add New Category</button>
+					<button type="submit" onclick="catForm()" id="submit" name="submit" class="btn btn-primary">Add New Category</button>
 				</div>
 			</form>	
-
-			<?php
-						if(isset($_POST['submit'])){
-
-							$cat_name = $_REQUEST['category_name'];
-							$cat_des = $_REQUEST['category_des'];
-
-							if(isset($_FILES['file']) && !empty($_FILES['file']['name'])){
-								$img = $_FILES['file']['name'];
-
-								if(!empty($cat_name)){
-
-									if(checkCatNamebyName($cat_name)>0){ 
-
-										echo "<script> Swal.fire({ icon: 'warning', title: 'Your work has been Already saved', showConfirmButton: false, timer: 1500 }); </script>";
-									}else{
-
-											if(insertCategory($cat_name,$cat_des,$img)){
-												echo "<script> Swal.fire({ icon: 'success', title: 'Your Category has been saved', showConfirmButton: false, timer: 1500 }); </script>";
-
-											}else{
-												echo '<script>
-												alert("Category Saved is not Success");
-												</script>';
-											}
-									}
-								}else{ echo "<script>alert(\"Please Enter Categori Name\");</script>";}
-
-							}else{ echo "<script>alert(\"Please select Image to Upload\");</script>";}
-						}
-					?>
-
-
+				
 		</div>
 
 		<div class="col-sm-8 cat-view">
@@ -98,11 +66,21 @@
 							<td> 
 								<a href="#"><?php echo $row['cat_name']; ?></a>
 							</td>
+
 							<td><?php echo $row['cat_des']; ?></td>
+
 							<td><img width="100px" src='<?php echo $img_src; ?>'></td>
-							<td><h3><a style="text-decoration: none; color: #333; font-size: 20px;" 
-							href="delete.php?cat_id=<?php echo $row['cat_id']; ?>">
-							<i class="fa fa-trash" aria-hidden="true"></i></a></h3></td>
+
+							<td><h3><a style="text-decoration: none; color: #333; font-size: 20px;">
+							<?php if($row['is_deleted']=='0') :?>
+							<button type="button" onclick="deleteCategory(<?php echo $row['cat_id']; ?>)">
+							<i class="fa fa-trash" aria-hidden="true"></i></button>
+							<?php endif ?>
+						</a></h3></td>
+
+							<td><h3><a style="text-decoration: none; color: #333; font-size: 20px;"
+							href="edit.php?cat_id=<?php echo $row['cat_id']; ?> ">
+							<i class="fa fa-edit" aria-hidden="true"></i></a></h3></td>
 							
 						</tr>
 						<?php } ?>
