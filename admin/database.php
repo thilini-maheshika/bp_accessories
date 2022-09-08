@@ -28,12 +28,10 @@ function addCategory($data)
 	$cat_name = $data['cat_name'];
 	$cat_des = $data['cat_des'];
 
-	$count= checkCatNamebyName($cat_name);
-	echo json_encode($count);
+	$count = checkCatNamebyName($cat_name);
+	
 
-	if($count > 0){
-		
-	}else{
+	if(	$count == 0){
 
 		$img = $_FILES['file']['name'];
 		$target_dir = "upload/category/";
@@ -41,12 +39,16 @@ function addCategory($data)
 		$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
 		$extensions_arr = array("jpg","jpeg","png","gif","jfif");
 		move_uploaded_file($_FILES['file']['tmp_name'],$target_dir.$img);
-		
+	
 		if (in_array($imageFileType,$extensions_arr)) {
 			$sql = "INSERT INTO category(cat_name,cat_des,cat_img, is_deleted,date_updated) VALUES('$cat_name','$cat_des', '$img', 0 , now())";
 			return mysqli_query($con, $sql);
 		}
+
+	}else{
+		echo json_encode($count);
 	}
+	
 	
 }
 function deleteCategory($data){

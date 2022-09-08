@@ -28,7 +28,7 @@
 				</div>
 
 				<div class="form-group">
-					<button type="submit" onclick="catForm()" id="submit" name="submit" class="btn btn-primary">Add New Category</button>
+					<button type="button" onclick="catForm()" id="submit" name="submit" class="btn btn-primary">Add New Category</button>
 				</div>
 			</form>	
 				

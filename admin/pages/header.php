@@ -1,6 +1,6 @@
 <?php
     require_once "connection.php";
-    require_once "database.php";
+    include "database.php";
     session_start();
 ?>
 
