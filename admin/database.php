@@ -28,12 +28,12 @@ function addCategory($data)
 	$cat_name = $data['cat_name'];
 	$cat_des = $data['cat_des'];
 
-	$count= checkCatNamebyName($cat_name);
-	echo json_encode($count);
+	// $count= checkCatNamebyName($cat_name);
+	// echo json_encode($count);
 
-	if($count > 0){
+	// if($count > 0){
 		
-	}else{
+	// }else{
 
 		$img = $_FILES['file']['name'];
 		$target_dir = "upload/category/";
@@ -48,7 +48,7 @@ function addCategory($data)
 		}
 	}
 	
-}
+//}
 function deleteCategory($data){
 
 	include 'connection.php';
