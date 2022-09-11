@@ -1,6 +1,6 @@
 <?php
     require_once "connection.php";
-    require_once "database.php";
+    include "database.php";
     session_start();
 ?>
 
@@ -117,8 +117,8 @@
 <script type="text/javascript" src="js/script.js"></script>
 <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script> -->
 <script type="text/javascript" src="js/admin.js"></script>
-
-
+<script src="	https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </body>
 </html>

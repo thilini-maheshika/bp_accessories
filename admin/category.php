@@ -2,7 +2,6 @@
     require_once 'pages/header.php';
 ?>
 
-
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-sm-12 title">
@@ -28,10 +27,11 @@
 				</div>
 
 				<div class="form-group">
-					<button type="submit" onclick="catForm()" id="submit" name="submit" class="btn btn-primary">Add New Category</button>
+					<button type="button" onclick="catForm()" id="submit" name="submit" class="btn btn-primary">Add New Category</button>
 				</div>
 			</form>	
-				
+
+			
 		</div>
 
 		<div class="col-sm-8 cat-view">
@@ -73,15 +73,14 @@
 
 							<td><h3><a style="text-decoration: none; color: #333; font-size: 20px;">
 							<?php if($row['is_deleted']=='0') :?>
-							<button type="button" onclick="deleteCategory(<?php echo $row['cat_id']; ?>)">
+							<button type="button" onclick="CategoryDelete(<?php echo $row['cat_id']; ?>)">
 							<i class="fa fa-trash" aria-hidden="true"></i></button>
 							<?php endif ?>
 						</a></h3></td>
 
-							<td><h3><a style="text-decoration: none; color: #333; font-size: 20px;"
-							href="edit.php?cat_id=<?php echo $row['cat_id']; ?> ">
-							<i class="fa fa-edit" aria-hidden="true"></i></a></h3></td>
-							
+							<td><h3><a style="text-decoration: none; color: #333; font-size: 20px;">
+							<button type="button" onclick="location.href='edit.php?cat_id=<?php echo $row['cat_id']; ?>'" >
+							<i class="fa fa-edit" aria-hidden="true"></i></a></h3></td>						
 						</tr>
 						<?php } ?>
 					</tbody>

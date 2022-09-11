@@ -1,5 +1,11 @@
 <?php
     require_once 'pages/header.php';
+
+	if(!isset($_REQUEST['cat_id'])){
+		echo '<script>window.location.href="category.php"</script>';
+	}
+
+	$cat_id=$_REQUEST['cat_id'];
 ?>
 
 
@@ -9,52 +15,44 @@
 			<h1><i class="fa fa-bars"></i> Categories</h1>
 		</div>
 		
+		<?php
+		$getall = getAllCategorybyID($cat_id);
+
+		if($row=mysqli_fetch_assoc($getall)){
+
+			$img = $row['cat_img'];
+			$img_src = "upload/category/".$img;?>
+
+
 		<div class="col-sm-4 cat-form">
 			<h3>Edit Category</h3>
+			<div class="form-group">
+				<label>Name</label>
+				<input type="text" value="<?php echo $row['cat_name'] ?>" onChange="CategoryEdit(this,<?php echo $cat_id; ?>,'cat_name')" id="cat_name <?php echo $cat_id; ?>" name="category_name" class="form-control">
+			</div>
+			
+			<div class="form-group">
+				<label>Description</label>
+				<textarea class="form-control" onChange="CategoryEdit(this,<?php echo $cat_id; ?>,'cat_des')" id="cat_des <?php echo $cat_id; ?>" name="category_des" rows="5"><?php echo $row['cat_des'] ?></textarea>
+			</div>
+			<div class="form-group">
+					<button type="button" onclick="window.location.href='category.php'" name="submit" class="btn btn-primary" >Back</button>
+				</div>
+		</div>
+
+		<div class="col-sm-3">
+		</div>
+		<div class="col-sm-5 ">
 			<form method="post" enctype="multipart/form-data">
 				<div class="form-group">
-					<label>Name</label>
-					<input type="text" name="category_name" id="category_name" class="form-control">
+						
+						<img width="50%" src='<?php echo $img_src; ?>'><br><br>
+						<input type="hidden" id="cat_id" name="cat_id" value="<?php echo $cat_id;?>"/>
+						<input type="file" id="file" name="file" onchange="CategoryEditImage(this.form)" /><br>
 				</div>
-
-				<div class="form-group">
-					<label>Description</label>
-					<textarea class="form-control" id="category_des" name="category_des" rows="5"></textarea>
-				</div>
-
-				<div class="form-group">
-					<label>Image</label>
-					<input type="file" id="file" name="file" /><br>
-				</div>
-
-				<div class="form-group">
-					<button type="submit" name="submit" class="btn btn-primary">Edit Category</button>
-				</div>
-			</form>	
-
-			<?php
-						require_once 'connection.php';  
-
-                        if(isset($_REQUEST['submit'])){
-                    
-                            $cat_id=$_REQUEST['cat_id'];
-                            $cat_name=$_REQUEST['category_name'];
-                            $cat_des=$_REQUEST['category_des'];
-                    
-                            $querygetcode="UPDATE category SET cat_name = '$cat_name', cat_des = '$cat_des'  WHERE cat_id = '$cat_id'";
-                            $result=mysqli_query($con,$querygetcode);
-                    
-                            if ($result) {
-                                echo "<script> Swal.fire({ icon: 'success', title: 'Updated Successfully', showConfirmButton: false, timer: 1500 }); </script>";
-                              } else {
-                                echo "<script> Swal.fire({ icon: 'warning', title: 'Try Again', showConfirmButton: false, timer: 1500 }); </script>";
-                              }
-                            
-                        }
-					?>
-
-
-		</div>
+			</form>
+			</div>
+	<?php } ?>
 	</div>
 </div>
 
