@@ -2656,8 +2656,18 @@ a:focus {
 .table > tfoot > tr > td {
   border-top: 1px solid #f4f4f4;
 }
+
+.thead > tbody { 
+  display: block; 
+  height: 100px;       /* Just for the demo          */
+  overflow-y: auto;    /* Trigger vertical scroll    */
+  overflow-x: hidden;  /* Hide the horizontal scroll */
+}
+
+
+
 .table > thead > tr > th {
-  border-bottom: 2px solid #f4f4f4;
+  border-bottom: 2px solid #f3e9e9;
 }
 .table tr td .progress {
   margin-top: 5px;
@@ -4103,6 +4113,7 @@ table.text-center th {
   color: #720e9e;
   background-color: #ffffff;
 }
+
 /*
  * Plugin: Full Calendar
  * ---------------------

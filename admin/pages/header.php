@@ -29,8 +29,9 @@
             </a>
             <ul class="treeview-menu">
               <li><a href="category.php"><i class="fa fa-plus-circle"></i>Categories</a></li>
+              <li><a href="model.php"><i class="fa fa-plus-circle"></i>Models</a></li>
               <li><a href="add-products.php"><i class="fa fa-plus-circle"></i>Add Products</a></li>
-              <li><a href="view-table.php"><i class="fa fa-eye"></i>View Products</a></li>
+              <li><a href="view-products.php"><i class="fa fa-eye"></i>View Products</a></li>
             </ul>
         </li>
         <li class="treeview">
