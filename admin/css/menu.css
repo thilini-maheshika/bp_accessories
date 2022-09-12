@@ -2699,10 +2699,10 @@ table.text-center th {
   text-align: center;
 }
 .table.align th {
-  text-align: left;
+  text-align: center;
 }
 .table.align td {
-  text-align: right;
+  text-align: center;
 }
 /*
  * Component: Label
@@ -4932,11 +4932,10 @@ table.text-center th {
     float: left;
     width: 33.3333333%;
   }
-  .table-responsive {
-    overflow: auto;
-  }
+  
   .table-responsive > .table tr th,
   .table-responsive > .table tr td {
     white-space: normal !important;
+    width: 100%;
   }
 }

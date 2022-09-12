@@ -18,9 +18,15 @@ if (isset($_GET['function_code']) && $_GET['function_code'] == 'categoryAdd') {
     editModelImage($_POST);
 }else if (isset($_GET['function_code']) && $_GET['function_code'] == 'ProductAdd') {
     addProduct($_POST);
+}else if (isset($_GET['function_code']) && $_GET['function_code'] == 'proDelete') {
+    deleteProduct($_POST);
 }else if (isset($_GET['function_code']) && $_GET['function_code'] == 'productEdit') {
-    eProduct($_POST);
+    editProduct($_POST);
+}else if (isset($_GET['function_code']) && $_GET['function_code'] == 'productImageEdit') {
+    editProductImage($_POST);
 }
+
+
 
 function checkCatNamebyName($cat_name){
 	include 'connection.php';
@@ -148,6 +154,7 @@ function getAllModel(){
 	return mysqli_query($con,$viewcat);
 }
 
+
 function addModel($data)
 {
 	include 'connection.php';
@@ -231,6 +238,16 @@ function checkProductNamebyName($p_name){
 	return mysqli_num_rows($proName_check);
 }
 
+
+function getAllProductsByJoin(){
+
+	include 'connection.php';
+
+	$viewpro = "SELECT * FROM products JOIN category ON products.cat_id = category.cat_id WHERE products.is_deleted='0'";
+	return mysqli_query($con,$viewpro);
+
+}
+
 function getAllProducts(){
 
 	include 'connection.php';
@@ -274,4 +291,56 @@ function addProduct($data){
 		echo json_encode($count);
 	}
 }
+
+function deleteProduct($data){
+
+	include 'connection.php';
+	
+	$p_id = $data['p_id'];
+	
+	$delpro="UPDATE products SET is_deleted = 1 , date_updated = now() WHERE p_id=$p_id";
+	return mysqli_query($con,$delpro);
+}
+
+function getAllProductsbyID($p_id){
+
+	include 'connection.php';
+
+	$viewPro = "SELECT * FROM products WHERE p_id='$p_id' AND is_deleted='0'";
+	return mysqli_query($con,$viewPro);
+}
+
+function editProduct($data){
+
+	include 'connection.php'; 
+
+	$p_id = $data['p_id'];
+    $field = $data['field'];
+    $value = $data['value']; 
+
+		
+	$sql1 = "UPDATE products SET $field='$value' , date_updated = now()  WHERE p_id='$p_id'";
+	return mysqli_query($con, $sql1);
+
+}
+
+function editProductImage($data){
+
+	$p_id=$data['p_id'];
+
+	include 'connection.php'; 
+
+	$img = $_FILES['file']['name'];
+		$target_dir = "upload/products/";
+		$target_file = $target_dir . basename($img);
+		$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+		$extensions_arr = array("jpg","jpeg","png","gif","jfif");
+		move_uploaded_file($_FILES['file']['tmp_name'],$target_dir.$img);
+
+		if (in_array($imageFileType,$extensions_arr)) {
+			$sql = "UPDATE products SET p_img='$img' , date_updated = now()  WHERE p_id='$p_id'";
+			return mysqli_query($con, $sql);
+		}
+}
+
  ?>

@@ -1,3 +1,12 @@
+window.addEventListener('DOMContentLoaded', event => {
+    // Simple-DataTables
+    // https://github.com/fiduswriter/Simple-DataTables/wiki
+
+    const datatablesSimple = document.getElementById('datatablesSimple');
+    if (datatablesSimple) {
+        new simpleDatatables.DataTable(datatablesSimple);
+    }
+});
 
 var error = "error";
 var success = "success";
@@ -304,6 +313,39 @@ function productForm(){
     }
 }
 
+function ProductDelete(p_id){
+    const data = {
+        p_id : p_id
+    }
+
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+
+      }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                method: "POST",
+                url: "database.php?function_code=proDelete",
+                data: data,
+                success:function($data){
+                    console.log($data);
+                    sweetAlert3();
+                    location.reload(this);
+                },
+                error: function (error) {
+                    console.log(`Error ${error}`);
+                }
+            });
+        }
+      })
+}
+
 function ProductEdit(ele, p_id ,field){
 
     var itemid = ele.id;
@@ -321,7 +363,7 @@ function ProductEdit(ele, p_id ,field){
         data: data,
         success:function($data){
             console.log($data);
-            //location.reload(this);
+            location.reload(this);
         },
         error: function (error) {
             console.log(`Error ${error}`);
@@ -329,6 +371,30 @@ function ProductEdit(ele, p_id ,field){
     });
 }
 
+function ProductEditImage(ele){
+ 
+    var formData = new FormData(ele);
+    
+    $.ajax({
+        
+        method: "POST",
+        url: "database.php?function_code=productImageEdit",
+        data: formData,
+        success:function($data){
+            console.log($data);
+            loading("Image Uploading...");
+            
+        },
+        cache: false,
+        contentType: false,
+        processData: false,
+        error: function (error) {
+            console.log(`Error ${error}`);
+            sweetAlert2(warning,'Something Wrong.Try again!!');
+        }  
+    })
+    
+}
 
 //Sweet Alert Functions Zone
 

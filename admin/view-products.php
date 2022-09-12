@@ -11,185 +11,145 @@
         <div class="search-div">
             <div class="col-sm-9">
                 All( <?php 
-        $all=getAllProducts();
-        $row=mysqli_num_rows($all);
-          echo $row;
-         ?> )
-            </div>
-
-            <div class="col-sm-3">
-                <input type="text" id="search" name="search" class="form-control" placeholder="Search Posts">
-            </div>
-        </div>
-
-        <div class="clearfix"></div>
-
-        <div class="filter-div">
-            <form method="post">
-                <div class="col-sm-2">
-                    <select name="action" class="form-control">
-                        <option>Bulk Action</option>
-                        <option>Move to Trash</option>
-                    </select>
-                </div>
-
-                <div class="col-sm-1">
-                    <div class="row">
-                        <button class="btn btn-default">Apply</button>
-                    </div>
-                </div>
-            </form>
-
-            <form method="post">
-                <div class="col-sm-2">
-                    <select name="dates" class="form-control">
-                        <option>All Dates</option>
-                        <option>No Dates Found</option>
-                    </select>
-                </div>
-                <div class="col-sm-2">
-                    <select name="dates" class="form-control">
-                        <option>All Categories</option>
-                        <option>No Categories Found</option>
-                    </select>
-                </div>
-                <div class="col-sm-2">
-                    <button class="btn btn-default">Apply Filter</button>
-                </div>
-            </form>
-            <div class="col-sm-3">
-                <ul class="pagination">
-                    <li><a href="#">&laquo;</a></li>
-                    <li><a href="#">1</a></li>
-                    <li><a href="#">2</a></li>
-                    <li class="active"><a href="#">3</a></li>
-                    <li><a href="#">4</a></li>
-                    <li><a href="#">5</a></li>
-                    <li><a href="#">&raquo;</a></li>
-                </ul>
+                    $all=getAllProducts();
+                    echo $row=mysqli_num_rows($all);;
+                    ?> )
             </div>
         </div>
 
         <div class="col-sm-12">
             <div class="content">
                 <div class="table-responsive">
-                    <table class="table table-striped" id="myTable">
+                    <table id="datatablesSimple">
                         <thead>
                             <tr>
-                                <th><input type="checkbox" id="select-all"> Product Name</th>
+                                <th>Product Name</th>
                                 <th>Description</th>
                                 <th>Category</th>
                                 <th>Brand</th>
                                 <th>Image</th>
-                                <th>Price</th>
-                                <th>Stock Quantity</th>
+                                <th width="10%">Price</th>
+                                <th width="100px">Stock Quantity</th>
                                 <th>Waranty</th>
                                 <th>Product Active</th>
 
-
                             </tr>
                         </thead>
+                        <tfoot>
+                            <tr>
+                                <th>Product Name</th>
+                                <th>Description</th>
+                                <th>Category</th>
+                                <th>Brand</th>
+                                <th>Image</th>
+                                <th width="10%">Price</th>
+                                <th width="100px">Stock Quantity</th>
+                                <th>Waranty</th>
+                                <th>Product Active</th>
+
+                            </tr>
+                        </tfoot>
                         <tbody>
 
                             <?php
-                            $getpro= getAllProducts();
+                            $getpro= getAllProductsByJoin();
                             while($row=mysqli_fetch_assoc($getpro)){
 
                               $p_id=$row['p_id'];
                               $img = $row['p_img'];
                               $img_src = "upload/Products/".$img;
                             
-                        ?>
+                            ?>
 
                             <tr>
+
                                 <td>
                                     <a href="#"><?php echo $row['p_name']; ?></a>
                                 </td>
+
                                 <td>
                                     <a href="#"><?php echo $row['p_des']; ?></a>
                                 </td>
+
                                 <td>
-                                    <select onchange='quickUpdateProduct(this, "<?php echo $pid; ?>","product_active")'
-                                        id="product_active <?php echo $pid; ?>" class='form-control norad tx12'
-                                        name="product_active" type='text' value="<?php echo $active; ?>">
-                                        <option value="1" <?php if ($row['product_active']=="1") echo "selected"; ?>>
-                                            ACTIVE</option>
-                                        <option value="0" <?php if ($row['product_active']=="0") echo "selected"; ?>>
-                                            OFFLINE</option>
+                                    <a href="#"><?php echo $row['cat_name']; ?></a>
+                                </td>
+
+                                <td>
+                                    <a href="#">
+                                        <?php 
+                                            $res=getAllModel();
+
+                                            if($row2=mysqli_fetch_assoc($res)) {
+                                                echo $row2['mod_name'];
+                                            }
+                                        ?>
+                                    </a>
+                                </td>
+
+                                <td>
+                                    <img width="100px" height="100px" src='<?php echo $img_src; ?>'>
+                                </td>
+
+                                <td>
+                                <input type="number" onchange='ProductEdit(this, "<?php echo $p_id; ?>","p_price")'
+                                        id="p_price <?php echo $p_id; ?>" class='form-control norad tx12'
+                                        name="p_price" value="<?php echo $row['p_price']; ?>" >
+                                </td>
+
+                                <td>
+                                    <input type="number" onchange='ProductEdit(this, "<?php echo $p_id; ?>","p_qnt")'
+                                        id="p_qnt <?php echo $p_id; ?>" class='form-control norad tx12'
+                                        name="p_qnt" value="<?php echo $row['p_qnt']; ?>" >
+                                </td>
+
+                                <td>
+                                    <a href="#"><?php echo $row['p_waranty']; ?></a>
+                                </td>
+
+
+                                <td>
+                                    <select onchange='ProductEdit(this, "<?php echo $p_id; ?>","p_active")'
+                                        id="p_active <?php echo $p_id; ?>" class='form-control norad tx12'
+                                        name="p_active" type='text' value="<?php echo $p_active; ?>">
+
+                                        <option value='1' <?php if ($row['p_active'] == '1') echo
+                                            "selected"; ?>>Active</option>
+                                        <option value='0' <?php if ($row['p_active'] == '0') echo
+                                            "selected"; ?>>Deactive</option>
                                     </select>
-                                </td>
-                                <td>
-                                    <a href="#"><?php echo $row['model']; ?></a>
+
                                 </td>
 
-                            </tr>
-                            <tr>
                                 <td>
-                                    <a href="#"></a>
+                                    <a>
+                                        <?php if($row['p_active']=='0') :?>
+                                        <button type="button"
+                                            style="text-decoration: none; color: #AA1928; font-size: 15px;"
+                                            onclick="ProductDelete(<?php echo $row['p_id']; ?>)">
+                                            <i class="fa fa-trash"></i></button>
+                                    </a><br><br>
+                                    <a>
+                                        <?php else : ?>
+
+                                            <button type="button"
+                                            style="text-decoration: none; color: #080641; font-size: 15px;"
+                                            onclick="location.href='edit-product.php?p_id=<?php echo $row['p_id']; ?>'">
+                                            <i class="fa fa-edit"></i>
+                                        <?php endif ?>    
+                                    </a>
                                 </td>
 
-                            </tr>
-                            <tr>
-                                <td>
-                                    <a href="#"></a>
-                                </td>
-
-                            </tr>
-                            <tr>
-                                <td>
-                                    <a href="#"></a>
-                                </td>
-
-                            </tr>
-                            <tr>
-                                <td>
-                                    <a href="#"></a>
-                                </td>
-
-                            </tr>
-                            <tr>
-                                <td>
-                                    <a href="#"></a>
-                                </td>
 
                             </tr>
                             <?php } ?>
                         </tbody>
                     </table>
+
                 </div>
             </div>
         </div>
 
         <div class="clearfix"></div>
-
-        <div class="filter-div">
-            <form method="post">
-                <div class="col-sm-2">
-                    <select name="action" class="form-control">
-                        <option>Bulk Action</option>
-                        <option>Move to Trash</option>
-                    </select>
-                </div>
-
-                <div class="col-sm-1">
-                    <div class="row">
-                        <button class="btn btn-default">Apply</button>
-                    </div>
-                </div>
-            </form>
-
-
-            <div class="col-sm-3 col-sm-offset-6">
-                <ul class="pagination">
-                    <li><a href="#">&laquo;</a></li>
-                    <li><a href="#">1</a></li>
-                    <li><a href="#">2</a></li>
-                    <li class="active"><a href="#">3</a></li>
-                    <li><a href="#">4</a></li>
-                    <li><a href="#">5</a></li>
-                    <li><a href="#">&raquo;</a></li>
-                </ul>
-            </div>
-        </div>
     </div>
 </div>
