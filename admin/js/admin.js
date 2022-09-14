@@ -396,6 +396,110 @@ function ProductEditImage(ele){
     
 }
 
+//gallery
+
+function galleryForm(){
+
+    let formDetails= document.getElementById('gallery');
+    let fd = new FormData(formDetails);
+
+    if(document.getElementById('title').value == ''){
+         sweetAlert1(error,"Please Enter Image Title");
+    }else if(document.getElementById('file').value == ''){
+        sweetAlert1(error, "Please Select Image!");
+    }else{
+
+        $.ajax({
+
+            method: "POST",
+            url: "database.php?function_code=galleryImageAdd",
+            data: fd,
+            success:function($data){
+                console.log($data);
+
+                if($data > 0){
+                    sweetAlert1(warning,"This Gallery Image Already Exists..");
+                }else{
+                    sweetAlert2(success,'Your work has been saved');
+                }
+            },
+            cache: false,
+            contentType: false,
+            processData: false,
+            error: function (error) {
+                console.log(`Error ${error}`);
+                sweetAlert2(warning,'Something Wrong.Try again!!');
+            }
+
+            
+        });
+    }
+}
+
+function galleryDelete(g_id){
+
+    const data = {
+        g_id : g_id
+    }
+
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+
+      }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                method: "POST",
+                url: "database.php?function_code=galleryDelete",
+                data: data,
+                success:function($data){
+                    console.log($data);
+                    sweetAlert3();
+                    location.reload(this);
+                },
+                error: function (error) {
+                    console.log(`Error ${error}`);
+                }
+            });
+        }
+      })
+}
+
+//login
+
+function loginForm(ele) {
+    var formData = new FormData(ele);
+
+    $.ajax({
+        method: "POST",
+        url: "database.php?function_code=loginAdmin",
+        data: formData,
+        success: function ($data) {
+            if($data > 0){
+                if(formData.get('email') === 'admin'){
+                    window.location.href='index.php';
+                }else{
+
+                }
+            }else{
+                sweetAlert2(warning,'Something Wrong.Try again!!');
+            }
+        },
+        cache: false,
+        contentType: false,
+        processData: false,
+        error: function (error) {
+            console.log(`Error ${error}`);
+        }
+    });
+}
+
+
 //Sweet Alert Functions Zone
 
 function sweetAlert1($icon, $data){

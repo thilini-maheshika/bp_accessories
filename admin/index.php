@@ -41,7 +41,7 @@
 					<img src="images/logo-big.png" width="100%">
 				</div>
 				<div class="col-sm-9">
-					<p><b><a href="http://www.sensemobile.com" target="_blank">SenseMobile.com</a></b> The ultimate home for prospective web developers.</p>
+					<p><b><a href="http://www.bpaccessories.com" target="_blank">BPAccessories.com</a></b> The ultimate home for prospective web developers.</p>
 					<div class="row">
 						<ul class="nav navbar-nav">
 							<li><a href="#">photoshop</a></li>
@@ -56,7 +56,7 @@
 						</ul>
 					</div>	
 					<p>
-						<a href="https://www.facebook.com/sensemobile/" target="_blank" class="btn btn-primary"><i class="fa fa-facebook"></i></a>
+						<a href="https://www.facebook.com/bpaccessories/" target="_blank" class="btn btn-primary"><i class="fa fa-facebook"></i></a>
 						<a href="https://www.youtube.com/channel/UCcfzunR364Vv1NUWTKk78QA" target="_blank" class="btn btn-danger"><i class="fa fa-youtube"></i></a>
 					 </p>
 				</div>

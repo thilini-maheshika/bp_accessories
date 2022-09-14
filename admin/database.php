@@ -1,5 +1,6 @@
 <?php 
-
+	session_start();
+	
 if (isset($_GET['function_code']) && $_GET['function_code'] == 'categoryAdd') {
     addCategory($_POST);
 } else if (isset($_GET['function_code']) && $_GET['function_code'] == 'categoryDelete') {
@@ -24,9 +25,38 @@ if (isset($_GET['function_code']) && $_GET['function_code'] == 'categoryAdd') {
     editProduct($_POST);
 }else if (isset($_GET['function_code']) && $_GET['function_code'] == 'productImageEdit') {
     editProductImage($_POST);
+}else if (isset($_GET['function_code']) && $_GET['function_code'] == 'galleryImageAdd') {
+    addGallery($_POST);
+}else if (isset($_GET['function_code']) && $_GET['function_code'] == 'galleryDelete') {
+    deleteGallery($_POST);
+}else if (isset($_GET['function_code']) && $_GET['function_code'] == 'loginAdmin') {
+    adminLogin($_POST);
 }
 
+//login
 
+function adminLogin($data){
+
+	include 'connection.php';
+
+		$uname=$data['email'];
+		$password=$data['password'];
+
+	$q1= "SELECT * FROM customers WHERE cust_email='$uname' AND cust_password='$password' ";
+	$login = mysqli_query($con,$q1);
+	$count = mysqli_num_rows($login);
+
+	if($count > 0){
+		if($uname == 'admin'){
+			$_SESSION['admin'] = $uname ;
+		}
+	}
+	echo $count;
+
+
+}	
+
+//Category
 
 function checkCatNamebyName($cat_name){
 	include 'connection.php';
@@ -341,6 +371,46 @@ function editProductImage($data){
 			$sql = "UPDATE products SET p_img='$img' , date_updated = now()  WHERE p_id='$p_id'";
 			return mysqli_query($con, $sql);
 		}
+}
+
+//gallery
+
+function addGallery($data){
+
+	include 'connection.php';
+
+	$title = $data['title'];
+
+		$img = $_FILES['file']['name'];
+		$target_dir = "upload/gallery/";
+		$target_file = $target_dir . basename($img);
+		$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+		$extensions_arr = array("jpg","jpeg","png","gif","jfif");
+		move_uploaded_file($_FILES['file']['tmp_name'],$target_dir.$img);
+	
+		if (in_array($imageFileType,$extensions_arr)) {
+			$sql = "INSERT INTO gallery(title,g_img) VALUES('$title','$img')";
+			return mysqli_query($con, $sql);
+		}
+}
+
+function getAllGalleryImages(){
+
+	include 'connection.php';
+
+	$viewimg = "SELECT * FROM gallery";
+	return mysqli_query($con,$viewimg);
+
+}
+
+function deleteGallery($data){
+
+	include 'connection.php';
+	
+	$g_id = $data['g_id'];
+	
+	$delimg="DELETE FROM gallery WHERE g_id=$g_id ";
+	return mysqli_query($con,$delimg);
 }
 
  ?>

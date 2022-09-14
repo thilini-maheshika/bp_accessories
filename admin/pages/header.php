@@ -1,7 +1,8 @@
 <?php
     require_once "connection.php";
     include "database.php";
-    session_start();
+    include "admin.php";
+    
 ?>
 
 <!DOCTYPE html>
@@ -43,8 +44,7 @@
               </span>
             </a>
             <ul class="treeview-menu">
-              <li><a href="#"><i class="fa fa-plus-circle"></i>Add Images</a></li>
-              <li><a href="#"><i class="fa fa-plus-circle"></i>Add Videos</a></li>
+              <li><a href="add-gallery.php"><i class="fa fa-plus-circle"></i>Add Images</a></li>
             </ul>
         </li>
         <li class="treeview">
@@ -96,7 +96,7 @@
             </a>
             <ul class="treeview-menu">
               <li><a href="#"><i class="fa fa-edit"></i>Edit Profile</a></li>
-              <li><a href="login.php"><i class="fa fa-power-off"></i>Log Out</a></li>
+              <li><a href="pages/logout.php"><i class="fa fa-power-off"></i>Log Out</a></li>
             </ul>
         </li>		
 	</ul>
@@ -122,6 +122,7 @@
 <script src="	https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+   <script src="assets/plugin/iziToast-master/dist/js/iziToast.min.js" type="text/javascript"></script>
 
 </body>
 </html>

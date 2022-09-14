@@ -11,7 +11,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-12 title">
-            <h1><i class="fa fa-bars"></i> Products</h1>
+            <h1><i class="fa fa-bars"></i>Edit Products</h1>
         </div>
 
         <?php
@@ -24,7 +24,6 @@
 
 
         <div class="col-sm-5 cat-form">
-            <h3>Edit Products</h3>
             <div class="form-group">
                 <label>Name</label>
                 <input type="text" value="<?php echo $row['p_name'] ?>"
@@ -81,25 +80,22 @@
                     onChange="ProductEdit(this,<?php echo $p_id;?>,'p_waranty')" id="p_waranty <?php echo $p_id; ?>"
                     name="p_waranty" class="form-control">
             </div>
-        </div>
 
-        <div class="col-sm-4">
-            <div class="form-group">
-                <label>Product Active</label>
+			<div class="form-group">
+                <label>Waranty</label>
                 <select onChange='ProductEdit(this, "<?php echo $p_id; ?>","p_active")'
                     id="p_active <?php echo $pid; ?>" class='form-control norad tx12' name="p_active" type='text'
                     value="<?php echo $p_active; ?>">
-                    <option value="1" <?php if ($row['p_active']=="1") echo "selected"; ?>>In Stock</option>
-                    <option value="0" <?php if ($row['p_active']=="0") echo "selected"; ?>>Out of Stock</option>
+                    <option value="1" <?php if ($row['p_active']=="1") echo "selected"; ?>>Active</option>
+                    <option value="0" <?php if ($row['p_active']=="0") echo "selected"; ?>>Deactive</option>
                 </select>
             </div>
+
         </div>
 
-        <div class="col-sm-7">
-        </div>
-        <div class="col-sm-5 ">
+        <div class="col-sm-7 ">
             <form method="post" enctype="multipart/form-data">
-                <div class="form-group">
+                <div class="form-group" style="margin-top: 7%;">
 
                     <img width="50%" src='<?php echo $img_src; ?>'><br><br>
                     <input type="hidden" id="p_id" name="p_id" value="<?php echo $p_id;?>" />
