@@ -69,7 +69,7 @@
                     <div class="col-sm-6">
 
                         <div class="form-group">
-                            <label>Waranty</label>
+                            <label>Waranty (Years) </label>
                             <input type="number" name="p_wrnt" id="p_wrnt" class="form-control">
                         </div>
 
@@ -77,8 +77,8 @@
                             <label>Product Active</label><br>
                             <select type="text" class='form-control norad tx12' name="product_active"
                                 id="product_active">
-                                <option value="1" selected>In Stock</option>
-                                <option value="0">Out of Stock</option>
+                                <option value="1" selected>Active</option>
+                                <option value="0">Deactive</option>
                             </select>
                         </div>
 

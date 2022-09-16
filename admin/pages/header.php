@@ -66,25 +66,13 @@
               </span>
             </a>            
         </li>
+
         <li class="treeview">
-            <a href="#">
-              <i class="fa fa-bar-chart"></i> <span>Reports</span>
+            <a href="settings.php">
+              <i class="fa fa-gear"></i> <span>Settings</span>
               <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
               </span>
             </a>
-        </li>
-        <li class="treeview">
-            <a href="#">
-              <i class="fa fa-user-plus"></i> <span>Users</span>
-              <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
-            </a>
-            <ul class="treeview-menu">
-              <li><a href="#"><i class="fa fa-plus-circle"></i>Add Users</a></li>
-              <li><a href="#"><i class="fa fa-eye"></i>View Users</a></li>
-            </ul>
         </li>
         
         <li class="treeview">

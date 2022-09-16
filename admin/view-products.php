@@ -24,12 +24,12 @@
                         <thead>
                             <tr>
                                 <th>Product Name</th>
-                                <th>Description</th>
+                                <th width="10%">Description</th>
                                 <th>Category</th>
                                 <th>Brand</th>
                                 <th>Image</th>
                                 <th width="10%">Price</th>
-                                <th width="100px">Stock Quantity</th>
+                                <th width="10px">Stock Quantity</th>
                                 <th>Waranty</th>
                                 <th>Product Active</th>
 
@@ -78,7 +78,7 @@
                                 <td>
                                     <a href="#">
                                         <?php 
-                                            $res=getAllModel();
+                                            $res=getAllModelbyID($row['model']);
 
                                             if($row2=mysqli_fetch_assoc($res)) {
                                                 echo $row2['mod_name'];
@@ -88,7 +88,7 @@
                                 </td>
 
                                 <td>
-                                    <img width="100px" height="100px" src='<?php echo $img_src; ?>'>
+                                    <img width="100px"  src='<?php echo $img_src; ?>'>
                                 </td>
 
                                 <td>

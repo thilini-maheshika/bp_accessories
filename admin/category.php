@@ -69,7 +69,7 @@
 
 							<td><?php echo $row['cat_des']; ?></td>
 
-							<td><img width="100px" height="100px" src='<?php echo $img_src; ?>'></td>
+							<td><img width="100px" src='<?php echo $img_src; ?>'></td>
 
 							<td><h3><a style="text-decoration: none; color: #333; font-size: 20px;">
 							<?php if($row['is_deleted']=='0') :?>

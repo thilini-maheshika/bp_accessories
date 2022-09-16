@@ -273,7 +273,7 @@ function getAllProductsByJoin(){
 
 	include 'connection.php';
 
-	$viewpro = "SELECT * FROM products JOIN category ON products.cat_id = category.cat_id WHERE products.is_deleted='0'";
+	$viewpro = "SELECT * FROM products JOIN category ON products.cat_id = category.cat_id JOIN model ON products.model = model.mod_id WHERE products.is_deleted='0'";
 	return mysqli_query($con,$viewpro);
 
 }
