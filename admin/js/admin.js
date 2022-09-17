@@ -499,6 +499,30 @@ function loginForm(ele) {
     });
 }
 
+//settings
+function quickUpdate(ele,field){
+
+    var val = document.getElementById(ele.id).value;
+
+    const data = {
+        field: field,
+        value: val,
+    }
+
+    $.ajax({
+        method: "POST",
+        url: "database.php?function_code=updateSettings",
+        data: data,
+        success:function($data){
+            console.log($data);
+            location.reload(this);
+        },
+        error: function (error) {
+            console.log(`Error ${error}`);
+        }
+    });
+}
+
 
 //Sweet Alert Functions Zone
 

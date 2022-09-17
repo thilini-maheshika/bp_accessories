@@ -38,12 +38,12 @@
                         <tfoot>
                             <tr>
                                 <th>Product Name</th>
-                                <th>Description</th>
+                                <th width="10%">Description</th>
                                 <th>Category</th>
                                 <th>Brand</th>
                                 <th>Image</th>
                                 <th width="10%">Price</th>
-                                <th width="100px">Stock Quantity</th>
+                                <th width="10px">Stock Quantity</th>
                                 <th>Waranty</th>
                                 <th>Product Active</th>
 

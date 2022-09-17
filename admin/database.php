@@ -31,7 +31,33 @@ if (isset($_GET['function_code']) && $_GET['function_code'] == 'categoryAdd') {
     deleteGallery($_POST);
 }else if (isset($_GET['function_code']) && $_GET['function_code'] == 'loginAdmin') {
     adminLogin($_POST);
+}else if (isset($_GET['function_code']) && $_GET['function_code'] == 'updateSettings') {
+    SettingsUpdate($_POST);
 }
+
+//settings
+
+function getAllSettings(){
+
+	include 'connection.php';
+
+	$setting = "SELECT * FROM settings";
+	return mysqli_query($con,$setting);
+
+}
+
+function SettingsUpdate($data){
+
+	include 'connection.php';
+
+	$field = $data['field'];
+    $value = $data['value']; 
+
+	$setup = "UPDATE settings SET $field = '$value' ";
+	return mysqli_query($con,$setup);
+
+}
+
 
 //login
 
