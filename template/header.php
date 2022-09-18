@@ -1,3 +1,8 @@
+<?php
+	include 'admin/connection.php';
+	include 'admin/database.php';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,6 +21,11 @@
 
 <body>
 
+<?php
+	$getall = getAllSettings();
+	$res = mysqli_fetch_assoc($getall);
+?>
+
 <div class="super_container">
 	
 	<!-- Header -->
@@ -28,8 +38,8 @@
 			<div class="container">
 				<div class="row">
 					<div class="col d-flex flex-row">
-						<div class="top_bar_contact_item"><div class="top_bar_icon"><img src="images/phone.png" alt=""></div>+38 068 005 3570</div>
-						<div class="top_bar_contact_item"><div class="top_bar_icon"><img src="images/mail.png" alt=""></div><a href="mailto:fastsales@gmail.com">fastsales@gmail.com</a></div>
+						<div class="top_bar_contact_item"><div class="top_bar_icon"><img src="images/phone.png" alt=""></div><?php echo $res['com_phone'] ?></div>
+						<div class="top_bar_contact_item"><div class="top_bar_icon"><img src="images/mail.png" alt=""></div><a href=""><?php echo $res['com_email'] ?></a></div>
 						<div class="top_bar_content ml-auto">
 							<div class="top_bar_user">
 								<div class="user_icon"><img src="images/user.svg" alt=""></div>
@@ -67,7 +77,7 @@
 												<span class="custom_dropdown_placeholder clc">All Categories</span>
 												<i class="fas fa-chevron-down"></i>
 												<ul class="custom_list clc">
-													<li><a class="clc" href="#">All Categories</a></li>
+													<li><a class="clc" href="#"><?php echo $res['com_phone'] ?></a></li>
 													<li><a class="clc" href="#"></a></li>
 												</ul>
 											</div>

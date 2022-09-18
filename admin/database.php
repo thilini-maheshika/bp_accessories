@@ -33,6 +33,8 @@ if (isset($_GET['function_code']) && $_GET['function_code'] == 'categoryAdd') {
     adminLogin($_POST);
 }else if (isset($_GET['function_code']) && $_GET['function_code'] == 'updateSettings') {
     SettingsUpdate($_POST);
+}else if (isset($_GET['function_code']) && $_GET['function_code'] == 'updateSettingsImage') {
+    SettingsImageUpdate($_POST);
 }
 
 //settings
@@ -56,6 +58,26 @@ function SettingsUpdate($data){
 	$setup = "UPDATE settings SET $field = '$value' ";
 	return mysqli_query($con,$setup);
 
+}
+
+function SettingsImageUpdate($data){
+
+	include 'connection.php'; 
+
+	$image = $_FILES['file']['name'];
+	$field = $data['field'];
+
+		$img = $_FILES['file']['name'];
+		$target_dir = "upload/setting_img/";
+		$target_file = $target_dir . basename($img);
+		$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+		$extensions_arr = array("jpg","jpeg","png","gif","jfif");
+		move_uploaded_file($_FILES['file']['tmp_name'],$target_dir.$img);
+
+		if (in_array($imageFileType,$extensions_arr)) {
+			$sql = "UPDATE settings SET $field = '$image'";
+			return mysqli_query($con, $sql);
+		}
 }
 
 

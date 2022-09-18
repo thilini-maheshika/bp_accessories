@@ -19,29 +19,32 @@
                         if($res = mysqli_fetch_assoc($getall)){
 
                         $b_img = $res['banner_img'];
-                        $b_img_src = 'upload/setting_img/banner_img'.$b_img;
+                        $b_img_src = 'upload/setting_img/'.$b_img;
+
+                        $sub_img = $res['subpage_back_img'];
+                        $sub_img_src = 'upload/setting_img/'.$sub_img;
+
                     ?>
 
                     <div class="mb-3">
                         <label>Banner Title</label>
-                        <input type="text" name="banner-title" id="banner-title" class="form-control" onchange="quickUpdate(this,'banner-title')"
-                            value="<?php echo $res['banner-title']; ?>" required>
+                        <input type="text" name="banner-title" id="banner-title" class="form-control" onchange="quickUpdate(this,'banner_title')" value="<?php echo $res['banner_title']; ?>"  required />
                     </div>
 
                     <div class="mb-3">
                         <label>Banner Product Name</label>
-                        <input type="text" name="banner-pname" id="banner-pname" class="form-control" onchange="quickUpdate(this,'banner-pname')"
-                            value="<?php echo $res['banner-pname']; ?>">
+                        <input type="text" name="banner-pname" id="banner-pname" class="form-control" onchange="quickUpdate(this,'banner_pname')"
+                            value="<?php echo $res['banner_pname']; ?>">
                     </div>
 
                     <form class="mt-3" method="POST" enctype="multipart/form-data">
                         <div class="mb-3">
-                            <input type="hidden" name="field" id="field" value="banner_image">
+                            <input type="hidden" name="field" id="field" value="banner_img">
                             <label for="formFile" class="form-label">Banner Image</label>
-                            <input class="form-control" onchange="" name="file" type="file" id="formFile">
+                            <input class="form-control" onchange="quickUpdateImageSetting(this.form);" name="file" type="file" id="formFile">
                         </div>
                     </form>
-                    <img class="mt-2" width="200px" src=''>
+                    <img class="mt-2" width="200px" src='<?php echo $b_img_src; ?>'>
 
                 </div>
 
@@ -53,27 +56,27 @@
                     <h5 class="text" style="font-size:17px; margin-top:5%; margin-bottom:2%;">Contact Settings</h5>
                     <div class="mb-3">
                         <label>Company Email</label>
-                        <input type="email" name="com-email" id="com-email" class="form-control" onchange="quickUpdate(this,'com-email')" value="<?php echo $res['com-email']; ?>"
+                        <input type="email" name="com-email" id="com-email" class="form-control" onchange="quickUpdate(this,'com_email')" value="<?php echo $res['com_email']; ?>"
                             required>
                     </div>
 
                     <div class="mb-3">
                         <label>Company Phone Number</label>
-                        <input type="text" name="com-phone" id="com-phone" class="form-control" onchange="quickUpdate(this,'com-phone')" value="<?php echo $res['com-phone']; ?>"
+                        <input type="text" name="com-phone" id="com-phone" class="form-control" onchange="quickUpdate(this,'com_phone')" value="<?php echo $res['com_phone']; ?>"
                             required>
                     </div>
 
                     <div class="mb-3">
                         <label>Company Address</label>
-                        <input type="text" name="com-address" id="com-address" class="form-control" onchange="quickUpdate(this,'com-address')"
-                            value="<?php echo $res['com-address']; ?>" required>
+                        <input type="text" name="com-address" id="com-address" class="form-control" onchange="quickUpdate(this,'com_address')"
+                            value="<?php echo $res['com_address']; ?>" required>
                     </div>
 
                     <div class="mb-3">
                         <label>Social Media -URL</label><br>
-                        Facebook<input type="url" name="facebook" id="facebook" class="form-control" onchange="quickUpdate(this,'facebook')"
+                        Facebook<input type="url" name="facebook" id="facebook" class="form-control" onchange="quickUpdate(this,'fb')"
                             value="<?php echo $res['fb']; ?>">
-                        Instagram<input type="url" name="instagram" id="instagram" class="form-control" onchange="quickUpdate(this,'instagram')"
+                        Instagram<input type="url" name="instagram" id="instagram" class="form-control" onchange="quickUpdate(this,'insta')"
                             value="<?php echo $res['insta']; ?>">
                         Google<input type="url" name="google" id="google" class="form-control" onchange="quickUpdate(this,'google')" value="<?php echo $res['google']; ?>">
 
@@ -88,18 +91,18 @@
                     <h5 class="text" style="font-size:17px; margin-top:5%; margin-bottom:2%;">Subpage Background Settings</h5>
                     <div class="mb-3">
                         <label>Sub Page Title</label>
-                        <input type="text" name="subpage-title" id="subpage-title" class="form-control" onchange="quickUpdate(this,'subpage-title')"
+                        <input type="text" name="subpage-title" id="subpage-title" class="form-control" onchange="quickUpdate(this,'subpage_title')"
                             value="<?php echo $res['subpage_title']; ?>" required>
                     </div>
 
                     <form class="mt-3" method="POST" enctype="multipart/form-data">
                         <div class="mb-3">
-                            <input type="hidden" name="field" id="field" value="sub_image">
+                            <input type="hidden" name="field" id="field" value="subpage_back_img">
                             <label for="formFile" class="form-label">Background Image</label>
-                            <input class="form-control" onchange="" name="file" type="file" id="formFile">
+                            <input class="form-control" onchange="quickUpdateImageSetting(this.form);" name="file" type="file" id="formFile">
                         </div>
                     </form>
-                    <img class="mt-2" width="200px" src=''>
+                    <img class="mt-2" width="200px" src="<?php echo $sub_img_src; ?>">
                 </div>
 
             <?php } ?>

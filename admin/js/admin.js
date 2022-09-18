@@ -523,6 +523,30 @@ function quickUpdate(ele,field){
     });
 }
 
+function quickUpdateImageSetting(ele){
+ 
+    var formData = new FormData(ele);
+    
+    $.ajax({
+        
+        method: "POST",
+        url: "database.php?function_code=updateSettingsImage",
+        data: formData,
+        success:function($data){
+            console.log($data);
+            loading("Image Uploading...");
+            
+        },
+        cache: false,
+        contentType: false,
+        processData: false,
+        error: function (error) {
+            console.log(`Error ${error}`);
+            sweetAlert2(warning,'Something Wrong.Try again!!');
+        }  
+    });
+    
+}
 
 //Sweet Alert Functions Zone
 

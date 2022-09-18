@@ -94,7 +94,7 @@
 
 <footer>
 	<div class="col-sm-6">
-		Copyright &copy; 2022 <a href="http://www.bpaccessories.com">BPAccessories.com</a> All rights reserved. 
+		Copyright &copy; 2022 <a href="http://www.bpaccessories.com">bpaccessories.com</a> All rights reserved. 
 	</div>
 	<div class="col-sm-6">
 		<span class="pull-right">Version 2.2.3</span>
