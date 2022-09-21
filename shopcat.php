@@ -2,7 +2,10 @@
 	include 'template/header.php';
 	include 'template/dependencies.php';
 ?>
-
+<?php
+    $cat_id = $_REQUEST['cat_id'];
+    $getpro = getProductsbycatID($cat_id);
+?>
 <!-- Home -->
 
 <div class="home">
@@ -62,8 +65,7 @@
                     <div class="shop_bar clearfix">
                         <div class="shop_product_count"><span>
 							<?php 
-								$all=getAllProducts();
-								echo $row=mysqli_num_rows($all);;
+								echo $row=mysqli_num_rows($getpro);;
                     		?>
 							</span> products found</div>
 							
@@ -89,7 +91,7 @@
                         <div class="product_grid_border"></div>
 
 						<?php
-							while($row2 = mysqli_fetch_assoc($all)){
+							while($row2 = mysqli_fetch_assoc($getpro)){
 								$p_id = $row2['p_id'];
 								$img = $row2['p_img'];
 								$img_src = "admin/upload/Products/".$img;

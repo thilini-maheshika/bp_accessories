@@ -121,6 +121,14 @@ function getAllCategory(){
 	return mysqli_query($con,$viewcat);
 }
 
+function getCategoryByLimit(){
+	include 'connection.php';
+
+	$fetchcat = "SELECT * FROM category WHERE is_deleted='0' LIMIT 5 ";
+	return mysqli_query($con,$fetchcat);
+}
+
+
 function addCategory($data)
 {
 	include 'connection.php';
@@ -195,7 +203,6 @@ function editCategoryImage($data){
 
 }
 
-
 function getAllCategorybyID($cat_id){
 
 	include 'connection.php';
@@ -203,6 +210,14 @@ function getAllCategorybyID($cat_id){
 	$viewcat = "SELECT * FROM category WHERE cat_id='$cat_id' AND is_deleted='0'";
 	return mysqli_query($con,$viewcat);
 
+}
+
+function featuredProducts(){
+
+	include 'connection.php';
+
+	$viewcat = "SELECT * FROM products join category on category.cat_id = products.cat_id WHERE products.is_deleted = 0 AND products.p_active = '1' ORDER BY products.date_updated DESC ";
+	return mysqli_query($con,$viewcat);
 }
 
 
@@ -213,6 +228,15 @@ function getAllModelbyID($mod_id){
 	include 'connection.php';
 
 	$viewmod = "SELECT * FROM model WHERE mod_id='$mod_id' AND is_deleted='0'";
+	return mysqli_query($con,$viewmod);
+
+}
+
+function getAllModelByCategory($cat_id){
+
+	include 'connection.php';
+
+	$viewmod = "SELECT * FROM model JOIN category ON model.mod_id = '$cat_id ' WHERE products.is_deleted = 0 AND products.p_active = '1' ";
 	return mysqli_query($con,$viewmod);
 
 }
@@ -321,18 +345,35 @@ function getAllProductsByJoin(){
 
 	include 'connection.php';
 
-	$viewpro = "SELECT * FROM products JOIN category ON products.cat_id = category.cat_id JOIN model ON products.model = model.mod_id WHERE products.is_deleted='0'";
-	return mysqli_query($con,$viewpro);
+	$viewjoin = "SELECT * FROM products JOIN category ON products.cat_id = category.cat_id JOIN model ON products.model = model.mod_id WHERE products.is_deleted='0' AND products.p_active='1' GROUP BY category.cat_name";
+	return mysqli_query($con,$viewjoin);
 
+}
+
+function getProductsByModel($mod_id){
+
+	include 'connection.php';
+
+	$viewcat = "SELECT * FROM products WHERE model='$mod_id' AND  products.is_deleted = 0 
+	AND products.p_active = '1' ";
+	return mysqli_query($con,$viewcat);
+}
+
+function getProductsbycatID($cat_id){
+
+	include 'connection.php';
+
+	$viewcat = "SELECT * FROM products WHERE cat_id='$cat_id' AND  products.is_deleted = 0 
+	AND products.p_active = '1' ";
+	return mysqli_query($con,$viewcat);
 }
 
 function getAllProducts(){
 
 	include 'connection.php';
 
-	$viewpro = "SELECT * FROM products WHERE is_deleted='0'";
+	$viewpro = "SELECT * FROM products WHERE is_deleted='0' AND products.p_active='1' ";
 	return mysqli_query($con,$viewpro);
-
 }
 
 function addProduct($data){
@@ -408,7 +449,7 @@ function editProductImage($data){
 
 	include 'connection.php'; 
 
-	$img = $_FILES['file']['name'];
+		$img = $_FILES['file']['name'];
 		$target_dir = "upload/products/";
 		$target_file = $target_dir . basename($img);
 		$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));

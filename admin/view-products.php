@@ -52,12 +52,13 @@
                         <tbody>
 
                             <?php
-                            $getpro= getAllProductsByJoin();
+                            $getpro= getAllProducts();
                             while($row=mysqli_fetch_assoc($getpro)){
 
-                              $p_id=$row['p_id'];
-                              $img = $row['p_img'];
-                              $img_src = "upload/Products/".$img;
+                            $cat_id = $row['cat_id'];
+                            $p_id=$row['p_id'];
+                            $img = $row['p_img'];
+                            $img_src = "upload/Products/".$img;
                             
                             ?>
 
@@ -72,9 +73,15 @@
                                 </td>
 
                                 <td>
-                                    <a href="#"><?php echo $row['cat_name']; ?></a>
-                                </td>
+                                    <?php $all=getAllCategorybyID($cat_id); 
 
+                                        while($row1=mysqli_fetch_assoc($all)){
+    
+                                        $cat_name=$row1['cat_name'];
+                                    ?>
+                                    <a href="#"><?php echo $cat_name; ?></a>
+                                </td>
+                                <?php } ?>
                                 <td>
                                     <a href="#">
                                         <?php 
@@ -88,19 +95,19 @@
                                 </td>
 
                                 <td>
-                                    <img width="100px"  src='<?php echo $img_src; ?>'>
+                                    <img width="100px" src='<?php echo $img_src; ?>'>
                                 </td>
 
                                 <td>
-                                <input type="number" onchange='ProductEdit(this, "<?php echo $p_id; ?>","p_price")'
-                                        id="p_price <?php echo $p_id; ?>" class='form-control norad tx12'
-                                        name="p_price" value="<?php echo $row['p_price']; ?>" >
+                                    <input type="number" onchange='ProductEdit(this, "<?php echo $p_id; ?>","p_price")'
+                                        id="p_price <?php echo $p_id; ?>" class='form-control norad tx12' name="p_price"
+                                        value="<?php echo $row['p_price']; ?>">
                                 </td>
 
                                 <td>
                                     <input type="number" onchange='ProductEdit(this, "<?php echo $p_id; ?>","p_qnt")'
-                                        id="p_qnt <?php echo $p_id; ?>" class='form-control norad tx12'
-                                        name="p_qnt" value="<?php echo $row['p_qnt']; ?>" >
+                                        id="p_qnt <?php echo $p_id; ?>" class='form-control norad tx12' name="p_qnt"
+                                        value="<?php echo $row['p_qnt']; ?>">
                                 </td>
 
                                 <td>
@@ -132,11 +139,11 @@
                                     <a>
                                         <?php else : ?>
 
-                                            <button type="button"
+                                        <button type="button"
                                             style="text-decoration: none; color: #080641; font-size: 15px;"
                                             onclick="location.href='edit-product.php?p_id=<?php echo $row['p_id']; ?>'">
                                             <i class="fa fa-edit"></i>
-                                        <?php endif ?>    
+                                            <?php endif ?>
                                     </a>
                                 </td>
 

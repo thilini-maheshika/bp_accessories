@@ -18,6 +18,9 @@
                         $getall = getAllSettings();
                         if($res = mysqli_fetch_assoc($getall)){
 
+                        $bb_img = $res['banner_back_img'];
+                        $bb_img_src = 'upload/setting_img/'.$bb_img;
+
                         $b_img = $res['banner_img'];
                         $b_img_src = 'upload/setting_img/'.$b_img;
 
@@ -36,6 +39,15 @@
                         <input type="text" name="banner-pname" id="banner-pname" class="form-control" onchange="quickUpdate(this,'banner_pname')"
                             value="<?php echo $res['banner_pname']; ?>">
                     </div>
+
+                    <form class="mt-3" method="POST" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <input type="hidden" name="field" id="field" value="banner_back_img">
+                            <label for="formFile" class="form-label">Banner background Image</label>
+                            <input class="form-control" onchange="quickUpdateImageSetting(this.form);" name="file" type="file" id="formFile">
+                        </div>
+                    </form>
+                    <img class="mt-2" width="200px" src='<?php echo $bb_img_src; ?>'>
 
                     <form class="mt-3" method="POST" enctype="multipart/form-data">
                         <div class="mb-3">

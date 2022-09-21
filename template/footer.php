@@ -1,100 +1,88 @@
-	<!-- Footer -->
+<!-- Footer -->
 
-	<footer class="footer">
-		<div class="container">
-			<div class="row">
+<footer class="footer">
+    <div class="container">
+        <div class="row">
 
-				<div class="col-lg-3 footer_col">
-					<div class="footer_column footer_contact">
-						<div class="logo_container">
-							<div class="logo"><a href="#">BP Mobile</a></div>
-						</div>
-						
-						<div class="footer_phone">+38 068 005 3570</div>
-						<div class="footer_contact_text">
-							<p>17 Princess Road, London</p>
-							<p>Grester London NW18JR, UK</p>
-						</div>
-						<div class="footer_social">
-							<ul>
-								<li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-								<li><a href="#"><i class="fab fa-instagram"></i></a></li>
-								<li><a href="#"><i class="fab fa-google"></i></a></li>
-								
-							</ul>
-						</div>
-					</div>
-				</div>
+            <div class="col-lg-3 footer_col">
+                <div class="footer_column footer_contact">
+                    <div class="logo_container">
+                        <div class="logo"><a href="#">BP Mobile</a></div>
+                    </div>
 
-				<div class="col-lg-2 offset-lg-2">
-					<div class="footer_column">
-						<div class="footer_title">Find it Fast</div>
-						<ul class="footer_list">
-							<li><a href="#">Computers & Laptops</a></li>
-							<li><a href="#">Cameras & Photos</a></li>
-							<li><a href="#">Hardware</a></li>
-							<li><a href="#">Smartphones & Tablets</a></li>
-							<li><a href="#">TV & Audio</a></li>
-						</ul>
-						<div class="footer_subtitle">Gadgets</div>
-						<ul class="footer_list">
-							<li><a href="#">Car Electronics</a></li>
-						</ul>
-					</div>
-				</div>
+                    <div class="footer_phone"><?php echo $res['com_phone'] ?></div>
+                    <div class="footer_contact_text">
+                        <p><?php echo $res['com_address'] ?></p>
 
-				<div class="col-lg-2">
-					<div class="footer_column">
-						<ul class="footer_list footer_list_2">
-							<li><a href="#">Video Games & Consoles</a></li>
-							<li><a href="#">Accessories</a></li>
-							<li><a href="#">Cameras & Photos</a></li>
-							<li><a href="#">Hardware</a></li>
-							<li><a href="#">Computers & Laptops</a></li>
-						</ul>
-					</div>
-				</div>
+                    </div>
+                    <div class="footer_social">
+                        <ul>
+                            <li><a href="<?php echo $res['fb']; ?>"><i class="fab fa-facebook-f"></i></a></li>
+                            <li><a href="<?php echo $res['insta']; ?>"><i class="fab fa-instagram"></i></a></li>
+                            <li><a href="<?php echo $res['google']; ?>"><i class="fab fa-google"></i></a></li>
 
-				<div class="col-lg-2">
-					<div class="footer_column">
-						<div class="footer_title">Customer Care</div>
-						<ul class="footer_list">
-							<li><a href="#">My Account</a></li>
-							<li><a href="#">Customer Services</a></li>
-							<li><a href="#">FAQs</a></li>
-							<li><a href="#">Product Support</a></li>
-						</ul>
-					</div>
-				</div>
+                        </ul>
+                    </div>
+                </div>
+            </div>
 
-			</div>
-		</div>
-	</footer>
+            <div class="col-lg-3 offset-lg-3">
+                <div class="footer_column">
+                    <div class="footer_title">Find it Fast</div>
+                    <?php
+						$fetch = getCategoryByLimit();
+						while($res1 = mysqli_fetch_assoc($fetch)){
+					?>
+                    <ul class="footer_list">
+                        <li><a href="#"><?php echo $res1['cat_name']; ?></a></li>
+                    </ul>
+					<?php } ?>
+                </div>
+            </div>
 
-	<!-- Copyright -->
+            <div class="col-lg-2">
+                <div class="footer_column">
+                    <div class="footer_title">Customer Care</div>
+                    <ul class="footer_list">
+                        <li><a href="#">My Account</a></li>
+                        <li><a href="#">Customer Services</a></li>
+                        <li><a href="#">Product Support</a></li>
+                    </ul>
+                </div>
+            </div>
 
-	<div class="copyright">
-		<div class="container">
-			<div class="row">
-				<div class="col">
-					
-					<div class="copyright_container d-flex flex-sm-row flex-column align-items-center justify-content-start">
-						<div class="copyright_content">
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | Bpaccessories.com <i class="fa fa-heart" aria-hidden="true"></i> BP Accessories </a>
+        </div>
+    </div>
+</footer>
 
+<!-- Copyright -->
+
+<div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+
+                <div
+                    class="copyright_container d-flex flex-sm-row flex-column align-items-center justify-content-start">
+                    <div class="copyright_content">
+                        Copyright &copy;<script>
+                        document.write(new Date().getFullYear());
+                        </script> All rights reserved | Bpaccessories.com <i class="fa fa-heart" aria-hidden="true"></i>
+                        BP Accessories </a>
+
+                    </div>
+                    <div class="logos ml-sm-auto">
+                        <ul class="logos_list">
+                            <li><a href="#"><img src="images/logos_1.png" alt=""></a></li>
+                            <li><a href="#"><img src="images/logos_2.png" alt=""></a></li>
+                            <li><a href="#"><img src="images/logos_4.png" alt=""></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-						<div class="logos ml-sm-auto">
-							<ul class="logos_list">
-								<li><a href="#"><img src="images/logos_1.png" alt=""></a></li>
-								<li><a href="#"><img src="images/logos_2.png" alt=""></a></li>
-								<li><a href="#"><img src="images/logos_4.png" alt=""></a></li>
-							</ul>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
 </div>
 
 <script src="js/jquery-3.3.1.min.js"></script>
@@ -117,6 +105,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 <script src="js/contact_custom.js"></script>
 <script src="js/cart_custom.js"></script>
 <script src="js/product_custom.js"></script>
+<script src="js/searchfunc.js"></script>
 
 </body>
 
