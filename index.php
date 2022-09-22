@@ -168,7 +168,7 @@
                         <div class="owl-item">
                             <div class="popular_category d-flex flex-column align-items-center justify-content-center">
                                 <div class="popular_category_image"><img src='<?php echo $img_src ?>' ></div>
-                                <div class="popular_category_text"><a href="shopcat.php?cat_id=<?php echo $cat_id; ?>"><?php echo $row3['cat_name'] ?></a></div>
+                                <div class="popular_category_text"><a href="shop.php?cat_id=<?php echo $cat_id; ?>"><?php echo $row3['cat_name'] ?></a></div>
                             </div>
                         </div>
 
@@ -218,9 +218,6 @@
                                     <div class="viewed_price"><span><?php echo $row4['p_price']; ?></span></div>
                                     <div class="viewed_name"><a href="product.php?p_id=<?php echo $p_id; ?>"><?php echo $row4['p_name']; ?></a></div>
                                 </div>
-                                <ul class="item_marks">
-                                    <li class="item_mark item_discount">New</li>
-                                </ul>
                             </div>
                         </div>
                         <?php } ?>

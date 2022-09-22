@@ -32,9 +32,10 @@
                     <?php
 						$fetch = getCategoryByLimit();
 						while($res1 = mysqli_fetch_assoc($fetch)){
+                            $cat_id = $res1['cat_id'];
 					?>
                     <ul class="footer_list">
-                        <li><a href="#"><?php echo $res1['cat_name']; ?></a></li>
+                        <li><a href="shop.php?cat_id=<?php echo $cat_id; ?>"><?php echo $res1['cat_name']; ?></a></li>
                     </ul>
 					<?php } ?>
                 </div>

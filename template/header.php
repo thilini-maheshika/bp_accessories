@@ -58,7 +58,7 @@
                             <div class="top_bar_content ml-auto">
                                 <div class="top_bar_user">
                                     <div class="user_icon"><img src="images/user.svg" alt=""></div>
-                                    <div><a href="#">Register</a></div>
+                                    <div><a href="">Register</a></div>
                                     <div><a href="admin/login.php">Sign in</a></div>
                                 </div>
                             </div>
@@ -98,12 +98,13 @@
 														while($res1 = mysqli_fetch_assoc($fetchcat)){
                                                             $cat_id = $res1['cat_id'];
 													?>
-                                                        <li><a class="clc" href="shopcat.php?cat_id=<?php echo $cat_id; ?>"><?php echo $res1['cat_name'] ?></a>
+                                                        <li><a class="clc" href="shop.php?cat_id=<?php echo $cat_id; ?>"><?php echo $res1['cat_name'] ?></a>
                                                         </li>
                                                         <?php } ?>
                                                     </ul>
                                                 </div>
                                             </div>
+                                            <button type="submit" class="header_search_button trans_300" value="Submit"><img src="images/search.png" onclick=""></button>
                                         </form>
                                     </div>
                                 </div>
@@ -158,7 +159,7 @@
                                             $cat_id = $res1['cat_id'];
                                         ?>
 
-                                        <li><a href="shopcat.php?cat_id=<?php echo $cat_id; ?>"><?php echo $res1['cat_name'] ?>
+                                        <li><a href="shop.php?cat_id=<?php echo $cat_id; ?>"><?php echo $res1['cat_name'] ?>
                                                 <i class="fas fa-chevron-right ml-auto"></i></a></li>
                                         <?php } ?>
                                     </ul>
@@ -179,7 +180,7 @@
                                                             $mod_id = $res2['mod_id'];
 													?>
                                                 <li>
-                                                    <a href="#"><?php echo $res2['mod_name'] ?><i class="fas fa-chevron-down"></i></a>
+                                                    <a href="shop.php?mod_id=<?php echo $mod_id; ?>"><?php echo $res2['mod_name'] ?><i class="fas fa-chevron-down"></i></a>
                                                     <ul>
                                                         
                                                         <?php $fetchPro = getProductsByModel($mod_id);

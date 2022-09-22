@@ -476,6 +476,7 @@ function loginForm(ele) {
     var formData = new FormData(ele);
 
     $.ajax({
+
         method: "POST",
         url: "database.php?function_code=loginAdmin",
         data: formData,
@@ -490,13 +491,31 @@ function loginForm(ele) {
                 sweetAlert2(warning,'Something Wrong.Try again!!');
             }
         },
-        cache: false,
-        contentType: false,
-        processData: false,
         error: function (error) {
             console.log(`Error ${error}`);
         }
     });
+
+    // $.ajax({
+    //     method: "POST",
+    //     url: "database.php?function_code=loginAdmin",
+    //     data: formData,
+    //     success: function ($data) {
+    //         if($data > 0){
+    //             if(formData.get('email') === 'admin'){
+    //                 window.location.href='index.php';
+    //             }else{
+
+    //             }
+    //         }else{
+    //             sweetAlert2(warning,'Something Wrong.Try again!!');
+    //         }
+    //     },
+       
+    //     error: function (error) {
+    //         console.log(`Error ${error}`);
+    //     }
+    // });
 }
 
 //settings

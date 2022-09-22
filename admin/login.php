@@ -17,7 +17,7 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
     <!-- MDB -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/5.0.0/mdb.min.css" rel="stylesheet" />
-	
+
 </head>
 
 <body>
@@ -35,24 +35,26 @@
                                         <h4 class="mt-1 mb-5 pb-1">Welcome to BP Accessories Website</h4>
                                     </div>
 
-									<p>Please login to your account</p>
+                                    <p>Please login to your account</p>
 
                                     <form method="post" novalidate enctype="multipart/form-data" id="logininfo">
 
                                         <div class="form-outline mb-4">
                                             <input type="email" id="form2Example11" class="form-control"
-                                                placeholder="Phone number or email address" name="email" id="email"/>
+                                                placeholder="Phone number or email address" name="email" id="email" />
                                             <label class="form-label">Email</label>
                                         </div>
 
                                         <div class="form-outline mb-4">
-                                            <input type="password" id="form2Example22" class="form-control" name="password" id="password" />
+                                            <input type="password" id="form2Example22" class="form-control"
+                                                name="password" id="password" />
                                             <label class="form-label">Password</label>
                                         </div>
 
                                         <div class="text-center pt-1 mb-5 pb-1">
                                             <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3"
-                                                type="button" onclick="loginForm(this.form)" id="submit" name="submit">Log in</button>
+                                                type="button" onclick="loginForm(this.form)" id="submit"
+                                                name="submit">Log in</button>
                                             <a class="text-muted" href="#!">Forgot password?</a>
                                         </div>
 

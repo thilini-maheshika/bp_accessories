@@ -86,7 +86,7 @@
                             <ul>
                                 
 
-                                <li>
+                            <li>
                                     <span class="sorting_text"><a href="shop.php">Best Match</a><i
                                             class="fas fa-chevron-down"></span></i>
                                     <ul>
@@ -108,9 +108,10 @@
                         <div class="product_grid_border"></div>
 
                         <?php
-							while($row2 = mysqli_fetch_assoc($all)){
-								$p_id = $row2['p_id'];
-								$img = $row2['p_img'];
+                        $sort = getProductsByOrderPrice();
+							while($sortrow = mysqli_fetch_assoc($sort)){
+								$p_id = $sortrow['p_id'];
+								$img = $sortrow['p_img'];
 								$img_src = "admin/upload/Products/".$img;
 						?>
 
@@ -122,16 +123,16 @@
 
                             <div class="product_content">
                                 <?php
-                                            if($row2['p_qnt'] == 0){ ?>
+                                            if($sortrow['p_qnt'] == 0){ ?>
                                 <div class="badge bg-dark text-white position-absolute"
                                     style="top: 0.5rem; right: 0.5rem">Out of
                                     Stock
                                 </div>
                                 <?php  } ?>
-                                <div class="product_price">RS.<?php echo $row2['p_price']?></div>
+                                <div class="product_price">RS.<?php echo $sortrow['p_price']?></div>
                                 <div class="product_name">
                                     <div><a href="product.php?p_id=<?php echo $p_id; ?>"
-                                            tabindex="0"><?php echo $row2['p_name']?></a></div>
+                                            tabindex="0"><?php echo $sortrow['p_name']?></a></div>
                                 </div>
                             </div>
 

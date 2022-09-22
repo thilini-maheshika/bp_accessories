@@ -2,9 +2,17 @@
 	include 'template/header.php';
 	include 'template/dependencies.php';
 ?>
+
 <?php
-    $cat_id = $_REQUEST['cat_id'];
-    $getpro = getProductsbycatID($cat_id);
+    if(isset($_REQUEST['mod_id'])){
+        $mod_id = $_REQUEST['mod_id'];
+        $all = getProductsByModel($mod_id);
+    }else if(isset($_REQUEST['cat_id'])){
+        $cat_id = $_REQUEST['cat_id'];
+        $all = getProductsbycatID($cat_id);
+    }else {
+        $all = getAllProducts();
+    }
 ?>
 <!-- Home -->
 
@@ -35,8 +43,9 @@
 								while($res1 = mysqli_fetch_assoc($fetchcat)){
 									$cat_id = $res1['cat_id'];
 							?>
-                            <li><a href="shopcat.php?cat_id=<?php echo $cat_id; ?>"><?php echo $res1['cat_name'] ?></a></li>
-							<?php } ?>
+                            <li><a href="shop.php?cat_id=<?php echo $cat_id; ?>"><?php echo $res1['cat_name'] ?></a>
+                            </li>
+                            <?php } ?>
                         </ul>
                     </div>
 
@@ -44,12 +53,15 @@
                         <div class="sidebar_subtitle brands_subtitle">Brands</div>
                         <ul class="brands_list">
 
-							<?php
+                            <?php
 								$fetchmod = getAllModel();
 								while($res2 = mysqli_fetch_assoc($fetchmod)){
+                                    $mod_id = $res2['mod_id'];
 							?>
 
-                            <li class="brand"><a href="#"><?php echo $res2['mod_name'] ?></a></li>
+                            <li class="brand"><a
+                                    href="shop.php?mod_id=<?php echo $mod_id; ?>"><?php echo $res2['mod_name'] ?></a>
+                            </li>
                             <?php } ?>
                         </ul>
                     </div>
@@ -64,25 +76,31 @@
                 <div class="shop_content">
                     <div class="shop_bar clearfix">
                         <div class="shop_product_count"><span>
-							<?php 
-								echo $row=mysqli_num_rows($getpro);;
+                                <?php 								
+								echo $row=mysqli_num_rows($all);;
                     		?>
-							</span> products found</div>
-							
+                            </span> products found</div>
+
                         <div class="shop_sorting">
                             <span>Sort by:</span>
                             <ul>
-                                <li>
-                                    <span class="sorting_text">Best Match<i class="fas fa-chevron-down"></span></i>
+                                
+
+                            <li>
+                                    <span class="sorting_text"><a href="shop.php">Best Match</a><i
+                                            class="fas fa-chevron-down"></span></i>
                                     <ul>
-									<li class="shop_sorting_button" data-isotope-option='{ "sortBy": "bestmatch" }'>Best Match
+                                        <li class="shop_sorting_button" data-isotope-option='{ "sortBy": "bestmatch" }'>
+                                            <a href="shop.php">Best Match</a>
                                         </li>
-                                        <li class="shop_sorting_button" data-isotope-option='{ "sortBy": "name" }'>Name
+                                        <li class="shop_sorting_button" data-isotope-option='{ "sortBy": "name" }'><a href="shopsortName.php">Name</a>
                                         </li>
                                         <li class="shop_sorting_button" data-isotope-option='{ "sortBy": "price" }'>
-                                            Price</li>
+                                           <a href="shopsortPrice.php"> Price</a></li>
                                     </ul>
                                 </li>
+
+
                             </ul>
                         </div>
                     </div>
@@ -90,10 +108,11 @@
                     <div class="product_grid">
                         <div class="product_grid_border"></div>
 
-						<?php
-							while($row2 = mysqli_fetch_assoc($getpro)){
-								$p_id = $row2['p_id'];
-								$img = $row2['p_img'];
+                        <?php
+                        $sort = getProductsByOrderASC();
+							while($sortrow = mysqli_fetch_assoc($sort)){
+								$p_id = $sortrow['p_id'];
+								$img = $sortrow['p_img'];
 								$img_src = "admin/upload/Products/".$img;
 						?>
 
@@ -101,30 +120,38 @@
                         <div class="product_item is_new">
                             <div class="product_border"></div>
                             <div class="product_image d-flex flex-column align-items-center justify-content-center"><img
-                                    src="<?php echo $img_src;?>" ></div>
+                                    src="<?php echo $img_src;?>"></div>
+
                             <div class="product_content">
-                                <div class="product_price">RS.<?php echo $row2['p_price']?></div>
+                                <?php
+                                            if($sortrow['p_qnt'] == 0){ ?>
+                                <div class="badge bg-dark text-white position-absolute"
+                                    style="top: 0.5rem; right: 0.5rem">Out of
+                                    Stock
+                                </div>
+                                <?php  } ?>
+                                <div class="product_price">RS.<?php echo $sortrow['p_price']?></div>
                                 <div class="product_name">
-                                    <div><a href="product.php?p_id=<?php echo $p_id; ?>" tabindex="0"><?php echo $row2['p_name']?></a></div>
+                                    <div><a href="product.php?p_id=<?php echo $p_id; ?>"
+                                            tabindex="0"><?php echo $sortrow['p_name']?></a></div>
                                 </div>
                             </div>
 
                             <ul class="product_marks">
+
+                                <?php
+                                $new = chooseNewProducts($p_id);
+                                    
+                                    if($res3=mysqli_fetch_assoc($new)){   
+                                          if(!$res3['p_qnt'] == 0){
+                                ?>
+
                                 <li class="product_mark product_new">new</li>
+                                <?php }} ?>
                             </ul>
                         </div>
-						<?php } ?>
+                        <?php } ?>
                     </div>
-
-                    <!-- Shop Page Navigation -->
-
-                    <div class="shop_page_nav d-flex flex-row">
-                        <div class="page_prev d-flex flex-column align-items-center justify-content-center"><i
-                                class="fas fa-chevron-left"></i></div>
-                        <div class="page_next d-flex flex-column align-items-center justify-content-center"><i
-                                class="fas fa-chevron-right"></i></div>
-                    </div>
-
                 </div>
 
             </div>

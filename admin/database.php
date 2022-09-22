@@ -35,6 +35,8 @@ if (isset($_GET['function_code']) && $_GET['function_code'] == 'categoryAdd') {
     SettingsUpdate($_POST);
 }else if (isset($_GET['function_code']) && $_GET['function_code'] == 'updateSettingsImage') {
     SettingsImageUpdate($_POST);
+}else if (isset($_GET['function_code']) && $_GET['function_code'] == 'regcustomer') {
+    RegisterCustomer($_POST);
 }
 
 //settings
@@ -79,7 +81,36 @@ function SettingsImageUpdate($data){
 			return mysqli_query($con, $sql);
 		}
 }
+ 
+//customer register
 
+function checkCustByEmail($email){
+	include 'connection.php';
+
+	$q1 = "SELECT * FROM customers WHERE email='$email' AND is_deleted='0'";
+	$catName_check = mysqli_query($con,$q1);
+	return mysqli_num_rows($catName_check);
+}
+
+
+function RegisterCustomer($data){
+
+	include 'connection.php';
+
+	$custname = $data['custname'];
+	$email = $data['email'];
+	$phone = $data['phone'];
+	$password = $data['pass'];
+
+	$count = checkCustByEmail($email);
+
+	if($count == 0){
+		$sql = "INSERT INTO customers(cust_name, cust_email, cust_phone, cust_password, is_deleted, date_updated) 
+		VALUES('$custname', '$email', '$phone', '$password', 0 , now())";
+		return mysqli_query($con, $sql);
+	}
+	echo $count;
+}
 
 //login
 
@@ -359,6 +390,24 @@ function getProductsByModel($mod_id){
 	return mysqli_query($con,$viewcat);
 }
 
+function getProductsByOrderASC(){
+
+	include 'connection.php';
+
+	$viewcat = "SELECT * FROM products WHERE products.is_deleted = 0 
+	AND products.p_active = '1' ORDER BY p_name ASC ";
+	return mysqli_query($con,$viewcat);
+}
+
+function getProductsByOrderPrice(){
+
+	include 'connection.php';
+
+	$viewcat = "SELECT * FROM products WHERE products.is_deleted = 0 
+	AND products.p_active = '1' ORDER BY p_price ASC ";
+	return mysqli_query($con,$viewcat);
+}
+
 function getProductsbycatID($cat_id){
 
 	include 'connection.php';
@@ -438,7 +487,7 @@ function editProduct($data){
     $value = $data['value']; 
 
 		
-	$sql1 = "UPDATE products SET $field='$value' , date_updated = now()  WHERE p_id='$p_id'";
+	$sql1 = "UPDATE products SET $field='$value' WHERE p_id='$p_id'";
 	return mysqli_query($con, $sql1);
 
 }
@@ -460,6 +509,17 @@ function editProductImage($data){
 			$sql = "UPDATE products SET p_img='$img' , date_updated = now()  WHERE p_id='$p_id'";
 			return mysqli_query($con, $sql);
 		}
+}
+
+function chooseNewProducts($p_id){
+
+	include 'connection.php'; 
+
+	$NewDate=Date('y:m:d', strtotime('-7 days'));
+
+	$sql1 = "SELECT * FROM products WHERE p_id= '$p_id' AND NOT(date_updated < '$NewDate'  OR date_updated >  now()) ";
+	return mysqli_query($con, $sql1);
+
 }
 
 //gallery
