@@ -102,11 +102,11 @@
 <script src="plugins/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
 <script src="plugins/parallax-js-master/parallax.min.js"></script>
 <script src="js/shop_custom.js"></script>
-<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyCIwF204lFZg1y4kPSIhKaHEXMLYxxuMhA"></script>
 <script src="js/contact_custom.js"></script>
 <script src="js/cart_custom.js"></script>
 <script src="js/product_custom.js"></script>
-<script src="js/searchfunc.js"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="admin/js/admin.js"></script>
 
 </body>
 

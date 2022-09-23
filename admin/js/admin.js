@@ -392,7 +392,7 @@ function ProductEditImage(ele){
             console.log(`Error ${error}`);
             sweetAlert2(warning,'Something Wrong.Try again!!');
         }  
-    })
+    });
     
 }
 
@@ -470,53 +470,59 @@ function galleryDelete(g_id){
       })
 }
 
-//login
+//contact form messages
 
-function loginForm(ele) {
-    var formData = new FormData(ele);
+function contactForm(form) {
+    var formData = new FormData(form);
 
     $.ajax({
+        
+        method: "POST",
+        url: "admin/database.php?function_code=contactmsg",
+        data: formData,
+        success:function($data){
+            console.log($data);
+              sweetAlert4("Your message has sent. We will response soon.Thank You!!");
+              location.reload(true);  
+            
+        },
+            contentType: false,
+            processData: false,
+            error: function(error){
+                console.log(`Error ${error}`);
+                sweetAlert2(warning,'Something Wrong.Try again!!');
+            } 
+    });             
+}
 
+//login
+
+function loginForm(ele){
+    var formData = new FormData(ele);
+    
+    $.ajax({
         method: "POST",
         url: "database.php?function_code=loginAdmin",
         data: formData,
-        success: function ($data) {
+        success: function($data){
             if($data > 0){
-                if(formData.get('email') === 'admin'){
-                    window.location.href='index.php';
+                    if(formData.get('email') === 'admin'){
+                        window.location.href='index.php';
+                    }else{
+                        window.location.href='../index.php';
+                    }
                 }else{
-
+                    sweetAlert2(warning,'Something Wrong.Try again!!');
                 }
-            }else{
-                sweetAlert2(warning,'Something Wrong.Try again!!');
-            }
         },
-        error: function (error) {
+        contentType: false,
+        processData: false,
+        error: function(error){
             console.log(`Error ${error}`);
         }
     });
-
-    // $.ajax({
-    //     method: "POST",
-    //     url: "database.php?function_code=loginAdmin",
-    //     data: formData,
-    //     success: function ($data) {
-    //         if($data > 0){
-    //             if(formData.get('email') === 'admin'){
-    //                 window.location.href='index.php';
-    //             }else{
-
-    //             }
-    //         }else{
-    //             sweetAlert2(warning,'Something Wrong.Try again!!');
-    //         }
-    //     },
-       
-    //     error: function (error) {
-    //         console.log(`Error ${error}`);
-    //     }
-    // });
 }
+
 
 //settings
 function quickUpdate(ele,field){
@@ -579,13 +585,14 @@ function sweetAlert1($icon, $data){
     })
 }
 
+
 function sweetAlert2($icon,$data){
     Swal.fire({
         position: 'center',
         icon: $icon,
         title: $data,
         showConfirmButton: false,
-        timer: 2000
+        timer: 5000
     }).then((result) => {
         location.reload(true);
     })
@@ -596,9 +603,20 @@ function sweetAlert3(){
         'Deleted!',
         'Your file has been deleted.',
         'success'
-      )
+        )
+    }
+    
+function sweetAlert4($data){
+    Swal.fire({
+        title: $data,
+        showClass: {
+            popup: 'animate__animated animate__fadeInDown'
+        },
+        hideClass: {
+            popup: 'animate__animated animate__fadeOutUp'
+        }
+        })
 }
-
 function loading(gettitle){
     let timerInterval
     Swal.fire({

@@ -37,7 +37,27 @@ if (isset($_GET['function_code']) && $_GET['function_code'] == 'categoryAdd') {
     SettingsImageUpdate($_POST);
 }else if (isset($_GET['function_code']) && $_GET['function_code'] == 'regcustomer') {
     RegisterCustomer($_POST);
+}else if (isset($_GET['function_code']) && $_GET['function_code'] == 'contactmsg') {
+    ContactFormMessage($_POST);
 }
+
+//Contact form
+
+function ContactFormMessage($data){
+	include 'connection.php';
+
+	$name = $data['name'];
+	$email = $data['email'];
+	$phone = $data['phone'];
+	$message = $data['message'];
+
+	$sql = "INSERT INTO contactform(contact_name,contact_email,contact_phone,contact_msg,date_updated) 
+	VALUES('$name','$email','$phone','$message',now())";
+	return mysqli_query($con, $sql);
+		
+}
+
+
 
 //settings
 
@@ -87,7 +107,7 @@ function SettingsImageUpdate($data){
 function checkCustByEmail($email){
 	include 'connection.php';
 
-	$q1 = "SELECT * FROM customers WHERE email='$email' AND is_deleted='0'";
+	$q1 = "SELECT * FROM customers WHERE cust_email='$email' AND is_deleted='0'";
 	$catName_check = mysqli_query($con,$q1);
 	return mysqli_num_rows($catName_check);
 }
@@ -108,8 +128,18 @@ function RegisterCustomer($data){
 		$sql = "INSERT INTO customers(cust_name, cust_email, cust_phone, cust_password, is_deleted, date_updated) 
 		VALUES('$custname', '$email', '$phone', '$password', 0 , now())";
 		return mysqli_query($con, $sql);
+	}else{
+		echo json_encode($count);
 	}
-	echo $count;
+	
+}
+
+function getAllCustomers(){
+
+	include 'connection.php';
+
+	$customer = "SELECT * FROM customers WHERE is_deleted='0'";
+	return mysqli_query($con,$customer);
 }
 
 //login
@@ -128,6 +158,8 @@ function adminLogin($data){
 	if($count > 0){
 		if($uname == 'admin'){
 			$_SESSION['admin'] = $uname ;
+		}else{
+			$_SESSION['customer'] = $uname ;
 		}
 	}
 	echo $count;

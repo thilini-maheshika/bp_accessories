@@ -58,11 +58,19 @@
               <li><a href="#"><i class="fa fa-eye"></i>View Orders</a></li>
             </ul>
         </li>
+
         <li class="treeview">
-            <a href="#">
+            <a href="viewcustomer.php">
+              <i class="fa fa-user"></i> <span>Customers</span>
+              <span class="pull-right-container">
+              </span>
+            </a>            
+        </li>
+
+        <li class="treeview">
+            <a href="messages.php">
               <i class="fa fa-file"></i> <span>Messages</span>
               <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
               </span>
             </a>            
         </li>
