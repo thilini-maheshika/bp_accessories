@@ -1,3 +1,4 @@
+
 window.addEventListener('DOMContentLoaded', event => {
     // Simple-DataTables
     // https://github.com/fiduswriter/Simple-DataTables/wiki
@@ -495,6 +496,28 @@ function contactForm(form) {
     });             
 }
 
+function NotifyMsgs(count){
+
+    if(count > 0){
+        $.ajax({
+        
+            method: "POST",
+            url: "database.php?function_code=msgnotify",
+            success:function(){
+                console.log("Success");
+                location.reload(this);
+            },
+                contentType: false,
+                processData: false,
+                error: function(error){
+                    console.log(`Error ${error}`);
+                } 
+        });
+    }
+
+   
+}
+
 //login
 
 function loginForm(ele){
@@ -641,3 +664,4 @@ function loading(gettitle){
       }
     })
 }
+

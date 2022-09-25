@@ -39,6 +39,8 @@ if (isset($_GET['function_code']) && $_GET['function_code'] == 'categoryAdd') {
     RegisterCustomer($_POST);
 }else if (isset($_GET['function_code']) && $_GET['function_code'] == 'contactmsg') {
     ContactFormMessage($_POST);
+}else if (isset($_GET['function_code']) && $_GET['function_code'] == 'msgnotify') {
+    MessageNotification($_POST);
 }
 
 //Contact form
@@ -51,13 +53,35 @@ function ContactFormMessage($data){
 	$phone = $data['phone'];
 	$message = $data['message'];
 
-	$sql = "INSERT INTO contactform(contact_name,contact_email,contact_phone,contact_msg,date_updated) 
-	VALUES('$name','$email','$phone','$message',now())";
+	$sql = "INSERT INTO contactform(contact_name,contact_email,contact_phone,contact_msg,status,date_updated) 
+	VALUES('$name','$email','$phone','$message', 0 ,now())";
 	return mysqli_query($con, $sql);
 		
 }
 
+function getAllMessages(){
 
+	include 'connection.php';
+
+	$msg = "SELECT * FROM contactform ";
+	return mysqli_query($con,$msg);
+}
+
+function getAllMessagesByBell(){
+
+	include 'connection.php';
+
+	$msg = "SELECT * FROM contactform WHERE status='0'";
+	return mysqli_query($con,$msg);
+}
+
+function MessageNotification(){
+
+	include 'connection.php';
+
+	$msg="UPDATE contactform SET status='1' WHERE status='0'";
+	return mysqli_query($con,$msg);
+}
 
 //settings
 
