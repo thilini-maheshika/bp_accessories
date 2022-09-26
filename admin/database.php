@@ -1,5 +1,7 @@
 <?php 
-	session_start();
+	if(session_id() == '') {
+		session_start();
+	}
 	
 if (isset($_GET['function_code']) && $_GET['function_code'] == 'categoryAdd') {
     addCategory($_POST);
@@ -41,6 +43,12 @@ if (isset($_GET['function_code']) && $_GET['function_code'] == 'categoryAdd') {
     ContactFormMessage($_POST);
 }else if (isset($_GET['function_code']) && $_GET['function_code'] == 'msgnotify') {
     MessageNotification($_POST);
+}else if (isset($_GET['function_code']) && $_GET['function_code'] == 'msgDelete') {
+	DeleteContactMsg($_POST);
+}else if (isset($_GET['function_code']) && $_GET['function_code'] == 'CustomerEdit') {
+	 EditCustomer($_POST);
+}else if (isset($_GET['function_code']) && $_GET['function_code'] == 'checkPassword') {
+	PasswordCheckCust($_POST);
 }
 
 //Contact form
@@ -57,6 +65,16 @@ function ContactFormMessage($data){
 	VALUES('$name','$email','$phone','$message', 0 ,now())";
 	return mysqli_query($con, $sql);
 		
+}
+
+function DeleteContactMsg($data){
+
+	include 'connection.php';
+	
+	$contact_id = $data['contact_id'];
+	
+	$delpro="DELETE FROM contactform WHERE contact_id='$contact_id' ";
+	return mysqli_query($con,$delpro);
 }
 
 function getAllMessages(){
@@ -126,6 +144,30 @@ function SettingsImageUpdate($data){
 		}
 }
  
+//profile settings
+
+function EditCustomer($data){
+	include 'connection.php';
+
+	$cust_id = $data['cust_id'];
+	$field = $data['field'];
+	$value = $data['value'];
+
+	// $sql1 = "UPDATE customers SET $field = '$value' WHERE cust_id = $cust_id";
+    // return mysqli_query($con, $sql1);
+	echo $field;
+}
+
+function PasswordCheckCust($data){
+	include 'connection.php';
+
+	$cust_id = $data['cust_id'];
+	$cust_password = $data['cust_password'];
+
+	$q1 = "SELECT * FROM customers WHERE cust_id = '$cust_id' AND cust_password='$cust_password' AND is_deleted='0'";
+	return mysqli_query($con,$q1);
+}
+
 //customer register
 
 function checkCustByEmail($email){
@@ -136,6 +178,12 @@ function checkCustByEmail($email){
 	return mysqli_num_rows($catName_check);
 }
 
+function checkCustomerByID($cust_id){
+	include 'connection.php';
+
+	$q2 = "SELECT * FROM customers WHERE cust_id='$cust_id' AND is_deleted='0'";
+	return mysqli_query($con,$q2);
+}
 
 function RegisterCustomer($data){
 
@@ -144,13 +192,15 @@ function RegisterCustomer($data){
 	$custname = $data['custname'];
 	$email = $data['email'];
 	$phone = $data['phone'];
+	$address = $data['address'];
+	$nic = $data['nic'];
 	$password = $data['pass'];
 
 	$count = checkCustByEmail($email);
 
 	if($count == 0){
-		$sql = "INSERT INTO customers(cust_name, cust_email, cust_phone, cust_password, is_deleted, date_updated) 
-		VALUES('$custname', '$email', '$phone', '$password', 0 , now())";
+		$sql = "INSERT INTO customers(cust_name, cust_email, cust_phone, cust_address, cust_nic, cust_password, is_deleted, date_updated) 
+		VALUES('$custname', '$email', '$phone', '$address', '$nic' , '$password', 0 , now())";
 		return mysqli_query($con, $sql);
 	}else{
 		echo json_encode($count);
@@ -175,18 +225,22 @@ function adminLogin($data){
 		$uname=$data['email'];
 		$password=$data['password'];
 
-	$q1= "SELECT * FROM customers WHERE cust_email='$uname' AND cust_password='$password' ";
-	$login = mysqli_query($con,$q1);
-	$count = mysqli_num_rows($login);
+		$q1= "SELECT * FROM customers WHERE cust_email='$uname' AND cust_password='$password' ";
+		$login = mysqli_query($con,$q1);
+		$count = mysqli_num_rows($login);
 
-	if($count > 0){
-		if($uname == 'admin'){
-			$_SESSION['admin'] = $uname ;
-		}else{
-			$_SESSION['customer'] = $uname ;
+		if($count > 0){
+			if($uname == 'admin'){
+				$_SESSION['admin'] = $uname ;
+			}else{
+				$q1 = "SELECT * FROM customers WHERE cust_email='$uname' AND is_deleted='0'";
+				$custname = mysqli_query($con,$q1);
+        		$row = mysqli_fetch_assoc($custname);
+
+				$_SESSION['customer'] = $row['cust_id'] ;
+			}
 		}
-	}
-	echo $count;
+		echo $count;
 
 
 }	

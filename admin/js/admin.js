@@ -349,7 +349,6 @@ function ProductDelete(p_id){
 
 function ProductEdit(ele, p_id ,field){
 
-    var itemid = ele.id;
     var val = document.getElementById(ele.id).value;
 
     const data = {
@@ -514,8 +513,39 @@ function NotifyMsgs(count){
                 } 
         });
     }
+}
 
-   
+function MessageDelete(contact_id){
+    const data = {
+        contact_id : contact_id
+    }
+
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+
+      }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                method: "POST",
+                url: "database.php?function_code=msgDelete",
+                data: data,
+                success:function($data){
+                    console.log($data);
+                    sweetAlert3();
+                    location.reload(this);
+                },
+                error: function (error) {
+                    console.log(`Error ${error}`);
+                }
+            });
+        }
+      })
 }
 
 //login
@@ -596,6 +626,70 @@ function quickUpdateImageSetting(ele){
     
 }
 
+//profile setting
+// function changePassword(form) {
+//     var formData = new FormData(form);
+
+//     if (formData.get('current_password').trim() != '') {
+//         if (formData.get('new_password').trim() != '') {
+//             if (formData.get('confirm_new_password').trim() != '') {
+//                 if (formData.get('new_password') == formData.get('confirm_new_password')) {
+//                     if (checkPassword(formData.get('current_password'), formData.get('cust_id')) > 0) {
+
+//                         var data = {
+//                             cust_id: formData.get('cust_id'),
+//                             field: 'cust_password',
+//                             value: formData.get('new_password'),
+//                         }
+
+//                         $.ajax({
+//                             method: "POST",
+//                             url: "admin/database.php?function_code=editCustomer",
+//                             data: data,
+//                             success: function ($data) {
+//                                 console.log($data);
+//                                 // successToastwithLogout();
+//                             },
+//                             contentType: false,
+//                             processData: false,
+//                             error: function (error) {
+//                                 console.log(`Error ${error}`);
+//                             }
+//                         });
+
+//                     } else { errorMessage("Current Password is Wrong"); }
+//                 } else { errorMessage("Password is Not Match!"); }
+//             } else { errorMessage("Please Enter Phone Number"); }
+//         } else { errorMessage("Please Enter New Password"); }
+//     } else { errorMessage("Please Enter Current Password"); }
+
+// }
+
+// function checkPassword(cust_password, cust_id) {
+//     const data = {
+//         cust_password: cust_password,
+//         cust_id: cust_id,
+//     }
+//     var values;
+//     $.ajax({
+//         method: "POST",
+//         url: "admin/database.php?function_code=checkPassword",
+//         data: data,
+//         success: function (data) {
+//             values = data;
+//             console.log(data);
+//         },
+//         contentType: false,
+//         processData: false,
+//         error: function (error) {
+//             console.log(`Error ${error}`);
+//         }
+//     });
+//     return values;
+// }
+
+
+
 //Sweet Alert Functions Zone
 
 function sweetAlert1($icon, $data){
@@ -665,3 +759,10 @@ function loading(gettitle){
     })
 }
 
+function errorMessage(title) {
+    iziToast.error({
+        timeout: 2000,
+        title: 'Error',
+        message: title,
+    });
+}

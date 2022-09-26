@@ -72,6 +72,15 @@
                                         <a href="#"><?php echo $row['date_updated']; ?></a>
                                     </td>
 
+                                    <td>
+                                        <a>
+                                            <button type="button"
+                                                style="text-decoration: none; color: #AA1928; font-size: 15px;"
+                                                onclick="MessageDelete(<?php echo $row['contact_id']; ?>)">
+                                                <i class="fa fa-trash"></i></button>
+                                        </a>
+                                    </td>
+
                                 </tr>
                                 <?php } ?>
                             </tbody>

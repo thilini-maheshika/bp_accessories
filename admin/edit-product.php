@@ -4,7 +4,6 @@
 	if(!isset($_REQUEST['p_id'])){
 		echo '<script>window.location.href="view-product.php"</script>';
 	}
-	$row['p_id'] = $_REQUEST['p_id'];
 ?>
 
 

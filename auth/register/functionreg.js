@@ -5,11 +5,13 @@ function CustomerSignup(form)  {
     if (formData.get('custname').trim() != '') {
         if (formData.get('email').trim() != '') {
             if (formData.get('phone').trim() != '') {
-                if (formData.get('pass').trim() != '') {
-                    if (formData.get('repass').trim() != '') {
-                        if (formData.get('pass') == formData.get('repass')) {
-                            if (emailvalidation(formData.get('email'))) {
-                                if (phonenumber(formData.get('phone'))) {
+                if (formData.get('address').trim() != '') {
+                    if (formData.get('nic').trim() != '') {
+                        if (formData.get('pass').trim() != '') {
+                            if (formData.get('repass').trim() != '') {
+                                if (formData.get('pass') == formData.get('repass')) {
+                                    if (emailvalidation(formData.get('email'))) {
+                                        if (phonenumber(formData.get('phone'))) {
 
                                     $.ajax({
                                         method: "POST",
@@ -35,9 +37,11 @@ function CustomerSignup(form)  {
 
                                 }
                             }
-                        } else { errorMessage("Password is Not Match"); }
-                    } else { errorMessage("Please Confirm Password"); }
-                } else { errorMessage("Please Enter Password"); }
+                                } else { errorMessage("Password is Not Match"); }
+                            } else { errorMessage("Please Confirm Password"); }
+                        } else { errorMessage("Please Enter Password"); }
+                    } else { errorMessage("Please Enter NIC"); }
+                } else { errorMessage("Please Enter Address"); }
             } else { errorMessage("Please Enter Phone number"); }
         } else { errorMessage("Please Enter Email"); }
     } else { errorMessage("Please Enter Your Name"); }

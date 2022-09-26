@@ -48,7 +48,7 @@
                     <div class="row">
                         <div class="col d-flex flex-row">
                             <div class="top_bar_contact_item">
-                                <div class="top_bar_icon"><img src="images/phone.png" alt=""></div>
+                                <div class="top_bar_icon"><img src="images/phone.png"></div>
                                 <?php echo $res['com_phone'] ?>
                             </div>
                             <div class="top_bar_contact_item">
@@ -57,7 +57,7 @@
                             </div>
                             <div class="top_bar_content ml-auto">
                                 <div class="top_bar_user">
-                                    <div class="user_icon"><img src="images/user.svg" alt=""></div>
+                                    <div class="user_icon"><a href="profile.php"><i class="fa fa-user"></i></a></div>
                                     <div><a href="auth/register/reg.php">Register</a></div>
                                     <div><a href="admin/login.php">Sign in</a></div>
                                     
