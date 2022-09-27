@@ -86,9 +86,11 @@
                             <div class="header_search">
                                 <div class="header_search_content">
                                     <div class="header_search_form_container">
-                                        <form action="#" class="header_search_form clearfix">
+                                        <form  method="POST" class="header_search_form clearfix">
                                             <input type="text"  class="header_search_input"
-                                                placeholder="Search for products...">
+                                                placeholder="Search for products..." name="key" id="key">
+                                            <button type="button" class="header_search_button trans_300" value="Submit" onclick="searchProduct(this.form)"><img src="images/search.png"></button>
+                                        
                                             <div class="custom_dropdown">
                                                 <div class="custom_dropdown_list">
                                                     <span class="custom_dropdown_placeholder clc">All Categories</span>
@@ -105,8 +107,8 @@
                                                     </ul>
                                                 </div>
                                             </div>
-                                            <button type="submit" class="header_search_button trans_300" value="Submit"><img src="images/search.png" onclick=""></button>
                                         </form>
+                                        
                                     </div>
                                 </div>
                             </div>

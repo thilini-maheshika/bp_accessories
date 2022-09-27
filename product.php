@@ -53,14 +53,14 @@
                                 <!-- Product Quantity -->
                                 <div class="product_quantity clearfix">
                                     <span>Quantity: </span>
-                                    <input id="quantity_input" type="text" pattern="[0-9]*" value="<?php echo $row2['p_qnt']; ?>">
+                                    <input id="quantity_input" type="text" pattern="[0-9]*" value="1">
                                 </div>
                                 
                             </div>
 
                             <div class="product_price">RS. <?php echo $row2['p_price']; ?></div>
                             <div class="button_container">
-                                <button type="button" class="button cart_button">Add to Cart</button>
+                                <button type="button" class="button cart_button"><a href="cart.php?p_id=<?php echo $p_id; ?>">Add to Cart</a></button>
                                 <div class="product_fav"><i class="fas fa-heart"></i></div>
                             </div>
 

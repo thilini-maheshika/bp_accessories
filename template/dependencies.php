@@ -15,5 +15,5 @@
 <link rel="stylesheet" type="text/css" href="styles/cart_responsive.css">
 <link rel="stylesheet" type="text/css" href="styles/shop_styles.css">
 <link rel="stylesheet" type="text/css" href="styles/shop_responsive.css">
-
+<link rel="stylesheet" href="plugins/iziToast-master/dist/css/iziToast.min.css">
 

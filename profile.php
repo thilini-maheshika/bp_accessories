@@ -3,7 +3,6 @@
 	include 'template/dependencies.php';
     include 'auth/register/auth.php';
 ?>
-<link rel="stylesheet" href="plugins/iziToast-master/dist/css/iziToast.min.css">
 
 <?php
     $getall = checkCustomerByID($_SESSION['customer']);
@@ -24,21 +23,37 @@
             </div>
         </div>
 
+        <?php
+		$getall = getAllCustomers($_SESSION['customer']);
+
+		$row=mysqli_fetch_assoc($getall);
+
+			$img = $row['cust_img'];
+			$img_src = "auth/upload/".$img;
+        ?>
+
         <div class="row">
-            <div class="col-lg-4">
+            <div class="col-lg-4">               
                 <div class="card mb-4">
                     <div class="card-body text-center">
-                        <img src="images/avatar 1.png" style="width: 150px;">
+                        <form method="post" enctype="multipart/form-data">
+                            <?php if($row['cust_img']==NULL){ ?>
+                            <img src="images/avatar 1.png" style="width: 150px;">
+                            <?php }else{?>
+                                <img src="<?php echo $img_src; ?>" style="width: 150px;">
+                            <?php }?>
                             <div class="profile">
                                 <label>
-                                <input type="file" onchange="profileImage()"><i class="fa fa-edit"></i>
+                                <input type="hidden" id="cust_id" name="cust_id" value="<?php echo $row['cust_id'];?>"/>
+                                    <input type="file" accept="image/*" name="new_img" id="new_img" onchange="profileImage(this.form)"><i
+                                        class="fa fa-edit"></i>
                                 </label>
                             </div>
-                        <h5 class="my-3">Welcome to Profile page</h5>
-                        <p class="text-muted mb-4"><?php echo $row['cust_name']; ?></p>
-                        <ul>
-                        <li><a href="auth/logout.php">Log Out <br><i class="fa fa-power-off"></i></a></li>
-                        </ul>
+                            <h5 class="my-3">Welcome <?php echo $row['cust_name']; ?> </h5>
+                            <ul>
+                                <li><a href="auth/logout.php">Log Out <br><i class="fa fa-power-off"></i></a></li>
+                            </ul>
+                        </form>
                     </div>
                 </div>
 
@@ -61,8 +76,8 @@
                                         id="confirm_new_password" placeholder="Confirm New Password" required>
                                 </li>
                                 <li>
-                                    <input type="hidden" class="form-control" name="cust_id" value="<?php echo $_SESSION['customer']; ?>"
-                                        id="cust_id">
+                                    <input type="hidden" class="form-control" name="cust_id"
+                                        value="<?php echo $_SESSION['customer']; ?>" id="cust_id">
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     <button type="button" onclick="changePassword(this.form)" class="btn btn-darkblue"
@@ -139,12 +154,12 @@
                                             placeholder="New Email Address" required>
                                     </li>
                                     <li>
-                                        <input type="hidden" class="form-control" name="customer_id" value=""
-                                            id="customer_id">
+                                        <input type="hidden" class="form-control" name="cust_id"
+                                            value="<?php echo $row['cust_id']?>" id="cust_id">
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        <button type="button" onclick="changePassword(this.form)"
-                                            class="btn btn-darkblue" style="margin-left:50px;">Save
+                                        <button type="button" onclick="changeEmail(this.form)" class="btn btn-darkblue"
+                                            style="margin-left:50px;">Save
                                             changes</button>
                                     </li>
 
@@ -159,31 +174,40 @@
                                 </p>
                                 <div>
                                     <label class="mb-1" style="font-size: .77rem;">Name</label>
-                                    <input type="text" onchange='changeCustomers()' class="form-control" id="name"
-                                        placeholder="Your name" value="">
+                                    <input type="text"
+                                        onchange='changeCustomers(this, "<?php echo $row["cust_id"]; ?>","cust_name")'
+                                        class="form-control" id="name" placeholder="Your name"
+                                        value="<?php echo $row['cust_name']; ?>">
                                 </div>
 
                                 <div>
                                     <label class="mb-1" style="font-size: .77rem;">Phone</label>
-                                    <input type="text" onchange='changeCustomers()' class="form-control" id="phone"
-                                        placeholder="Your Phone" value="">
+                                    <input type="text"
+                                        onchange='changeCustomers(this,"<?php echo $row["cust_id"]; ?>","cust_phone")'
+                                        class="form-control" id="phone" placeholder="Your Phone"
+                                        value="<?php echo $row['cust_phone']; ?>">
                                 </div>
 
                                 <div>
                                     <label class="mb-1" style="font-size: .77rem;">Address</label>
-                                    <input type="text" onchange='changeCustomers()' class="form-control" id="address"
-                                        placeholder="Your Address" value="">
+                                    <input type="text"
+                                        onchange='changeCustomers(this,"<?php echo $row["cust_id"]; ?>","cust_address")'
+                                        class="form-control" id="address" placeholder="Your Address"
+                                        value="<?php echo $row['cust_address']; ?>">
                                 </div>
 
                                 <div>
                                     <label class="mb-1" style="font-size: .77rem;">NIC</label>
-                                    <input type="text" onchange='changeCustomers()' class="form-control" id="nic"
-                                        placeholder="Your NIC" value="">
+                                    <input type="text"
+                                        onchange='changeCustomers(this,"<?php echo $row["cust_id"]; ?>","cust_nic")'
+                                        class="form-control" id="nic" placeholder="Your NIC"
+                                        value="<?php echo $row['cust_nic']; ?>">
                                 </div>
 
                                 <div>
                                     <label>Delete Account</label><br>
-                                    <button class="border px-3 p-1 add-experience" onclick="deleteCustomer()"><i
+                                    <button class="border px-3 p-1 add-experience"
+                                        onclick="deleteCustomer(<?php echo $row['cust_id']; ?>)"><i
                                             class="fa fa-trash"></i></button>
                                 </div>
 
@@ -191,20 +215,25 @@
                         </div>
                     </div>
                 </div>
-            </div>        
+            </div>
         </div>
     </div>
 </section>
 
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="plugins/iziToast-master/dist/js/iziToast.min.js"></script>
+<script src="admin/js/admin.js"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <style>
 .form-control {
     font-size: 12px;
+    color: #3a89df;
 }
-.profile input[type="file"]{
-    display:none;
+
+.profile input[type="file"] {
+    display: none;
 }
 </style>
-
-<script type="text/javascript" src="admin/js/admin.js"></script>
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
-<script src="plugins/iziToast-master/dist/js/iziToast.min.js" type="text/javascript"></script>

@@ -576,6 +576,35 @@ function loginForm(ele){
     });
 }
 
+//search
+
+function searchProduct(ele){
+    var formData = new FormData(ele);
+    var key = formData.get('key');
+    window.location.href="shop.php?keyword=" + key;
+    
+    // $.ajax({
+    //     method: "POST",
+    //     url: "database.php?function_code=loginAdmin",
+    //     data: formData,
+    //     success: function($data){
+    //         if($data > 0){
+    //                 if(formData.get('email') === 'admin'){
+    //                     window.location.href='index.php';
+    //                 }else{
+    //                     window.location.href='../index.php';
+    //                 }
+    //             }else{
+    //                 sweetAlert2(warning,'Something Wrong.Try again!!');
+    //             }
+    //     },
+    //     contentType: false,
+    //     processData: false,
+    //     error: function(error){
+    //         console.log(`Error ${error}`);
+    //     }
+    // });
+}
 
 //settings
 function quickUpdate(ele,field){
@@ -627,67 +656,214 @@ function quickUpdateImageSetting(ele){
 }
 
 //profile setting
-// function changePassword(form) {
-//     var formData = new FormData(form);
+function changePassword(form) {
+    
+    var formData = new FormData(form);
 
-//     if (formData.get('current_password').trim() != '') {
-//         if (formData.get('new_password').trim() != '') {
-//             if (formData.get('confirm_new_password').trim() != '') {
-//                 if (formData.get('new_password') == formData.get('confirm_new_password')) {
-//                     if (checkPassword(formData.get('current_password'), formData.get('cust_id')) > 0) {
+    if (formData.get('current_password').trim() != '') {
+        if (formData.get('new_password').trim() != '') {
+            if (formData.get('confirm_new_password').trim() != '') {
+                if (formData.get('new_password') == formData.get('confirm_new_password')) {
+                    if (checkPassword(formData.get('current_password'), formData.get('cust_id')) > 0) {
 
-//                         var data = {
-//                             cust_id: formData.get('cust_id'),
-//                             field: 'cust_password',
-//                             value: formData.get('new_password'),
-//                         }
+                        
+                        const data = {
+                            cust_id: formData.get('cust_id'),
+                            field: 'cust_password',
+                            value: formData.get('new_password'),
+                        }
 
-//                         $.ajax({
-//                             method: "POST",
-//                             url: "admin/database.php?function_code=editCustomer",
-//                             data: data,
-//                             success: function ($data) {
-//                                 console.log($data);
-//                                 // successToastwithLogout();
-//                             },
-//                             contentType: false,
-//                             processData: false,
-//                             error: function (error) {
-//                                 console.log(`Error ${error}`);
-//                             }
-//                         });
+                            $.ajax({
+                                method: "POST",
+                                url: "admin/database.php?function_code=CustomerEdit",
+                                data: data,
+                                success:function($data){
+                                    console.log($data);
+                                    successToastwithLogout();
+                                },
+                                error: function (error) {
+                                    console.log(`Error ${error}`);
+                                }
+                            });
 
-//                     } else { errorMessage("Current Password is Wrong"); }
-//                 } else { errorMessage("Password is Not Match!"); }
-//             } else { errorMessage("Please Enter Phone Number"); }
-//         } else { errorMessage("Please Enter New Password"); }
-//     } else { errorMessage("Please Enter Current Password"); }
+                    } else { errorMessage("Current Password is Wrong"); }
+                } else { errorMessage("Password is Not Match!"); }
+            } else { errorMessage("Please Confirm Your Password"); }
+        } else { errorMessage("Please Enter New Password"); }
+    } else { errorMessage("Please Enter Current Password"); }
 
-// }
+}
 
-// function checkPassword(cust_password, cust_id) {
-//     const data = {
-//         cust_password: cust_password,
-//         cust_id: cust_id,
+function checkPassword(cust_password, cust_id) {
+ 
+    const data = {
+        cust_password: cust_password,
+        cust_id: cust_id,
+    }
+    var values;
+    console.log(values);
+
+    $.ajax({
+        method: "POST",
+        url: "admin/database.php?function_code=checkPass",
+        data: data,
+        async: false,
+        success:function(data){
+            console.log(data);
+            values= data;
+        },
+        
+        error: function (error) {
+            console.log(`Error ${error}`);
+        }
+    });
+    return values;
+    
+}
+
+function changeEmail(form){
+
+    var formData=new FormData(form);
+
+    if (formData.get('current_email').trim() != '') {
+        if (formData.get('new_email').trim() != '') {
+            if (checkEmail(formData.get('current_email'), formData.get('cust_id')) > 0) {
+
+                var data = {
+                    cust_id: formData.get('cust_id'),
+                    field: 'cust_email',
+                    value: formData.get('new_email'),
+                }
+
+                $.ajax({
+                    method: "POST",
+                    url: "admin/database.php?function_code=CustomerEdit",
+                    data: data,
+                    success: function ($data) {
+                        console.log($data);
+                        successToastwithLogout();
+                    },
+                    error: function (error) {
+                        console.log(`Error ${error}`);
+                    }
+                });
+
+            } else { errorMessage("Current Emaiil is Wrong!"); }
+        } else { errorMessage("Please Enter Your new Email"); }
+    } else { errorMessage("Please Enter Your Current Email"); }
+}
+
+function checkEmail(cust_email, cust_id) {
+    const data = {
+        cust_email: cust_email,
+        cust_id: cust_id,
+    }
+    var values;
+
+    $.ajax({
+        method: "POST",
+        url: "admin/database.php?function_code=emailCheck",
+        data: data,
+        async: false,
+        success: function (data) {
+            console.log(data);
+            values = data;
+
+        },
+        error: function (error) {
+            console.log(`Error ${error}`);
+        }
+    });
+
+    return values;
+}
+
+function changeCustomers(ele,cust_id,field){
+
+    var value = document.getElementById(ele.id).value;
+    
+        const data = {
+            cust_id: cust_id,
+            field: field,
+            value: value,
+        }
+    
+        $.ajax({
+            method: "POST",
+            url: "admin/database.php?function_code=CustomerEdit",
+            data: data,
+            success:function($data){
+                console.log($data);
+                 successToastEdit();
+            },
+            error: function (error) {
+                console.log(`Error ${error}`);
+            }
+        });
+}
+
+function deleteCustomer(cust_id){
+    const data = {
+        cust_id : cust_id
+    }
+
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+
+      }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                method: "POST",
+                url: "admin/database.php?function_code=customerDelete",
+                data: data,
+                success:function($data){
+                    console.log($data);
+                    sweetAlert3();
+                    window.location.href="auth/logout.php";
+                },
+                error: function (error) {
+                    console.log(`Error ${error}`);
+                }
+            });
+        }
+      })
+}
+
+// function profileImage(ele){
+ 
+//     var formData = new FormData(ele);
+
+//     var data = {
+//         cust_id: formData.get('cust_id'),
+//         field: 'cust_img',
+//         value: formData.append("new_img",file),
 //     }
-//     var values;
+    
 //     $.ajax({
+        
 //         method: "POST",
-//         url: "admin/database.php?function_code=checkPassword",
+//         url: "admin/database.php?function_code=profileImageEdit",
 //         data: data,
-//         success: function (data) {
-//             values = data;
-//             console.log(data);
+//         success:function($data){
+//             console.log($data);
+//             //  loading("Image Uploading...");
+            
 //         },
-//         contentType: false,
-//         processData: false,
+//         cache: false,
+
 //         error: function (error) {
 //             console.log(`Error ${error}`);
-//         }
+//             sweetAlert2(warning,'Something Wrong.Try again!!');
+//         }  
 //     });
-//     return values;
+    
 // }
-
 
 
 //Sweet Alert Functions Zone
@@ -765,4 +941,26 @@ function errorMessage(title) {
         title: 'Error',
         message: title,
     });
+}
+
+function successToastwithLogout() {
+    iziToast.success({
+        timeout: 1000,
+        title: 'Saving..',
+        message: 'Your Changes saved Successfully!',
+        onClosing: function () {
+            window.location.href = 'auth/logout.php';
+        }
+    })
+}
+
+function successToastEdit() {
+    iziToast.success({
+        timeout: 1000,
+        title: 'Saving..',
+        message: 'Successfully Saved Changes!',
+        onClosing: function () {
+            location.reload(true);
+        }
+    })
 }

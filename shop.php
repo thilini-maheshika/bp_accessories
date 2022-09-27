@@ -10,6 +10,9 @@
     }else if(isset($_REQUEST['cat_id'])){
         $cat_id = $_REQUEST['cat_id'];
         $all = getProductsbycatID($cat_id);
+    }else if(isset($_REQUEST['keyword'])){
+        $key = $_REQUEST['keyword'];
+        $all = searchfunc($key);
     }else {
         $all = getAllProducts();
     }

@@ -47,8 +47,14 @@ if (isset($_GET['function_code']) && $_GET['function_code'] == 'categoryAdd') {
 	DeleteContactMsg($_POST);
 }else if (isset($_GET['function_code']) && $_GET['function_code'] == 'CustomerEdit') {
 	 EditCustomer($_POST);
-}else if (isset($_GET['function_code']) && $_GET['function_code'] == 'checkPassword') {
+}else if (isset($_GET['function_code']) && $_GET['function_code'] == 'checkPass') {
 	PasswordCheckCust($_POST);
+}else if (isset($_GET['function_code']) && $_GET['function_code'] == 'emailCheck') {
+	EmailCheckCust($_POST);
+}else if (isset($_GET['function_code']) && $_GET['function_code'] == 'customerDelete') {
+	DeleteCustomer($_POST);
+}else if (isset($_GET['function_code']) && $_GET['function_code'] == 'profileImageEdit') {
+	editProfileImage($_POST);
 }
 
 //Contact form
@@ -145,6 +151,16 @@ function SettingsImageUpdate($data){
 }
  
 //profile settings
+function DeleteCustomer($data){
+
+	include 'connection.php';
+
+	$cust_id = $data['cust_id'];
+
+	$sql1 = "UPDATE customers SET is_deleted = '1' WHERE cust_id = $cust_id";
+    return mysqli_query($con, $sql1);
+}
+
 
 function EditCustomer($data){
 	include 'connection.php';
@@ -153,9 +169,9 @@ function EditCustomer($data){
 	$field = $data['field'];
 	$value = $data['value'];
 
-	// $sql1 = "UPDATE customers SET $field = '$value' WHERE cust_id = $cust_id";
-    // return mysqli_query($con, $sql1);
-	echo $field;
+	 $sql1 = "UPDATE customers SET $field = '$value' WHERE cust_id = $cust_id";
+     return mysqli_query($con, $sql1);
+
 }
 
 function PasswordCheckCust($data){
@@ -165,7 +181,43 @@ function PasswordCheckCust($data){
 	$cust_password = $data['cust_password'];
 
 	$q1 = "SELECT * FROM customers WHERE cust_id = '$cust_id' AND cust_password='$cust_password' AND is_deleted='0'";
-	return mysqli_query($con,$q1);
+	$check = mysqli_query($con,$q1);
+	$count= mysqli_num_rows($check);
+
+	echo json_encode($count);
+}
+
+function EmailCheckCust($data){
+	include 'connection.php';
+
+	$cust_id = $data['cust_id'];
+	$cust_email = $data['cust_email'];
+
+	$q1 = "SELECT * FROM customers WHERE cust_id = '$cust_id' AND cust_email='$cust_email' AND is_deleted='0'";
+	$check = mysqli_query($con,$q1);
+	$count= mysqli_num_rows($check);
+
+	echo json_encode($count);
+}
+
+function editProfileImage($data){
+
+	$cust_id = $data['cust_id'];
+	$field = $data['field'];
+	$image = $_FILES['file']['name'];
+
+	include 'connection.php'; 
+
+		$target_dir = "auth/upload/";
+		$target_file = $target_dir . basename($img);
+		$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+		$extensions_arr = array("jpg","jpeg","png","gif","jfif");
+		move_uploaded_file($_FILES['file']['tmp_name'],$target_dir.$img);
+
+		if (in_array($imageFileType,$extensions_arr)) {
+			$sql = "UPDATE customers SET $field = '$image' WHERE cust_id = $cust_id";
+			return mysqli_query($con, $sql);
+		}
 }
 
 //customer register
@@ -199,8 +251,8 @@ function RegisterCustomer($data){
 	$count = checkCustByEmail($email);
 
 	if($count == 0){
-		$sql = "INSERT INTO customers(cust_name, cust_email, cust_phone, cust_address, cust_nic, cust_password, is_deleted, date_updated) 
-		VALUES('$custname', '$email', '$phone', '$address', '$nic' , '$password', 0 , now())";
+		$sql = "INSERT INTO customers(cust_name, cust_email, cust_phone, cust_address, cust_nic, cust_img, cust_password, is_deleted, date_updated) 
+		VALUES('$custname', '$email', '$phone', '$address', '$nic' , NULL, '$password', 0 , now())";
 		return mysqli_query($con, $sql);
 	}else{
 		echo json_encode($count);
@@ -576,7 +628,7 @@ function deleteProduct($data){
 	
 	$p_id = $data['p_id'];
 	
-	$delpro="UPDATE products SET is_deleted = 1 , date_updated = now() WHERE p_id=$p_id";
+	$delpro="UPDATE products SET is_deleted = 1  WHERE p_id=$p_id";
 	return mysqli_query($con,$delpro);
 }
 
@@ -616,7 +668,7 @@ function editProductImage($data){
 		move_uploaded_file($_FILES['file']['tmp_name'],$target_dir.$img);
 
 		if (in_array($imageFileType,$extensions_arr)) {
-			$sql = "UPDATE products SET p_img='$img' , date_updated = now()  WHERE p_id='$p_id'";
+			$sql = "UPDATE products SET p_img='$img'  WHERE p_id='$p_id'";
 			return mysqli_query($con, $sql);
 		}
 }
@@ -670,6 +722,20 @@ function deleteGallery($data){
 	
 	$delimg="DELETE FROM gallery WHERE g_id=$g_id ";
 	return mysqli_query($con,$delimg);
+}
+
+
+//search 
+
+function searchfunc($key){
+	include 'connection.php';
+
+	$search = "SELECT * FROM products JOIN category ON products.cat_id = category.cat_id JOIN model ON products.model = model.mod_id WHERE (products.p_name LIKE '%".$key."%' OR category.cat_name LIKE '%".$key."%' OR model.mod_name LIKE '%".$key."%') AND products.is_deleted='0' AND products.p_active='1' ";
+
+
+
+	// $search = "SELECT * FROM products WHERE p_name LIKE '%".$key."%' AND AND is_deleted='0' AND p_active = '1'";
+	return mysqli_query($con,$search);
 }
 
  ?>

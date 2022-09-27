@@ -107,6 +107,8 @@
 <script src="js/product_custom.js"></script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="admin/js/admin.js"></script>
+<script src="plugins/iziToast-master/dist/js/iziToast.min.js"></script>
+
 
 </body>
 
