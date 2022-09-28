@@ -21,11 +21,11 @@
 				$img_src = "admin/upload/Products/".$img;?>
 
             <!-- Images -->
-            <div class="col-lg-2 order-lg-1 order-2">
+            <!-- <div class="col-lg-2 order-lg-1 order-2">
                 <ul class="image_list">
                     <li><img src="<?php echo $img_src; ?>" alt=""></li>
                 </ul>
-            </div>
+            </div> -->
 
             <!-- Selected Image -->
             <div class="col-lg-5 order-lg-2 order-1">
@@ -54,14 +54,17 @@
                                 <div class="product_quantity clearfix">
                                     <span>Quantity: </span>
                                     <input id="quantity_input" type="text" pattern="[0-9]*" value="1">
+                                    <div class="quantity_buttons">
+											<div id="quantity_inc_button" class="quantity_inc quantity_control"><i class="fas fa-chevron-up"></i></div>
+											<div id="quantity_dec_button" class="quantity_dec quantity_control"><i class="fas fa-chevron-down"></i></div>
+										</div>
                                 </div>
                                 
                             </div>
 
                             <div class="product_price">RS. <?php echo $row2['p_price']; ?></div>
                             <div class="button_container">
-                                <button type="button" class="button cart_button"><a href="cart.php?p_id=<?php echo $p_id; ?>">Add to Cart</a></button>
-                                <div class="product_fav"><i class="fas fa-heart"></i></div>
+                                <button type="button" class="button cart_button" onclick="addtoCartwithQty(<?php echo $p_id; ?>, <?php echo $row2['p_price']; ?>)">Add to Cart</button>
                             </div>
 
                         </form>

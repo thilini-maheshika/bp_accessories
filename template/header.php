@@ -60,7 +60,7 @@
                                     <div class="user_icon"><a href="profile.php"><i class="fa fa-user"></i></a></div>
                                     <div><a href="auth/register/reg.php">Register</a></div>
                                     <div><a href="admin/login.php">Sign in</a></div>
-                                    
+
                                 </div>
                             </div>
                         </div>
@@ -86,11 +86,13 @@
                             <div class="header_search">
                                 <div class="header_search_content">
                                     <div class="header_search_form_container">
-                                        <form  method="POST" class="header_search_form clearfix">
-                                            <input type="text"  class="header_search_input"
+                                        <form method="POST" class="header_search_form clearfix">
+                                            <input type="text" class="header_search_input"
                                                 placeholder="Search for products..." name="key" id="key">
-                                            <button type="button" class="header_search_button trans_300" value="Submit" onclick="searchProduct(this.form)"><img src="images/search.png"></button>
-                                        
+                                            <button type="button" class="header_search_button trans_300" value="Submit"
+                                                onclick="searchProduct(this.form)"><img
+                                                    src="images/search.png"></button>
+
                                             <div class="custom_dropdown">
                                                 <div class="custom_dropdown_list">
                                                     <span class="custom_dropdown_placeholder clc">All Categories</span>
@@ -101,14 +103,15 @@
 														while($res1 = mysqli_fetch_assoc($fetchcat)){
                                                             $cat_id = $res1['cat_id'];
 													?>
-                                                        <li><a class="clc" href="shop.php?cat_id=<?php echo $cat_id; ?>"><?php echo $res1['cat_name'] ?></a>
+                                                        <li><a class="clc"
+                                                                href="shop.php?cat_id=<?php echo $cat_id; ?>"><?php echo $res1['cat_name'] ?></a>
                                                         </li>
                                                         <?php } ?>
                                                     </ul>
                                                 </div>
                                             </div>
                                         </form>
-                                        
+
                                     </div>
                                 </div>
                             </div>
@@ -120,11 +123,12 @@
                                 <div class="cart">
                                     <div class="cart_container d-flex flex-row align-items-center justify-content-end">
                                         <div class="cart_icon">
-                                            <img src="images/cart.png" alt="">
-                                            <div class="cart_count"><span>10</span></div>
+                                            <img src="images/cart1.png" style="width:30px;">
+                                            <?php if(isset($_SESSION['customer'])): ?>
+                                            <div class="cart_count"><span><?php echo getCartCount($_SESSION['customer']); endif ?></span></div>
                                         </div>
                                         <div class="cart_content">
-                                            <div class="cart_text"><a href="#">Cart</a></div>
+                                            <div class="cart_text"><a href="cart-all.php">Cart</a></div>
                                             <div class="cart_price">$85</div>
                                         </div>
                                     </div>
@@ -177,26 +181,28 @@
                                             <a href="#">Featured Brands<i class="fas fa-chevron-down"></i></a>
 
                                             <ul>
-													<?php 
+                                                <?php 
 														$fetchmod = getAllProductsByJoin();														
 														while($res2 = mysqli_fetch_assoc($fetchmod)){
                                                             $mod_id = $res2['mod_id'];
 													?>
                                                 <li>
-                                                    <a href="shop.php?mod_id=<?php echo $mod_id; ?>"><?php echo $res2['mod_name'] ?><i class="fas fa-chevron-down"></i></a>
+                                                    <a href="shop.php?mod_id=<?php echo $mod_id; ?>"><?php echo $res2['mod_name'] ?><i
+                                                            class="fas fa-chevron-down"></i></a>
                                                     <ul>
-                                                        
+
                                                         <?php $fetchPro = getProductsByModel($mod_id);
                                                             while($res3 = mysqli_fetch_assoc($fetchPro)){
                                                                 $p_id= $res3['p_id'];
                                                         ?>
-                                                        
-                                                        <li><a href="product.php?p_id=<?php echo $p_id; ?>"><?php echo $res3['p_name'] ?></i></a>
-                                                    </li>
-                                                    <?php } ?>
-                                                </ul>
-                                            </li>
-                                            <?php } ?>
+
+                                                        <li><a
+                                                                href="product.php?p_id=<?php echo $p_id; ?>"><?php echo $res3['p_name'] ?></i></a>
+                                                        </li>
+                                                        <?php } ?>
+                                                    </ul>
+                                                </li>
+                                                <?php } ?>
                                             </ul>
 
                                         </li>
@@ -228,4 +234,3 @@
                 </div>
             </nav>
         </header>
-		

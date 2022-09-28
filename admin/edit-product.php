@@ -75,6 +75,13 @@
             </div>
 
             <div class="form-group">
+                <label>Shipping Fee: Rs.</label>
+                <input type="text" value="<?php echo $row['ship_fee'] ?>"
+                    onChange="ProductEdit(this,<?php echo $row['p_id'];?>,'ship_fee')" id="ship_fee <?php echo $row['p_id']; ?>"
+                    name="ship_fee" class="form-control">
+            </div>
+
+            <div class="form-group">
                 <label>Stock Quantity</label>
                 <input type="text" value="<?php echo $row['p_qnt'] ?>"
                     onChange="ProductEdit(this,<?php echo $row['p_id'];?>,'p_qnt')" id="p_qnt <?php echo $row['p_id']; ?>"
@@ -89,7 +96,7 @@
             </div>
 
             <div class="form-group">
-                <label>Waranty</label>
+                <label>Product Status</label>
                 <select onChange='ProductEdit(this, "<?php echo $row['p_id']; ?>","p_active")'
                     id="p_active <?php echo $pid; ?>" class='form-control norad tx12' name="p_active" type='text'
                     value="<?php echo $p_active; ?>">

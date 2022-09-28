@@ -835,6 +835,64 @@ function deleteCustomer(cust_id){
       })
 }
 
+//cart
+
+function addtoCartwithQty(p_id,p_price){
+
+    var qnt = document.getElementById('quantity_input').value;
+
+    var data = {
+        p_id: p_id,
+        p_price: p_price,
+        qnt: qnt,
+    };
+
+    $.ajax({
+        method: "POST",
+        url: "pages/addtocart.php?p_id=" + p_id + "&p_price=" + p_price + "&qnt=" + qnt,
+        data: data,
+        success: function ($data) {
+            console.log($data);
+            if ($data === '"Fail"') {
+                window.location.href = 'admin/login.php';
+            } else {
+                sweetAlert2(success,'Product added to cart');
+                window.location.href = 'cart.php?cart_id=' + $data;
+            }
+        },
+        cache: false,
+        contentType: false,
+        processData: false,
+        error: function (error) {
+            console.log(`Error ${error}`);
+        }
+    });
+}
+
+function deleteCart(cart_id){
+
+    var data = {
+        cart_id: cart_id,
+    }
+
+    $.ajax({
+        method: "POST",
+        url: "admin/database.php?function_code=cartItemDelete",
+        data: data,
+        success: function ($data) {
+            console.log($data);
+             sweetAlert3();
+             location.reload(true);
+             window.location.href = 'index.php';
+        },
+        error: function (error) {
+            console.log(`Error ${error}`);
+        }
+    });
+
+}
+
+
 // function profileImage(ele){
  
 //     var formData = new FormData(ele);
@@ -959,6 +1017,28 @@ function successToastEdit() {
         timeout: 1000,
         title: 'Saving..',
         message: 'Successfully Saved Changes!',
+        onClosing: function () {
+            location.reload(true);
+        }
+    })
+}
+
+function successToastCart() {
+    iziToast.success({
+        timeout: 1000,
+        title: 'Saving..',
+        message: 'Product added to cart!',
+        onClosing: function () {
+                      
+        }
+    })
+}
+
+function successToast() {
+    iziToast.success({
+        timeout: 1000,
+        title: 'Saving..',
+        message: 'Successfully Inserted record!',
         onClosing: function () {
             location.reload(true);
         }

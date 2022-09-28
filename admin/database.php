@@ -55,8 +55,64 @@ if (isset($_GET['function_code']) && $_GET['function_code'] == 'categoryAdd') {
 	DeleteCustomer($_POST);
 }else if (isset($_GET['function_code']) && $_GET['function_code'] == 'profileImageEdit') {
 	editProfileImage($_POST);
+}else if (isset($_GET['function_code']) && $_GET['function_code'] == 'cartItemDelete') {
+	deleteCartItems($_POST);
 }
 
+//cart
+
+function addtoCart($p_id, $customer, $p_price, $qnt){
+
+	include 'connection.php';
+
+	$cart = "INSERT INTO cart(p_id, cust_id, p_price, qnt, date_updated) VALUES('$p_id', '$customer', '$p_price', '$qnt', now())";
+	$getcart= mysqli_query($con, $cart);
+	$res= mysqli_insert_id($con);
+	echo json_encode($res);
+}
+
+function getAllProductsByCart($cart_id){
+
+	include 'connection.php';
+
+	$cart = "SELECT * FROM cart join products on products.p_id = cart.p_id  WHERE cart.cart_id='$cart_id'";
+	return mysqli_query($con,$cart);
+
+}
+
+function deleteCartItems($data){
+
+	include 'connection.php';
+
+	$cart_id=$data['cart_id'];
+
+	$cart = "DELETE FROM cart where cart_id = $cart_id";
+    return mysqli_query($con, $cart);
+}
+
+function getAllCartItems(){
+
+	include 'connection.php';
+
+	$sql = "SELECT * FROM cart ";
+	return mysqli_query($con,$sql);
+}
+
+function getAllCart($customer_id){
+
+	include 'connection.php';
+
+	$q1= "SELECT * FROM cart join products on products.p_id = cart.p_id join customers on customers.cust_id = cart.cust_id WHERE cart.cust_id='$customer_id'";
+	return mysqli_query($con,$q1);
+}
+
+function getCartCount($customer_id){
+	include 'connection.php';
+
+	$q1= "SELECT * FROM cart WHERE cust_id='$customer_id'";
+	$cartcount = mysqli_query($con,$q1);
+	return mysqli_num_rows($cartcount);
+}
 //Contact form
 
 function ContactFormMessage($data){

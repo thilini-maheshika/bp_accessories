@@ -58,18 +58,20 @@
 
                             <!-- Deals Item -->
                             <div class="owl-item deals_item">
-                                <div class="deals_image"><img src="<?php echo $img_src; ?>" ></div>
+                                <div class="deals_image"><img src="<?php echo $img_src; ?>"></div>
                                 <div class="deals_content">
                                     <div class="deals_info_line d-flex flex-row justify-content-start">
                                     </div>
                                     <div class="deals_info_line d-flex flex-row justify-content-start">
-                                        <div class="deals_item_name"><a href="product.php?p_id=<?php echo $p_id; ?>"><?php echo $row2['p_name']; ?></a></div>
+                                        <div class="deals_item_name"><a
+                                                href="product.php?p_id=<?php echo $p_id; ?>"><?php echo $row2['p_name']; ?></a>
+                                        </div>
                                         <div class="deals_item_price ml-auto">RS.<?php echo $row2['p_price']; ?></div>
                                     </div>
-                                   
+
                                 </div>
                             </div>
-                        <?php } $count++; } ?>
+                            <?php } $count++; } ?>
                         </div>
 
                     </div>
@@ -84,16 +86,16 @@
 
                 <!-- Featured -->
                 <div class="featured">
-						<div class="tabbed_container">
-							<div class="tabs">
-								<ul class="clearfix">
-									<li class="active">Featured</li>
-								</ul>
-							</div>
+                    <div class="tabbed_container">
+                        <div class="tabs">
+                            <ul class="clearfix">
+                                <li class="active">Featured</li>
+                            </ul>
+                        </div>
 
-							<!-- Product Panel -->
-							<div class="product_panel panel active">
-								<div class="featured_slider slider">
+                        <!-- Product Panel -->
+                        <div class="product_panel panel active">
+                            <div class="featured_slider slider">
 
                                 <?php 
                                 $count=0;
@@ -102,61 +104,68 @@
                                         $img = $row['p_img'];
                                         $img_src = "admin/upload/Products/".$img; 
                                         
+                                    if(!$row['p_qnt'] == 0){   
                                         if($count < 8 || $count < 4){
-
-                                        
                                         ?>
 
-									<!-- Slider Item -->
-									<div class="featured_slider_item">
-										<div class="border_active"></div>
-										<div class="product_item discount d-flex flex-column align-items-center justify-content-center text-center">
-											<div class="product_image d-flex flex-column align-items-center justify-content-center"><img src="<?php echo $img_src ?>" width="200px"></div>
-											<div class="product_content">
-												<div class="product_price discount"><span>RS.<?php echo $row['p_price'] ?></span></div>
-												<div class="product_name"><div><a href="product.php?p_id=<?php echo $p_id; ?>"><?php echo $row['p_name'] ?></a></div></div>
-												<div class="product_extras">
-													<button class="product_cart_button">Add to Cart</button>
-												</div>
-											</div>
-										</div>
-									</div>
-                                <?php } $count++; } ?>
-								</div>
-							</div>
-							
-					</div>
-                
+                                <!-- Slider Item -->
+                                <div class="featured_slider_item">
+                                    <div class="border_active"></div>
+                                    <div
+                                        class="product_item discount d-flex flex-column align-items-center justify-content-center text-center">
+                                        <div
+                                            class="product_image d-flex flex-column align-items-center justify-content-center">
+                                            <img src="<?php echo $img_src ?>" width="200px"></div>
+                                        <div class="product_content">
+                                            <div class="product_price discount">
+                                                <span>RS.<?php echo $row['p_price'] ?></span></div>
+                                            <div class="product_name">
+                                                <div><a
+                                                        href="product.php?p_id=<?php echo $p_id; ?>"><?php echo $row['p_name'] ?></a>
+                                                </div>
+                                            </div>
+                                            <div class="product_extras">
+                                                <button class="product_cart_button">Add to Cart</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <?php } $count++; }} ?>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<!-- Popular Categories -->
+    <!-- Popular Categories -->
 
-<div class="popular_categories">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-3">
-                <div class="popular_categories_content">
-                    <div class="popular_categories_title">Popular Categories</div>
-                    <div class="popular_categories_slider_nav">
-                        <div class="popular_categories_prev popular_categories_nav"><i
-                                class="fas fa-angle-left ml-auto"></i></div>
-                        <div class="popular_categories_next popular_categories_nav"><i
-                                class="fas fa-angle-right ml-auto"></i></div>
+    <div class="popular_categories">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="popular_categories_content">
+                        <div class="popular_categories_title">Popular Categories</div>
+                        <div class="popular_categories_slider_nav">
+                            <div class="popular_categories_prev popular_categories_nav"><i
+                                    class="fas fa-angle-left ml-auto"></i></div>
+                            <div class="popular_categories_next popular_categories_nav"><i
+                                    class="fas fa-angle-right ml-auto"></i></div>
+                        </div>
+                        <div class="popular_categories_link"><a href="shop.php">full catalog</a></div>
                     </div>
-                    <div class="popular_categories_link"><a href="shop.php">full catalog</a></div>
                 </div>
-            </div>
 
-            <!-- Popular Categories Slider -->
+                <!-- Popular Categories Slider -->
 
-            <div class="col-lg-9">
-                <div class="popular_categories_slider_container">
-                    <div class="owl-carousel owl-theme popular_categories_slider">
+                <div class="col-lg-9">
+                    <div class="popular_categories_slider_container">
+                        <div class="owl-carousel owl-theme popular_categories_slider">
 
-                        <?php 
+                            <?php 
                             $fetchPopular = getAllCategory();
                             while($row3=mysqli_fetch_assoc($fetchPopular)){
                                 $cat_id = $row3['cat_id'];
@@ -164,42 +173,45 @@
                                 $img_src = "admin/upload/category/".$img; 
 
                         ?>
-                        <!-- Popular Categories Item -->
-                        <div class="owl-item">
-                            <div class="popular_category d-flex flex-column align-items-center justify-content-center">
-                                <div class="popular_category_image"><img src='<?php echo $img_src ?>' ></div>
-                                <div class="popular_category_text"><a href="shop.php?cat_id=<?php echo $cat_id; ?>"><?php echo $row3['cat_name'] ?></a></div>
+                            <!-- Popular Categories Item -->
+                            <div class="owl-item">
+                                <div
+                                    class="popular_category d-flex flex-column align-items-center justify-content-center">
+                                    <div class="popular_category_image"><img src='<?php echo $img_src ?>'></div>
+                                    <div class="popular_category_text"><a
+                                            href="shop.php?cat_id=<?php echo $cat_id; ?>"><?php echo $row3['cat_name'] ?></a>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
 
-                        <?php } ?>
+                            <?php } ?>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<!-- Hot New Arrivals -->
-<div class="viewed">
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                <div class="viewed_title_container">
-                    <h3 class="viewed_title">Hot New Arrivals</h3>
-                    <div class="viewed_nav_container">
-                        <div class="viewed_nav viewed_prev"><i class="fas fa-chevron-left"></i></div>
-                        <div class="viewed_nav viewed_next"><i class="fas fa-chevron-right"></i></div>
+    <!-- Hot New Arrivals -->
+    <div class="viewed">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="viewed_title_container">
+                        <h3 class="viewed_title">Hot New Arrivals</h3>
+                        <div class="viewed_nav_container">
+                            <div class="viewed_nav viewed_prev"><i class="fas fa-chevron-left"></i></div>
+                            <div class="viewed_nav viewed_next"><i class="fas fa-chevron-right"></i></div>
+                        </div>
                     </div>
-                </div>
 
-                <div class="viewed_slider_container">
+                    <div class="viewed_slider_container">
 
-                    <!-- Recently Viewed Slider -->
+                        <!-- Recently Viewed Slider -->
 
-                    <div class="owl-carousel owl-theme viewed_slider">
+                        <div class="owl-carousel owl-theme viewed_slider">
 
-                        <?php 
+                            <?php 
                                 $getFea= featuredProducts();
                                 while($row4 = mysqli_fetch_assoc($getFea)){
 
@@ -207,85 +219,88 @@
                                     $img = $row4['p_img'];
                                     $img_src = "admin/upload/Products/".$img;
                                     
+                                    
                         ?>
 
-                        <!-- Recently Viewed Item -->
-                        <div class="owl-item">
-                            <div
-                                class="viewed_item discount d-flex flex-column align-items-center justify-content-center text-center">
-                                <div class="viewed_image"><img src="<?php echo $img_src; ?>"></div>
-                                <div class="viewed_content text-center">
-                                    <div class="viewed_price"><span><?php echo $row4['p_price']; ?></span></div>
-                                    <div class="viewed_name"><a href="product.php?p_id=<?php echo $p_id; ?>"><?php echo $row4['p_name']; ?></a></div>
+                            <!-- Recently Viewed Item -->
+                            <div class="owl-item">
+                                <div
+                                    class="viewed_item discount d-flex flex-column align-items-center justify-content-center text-center">
+                                    <div class="viewed_image"><img src="<?php echo $img_src; ?>"></div>
+                                    <div class="viewed_content text-center">
+                                        <div class="viewed_price"><span><?php echo $row4['p_price']; ?></span></div>
+                                        <div class="viewed_name"><a
+                                                href="product.php?p_id=<?php echo $p_id; ?>"><?php echo $row4['p_name']; ?></a>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
+                            <?php } ?>
+
                         </div>
-                        <?php } ?>
-                        
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<!-- Brands -->
+    <!-- Brands -->
 
-<div class="brands">
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                <div class="brands_slider_container">
+    <div class="brands">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="brands_slider_container">
 
-                    <!-- Brands Slider -->
+                        <!-- Brands Slider -->
 
-                    <div class="owl-carousel owl-theme brands_slider">
+                        <div class="owl-carousel owl-theme brands_slider">
 
-                        <div class="owl-item">
-                            <div class="brands_item d-flex flex-column justify-content-center"><img
-                                    src="images/brands_1.jpg" alt=""></div>
+                            <div class="owl-item">
+                                <div class="brands_item d-flex flex-column justify-content-center"><img
+                                        src="images/brands_1.jpg" alt=""></div>
+                            </div>
+                            <div class="owl-item">
+                                <div class="brands_item d-flex flex-column justify-content-center"><img
+                                        src="images/brands_2.jpg" alt=""></div>
+                            </div>
+                            <div class="owl-item">
+                                <div class="brands_item d-flex flex-column justify-content-center"><img
+                                        src="images/brands_3.jpg" alt=""></div>
+                            </div>
+                            <div class="owl-item">
+                                <div class="brands_item d-flex flex-column justify-content-center"><img
+                                        src="images/brands_4.jpg" alt=""></div>
+                            </div>
+                            <div class="owl-item">
+                                <div class="brands_item d-flex flex-column justify-content-center"><img
+                                        src="images/brands_5.jpg" alt=""></div>
+                            </div>
+                            <div class="owl-item">
+                                <div class="brands_item d-flex flex-column justify-content-center"><img
+                                        src="images/brands_6.jpg" alt=""></div>
+                            </div>
+                            <div class="owl-item">
+                                <div class="brands_item d-flex flex-column justify-content-center"><img
+                                        src="images/brands_7.jpg" alt=""></div>
+                            </div>
+                            <div class="owl-item">
+                                <div class="brands_item d-flex flex-column justify-content-center"><img
+                                        src="images/brands_8.jpg" alt=""></div>
+                            </div>
+
                         </div>
-                        <div class="owl-item">
-                            <div class="brands_item d-flex flex-column justify-content-center"><img
-                                    src="images/brands_2.jpg" alt=""></div>
-                        </div>
-                        <div class="owl-item">
-                            <div class="brands_item d-flex flex-column justify-content-center"><img
-                                    src="images/brands_3.jpg" alt=""></div>
-                        </div>
-                        <div class="owl-item">
-                            <div class="brands_item d-flex flex-column justify-content-center"><img
-                                    src="images/brands_4.jpg" alt=""></div>
-                        </div>
-                        <div class="owl-item">
-                            <div class="brands_item d-flex flex-column justify-content-center"><img
-                                    src="images/brands_5.jpg" alt=""></div>
-                        </div>
-                        <div class="owl-item">
-                            <div class="brands_item d-flex flex-column justify-content-center"><img
-                                    src="images/brands_6.jpg" alt=""></div>
-                        </div>
-                        <div class="owl-item">
-                            <div class="brands_item d-flex flex-column justify-content-center"><img
-                                    src="images/brands_7.jpg" alt=""></div>
-                        </div>
-                        <div class="owl-item">
-                            <div class="brands_item d-flex flex-column justify-content-center"><img
-                                    src="images/brands_8.jpg" alt=""></div>
-                        </div>
+
+                        <!-- Brands Slider Navigation -->
+                        <div class="brands_nav brands_prev"><i class="fas fa-chevron-left"></i></div>
+                        <div class="brands_nav brands_next"><i class="fas fa-chevron-right"></i></div>
 
                     </div>
-
-                    <!-- Brands Slider Navigation -->
-                    <div class="brands_nav brands_prev"><i class="fas fa-chevron-left"></i></div>
-                    <div class="brands_nav brands_next"><i class="fas fa-chevron-right"></i></div>
-
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<?php
+    <?php
 	include 'template/footer.php';
 ?>

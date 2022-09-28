@@ -15,7 +15,7 @@
                 <div class="col-sm-9">
                     All( <?php 
                     $all=getAllMessages();
-                    echo $row=mysqli_num_rows($all);;
+                    echo $row=mysqli_num_rows($all);
                     ?> )
                 </div>
             </div>

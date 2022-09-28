@@ -87,7 +87,7 @@
                         <div class="shop_sorting">
                             <span>Sort by:</span>
                             <ul>
-                                
+
 
                                 <li>
                                     <span class="sorting_text"><a href="shop.php">Best Match</a><i
@@ -96,10 +96,12 @@
                                         <li class="shop_sorting_button" data-isotope-option='{ "sortBy": "bestmatch" }'>
                                             <a href="shop.php">Best Match</a>
                                         </li>
-                                        <li class="shop_sorting_button" data-isotope-option='{ "sortBy": "name" }'><a href="shopsortName.php">Name</a>
+                                        <li class="shop_sorting_button" data-isotope-option='{ "sortBy": "name" }'><a
+                                                href="shopsortName.php">Name</a>
                                         </li>
                                         <li class="shop_sorting_button" data-isotope-option='{ "sortBy": "price" }'>
-                                           <a href="shopsortPrice.php"> Price</a></li>
+                                            <a href="shopsortPrice.php"> Price</a>
+                                        </li>
                                     </ul>
                                 </li>
 
@@ -133,8 +135,15 @@
                                 <?php  } ?>
                                 <div class="product_price">RS.<?php echo $row2['p_price']?></div>
                                 <div class="product_name">
+
+                                    <?php 
+                                            if(!$row2['p_qnt'] == 0){ ?>
+
                                     <div><a href="product.php?p_id=<?php echo $p_id; ?>"
                                             tabindex="0"><?php echo $row2['p_name']?></a></div>
+                                    <?php }else{ ?>
+                                        <div><a tabindex="0"><del><?php echo $row2['p_name']?></del></a></div>
+                                    <?php } ?>
                                 </div>
                             </div>
 

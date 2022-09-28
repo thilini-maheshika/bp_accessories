@@ -62,6 +62,11 @@
                             </div>
 
                             <div class="form-group">
+                                <label>Shipping Fee: Rs.</label>
+                                <input type="number" class="form-control" id="ship_fee" name="ship_fee">
+                            </div>
+
+                            <div class="form-group">
                                 <label>Stock Quantity</label>
                                 <input type="number" name="p_qnt" id="p_qnt" class="form-control">
                             </div>

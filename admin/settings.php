@@ -3,15 +3,15 @@
 ?>
 
 <div class="container-fluid">
-    <div class="row">
+    <div class="row" style="margin-left:50px;" >
         <div class="col-sm-10 title">
-            <h3 style="font-size:20px;"><i class="fa fa-bars"></i> Settings - Website Home page </h3>
+            <h3 style="font-size:20px; margin-bottom:20px;"><i class="fa fa-bars"></i> Settings - Website Home page </h3>
         </div>
 
         <div class="col-sm-12">
             <div class="row">
                 <!-- Banner Settings Start -->
-                <div class="col-sm-9">
+                <div class="col-sm-9 " style="border:1px solid gray; ">
                     <h5 class="text" style="font-size:17px; margin-bottom:2%;">Banner Settings</h5>
 
                     <?php
@@ -56,7 +56,7 @@
                             <input class="form-control" onchange="quickUpdateImageSetting(this.form);" name="file" type="file" id="formFile">
                         </div>
                     </form>
-                    <img class="mt-2" width="200px" src='<?php echo $b_img_src; ?>'>
+                    <img style="margin-bottom:2%;" class="mt-2" width="200px" src='<?php echo $b_img_src; ?>'>
 
                 </div>
 
@@ -64,7 +64,7 @@
 
                 <!-- Contact Settings start -->
 
-                <div class="col-sm-9">
+                <div class="col-sm-9" style="border:1px solid gray; margin-top:30px;">
                     <h5 class="text" style="font-size:17px; margin-top:5%; margin-bottom:2%;">Contact Settings</h5>
                     <div class="mb-3">
                         <label>Company Email</label>
@@ -84,7 +84,7 @@
                             value="<?php echo $res['com_address']; ?>" required>
                     </div>
 
-                    <div class="mb-3">
+                    <div class="mb-3" style="margin-bottom:2%;">
                         <label>Social Media -URL</label><br>
                         Facebook<input type="url" name="facebook" id="facebook" class="form-control" onchange="quickUpdate(this,'fb')"
                             value="<?php echo $res['fb']; ?>">
@@ -99,7 +99,7 @@
 
                 <!-- Shop Background Setting start-->
 
-                <div class="col-sm-9">
+                <div class="col-sm-9" style="border:1px solid gray; margin-top:30px; margin-bottom:30px;">
                     <h5 class="text" style="font-size:17px; margin-top:5%; margin-bottom:2%;">Subpage Background Settings</h5>
                     <div class="mb-3">
                         <label>Sub Page Title</label>
@@ -114,7 +114,7 @@
                             <input class="form-control" onchange="quickUpdateImageSetting(this.form);" name="file" type="file" id="formFile">
                         </div>
                     </form>
-                    <img class="mt-2" width="200px" src="<?php echo $sub_img_src; ?>">
+                    <img style="margin-bottom:2%;" class="mt-2" width="200px" src="<?php echo $sub_img_src; ?>">
                 </div>
 
             <?php } ?>
