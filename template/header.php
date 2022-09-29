@@ -125,11 +125,11 @@
                                         <div class="cart_icon">
                                             <img src="images/cart1.png" style="width:30px;">
                                             <?php if(isset($_SESSION['customer'])): ?>
-                                            <div class="cart_count"><span><?php echo getCartCount($_SESSION['customer']); endif ?></span></div>
+                                            <div class="cart_count"><span><?php echo getCartCount($_SESSION['customer']); ?></span></div>
                                         </div>
+                                        <?php endif ?>
                                         <div class="cart_content">
                                             <div class="cart_text"><a href="cart-all.php">Cart</a></div>
-                                            <div class="cart_price">$85</div>
                                         </div>
                                     </div>
                                 </div>
@@ -211,6 +211,9 @@
                                         </li>
                                         <li class="hassubs">
                                             <a href="contact.php">contact</a>
+                                        </li>
+                                        <li class="hassubs">
+                                            <a href="order.php">Order Tracking</a>
                                         </li>
                                     </ul>
                                 </div>

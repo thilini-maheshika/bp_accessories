@@ -882,7 +882,6 @@ function deleteCart(cart_id){
         success: function ($data) {
             console.log($data);
              sweetAlert3();
-             location.reload(true);
              window.location.href = 'index.php';
         },
         error: function (error) {
@@ -891,6 +890,76 @@ function deleteCart(cart_id){
     });
 
 }
+
+function quantityChange(ele,cart_id,field){
+
+    var value = document.getElementById(ele.id).value;
+
+    var data = {
+        cart_id: cart_id,
+        field: field,
+        value: value,
+    }
+
+    $.ajax({
+        method: "POST",
+        url: "admin/database.php?function_code=qntEdit",
+        data: data,
+        success: function ($data) {
+            console.log($data);
+            successToastEdit();
+        },
+        error: function (error) {
+            console.log(`Error ${error}`);
+        }
+    });
+}
+
+//order
+
+function placeOrder(form) {
+    var formData = new FormData(form);
+
+    if (formData.get('typeName').trim() != '') {
+        if (formData.get('typeExp').trim() != '') {
+            if (formData.get('typeText').trim() != '') {
+
+                    if (formData.get('address1').trim() != '') {
+                        if (formData.get('address2').trim() != '') {
+
+                            if (formData.get('total') > 0) {
+
+                                var data = {
+                                    cust_id: formData.get('cust_id'),
+                                    address1: formData.get('address1'),
+                                    address2: formData.get('address2'),
+                                    total: formData.get('total'),
+                                }
+
+                                $.ajax({
+                                    method: "POST",
+                                    url: "admin/database.php?function_code=placeOrder",
+                                    data: data,
+                                    success: function ($data) {
+                                        console.log($data);
+                                        successToastwithRedirect();
+                                    },
+                                    error: function (error) {
+                                        console.log(`Error ${error}`);
+                                    }
+                                });
+
+                            } else { errorMessage("Please Select Atleast one Item to Buy!"); }
+
+                        } else { errorMessage("Please Enter Billing Address"); }
+                    } else { errorMessage("Please Enter Shipping Address"); }
+  
+            } else { errorMessage("Please Enter Card Number"); }
+        } else { errorMessage("Please Enter Expire Details"); }
+    } else { errorMessage("Please Enter Holder Name"); }
+
+}
+
 
 
 // function profileImage(ele){
@@ -1041,6 +1110,17 @@ function successToast() {
         message: 'Successfully Inserted record!',
         onClosing: function () {
             location.reload(true);
+        }
+    })
+}
+
+function successToastwithRedirect() {
+    iziToast.success({
+        timeout: 1000,
+        title: 'Saving..',
+        message: 'Successfully Placed Order!',
+        onClosing: function () {
+            window.location.href = 'order.php';
         }
     })
 }

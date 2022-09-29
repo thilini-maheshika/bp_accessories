@@ -57,6 +57,27 @@ if (isset($_GET['function_code']) && $_GET['function_code'] == 'categoryAdd') {
 	editProfileImage($_POST);
 }else if (isset($_GET['function_code']) && $_GET['function_code'] == 'cartItemDelete') {
 	deleteCartItems($_POST);
+}else if (isset($_GET['function_code']) && $_GET['function_code'] == 'qntEdit') {
+	editQuantity($_POST);
+}else if (isset($_GET['function_code']) && $_GET['function_code'] == 'placeOrder') {
+	orderPlace($_POST);
+}
+
+//order
+function orderPlace($data){
+
+	include 'connection.php';
+
+	$cust_id = $data['cust_id'];
+    $shipping_address = $data['address1'];
+    $billing_address = $data['address2'];
+    $total = $data['total'];
+
+	$sql = "INSERT INTO order_products(cust_id, total, shipping_address, billing_address, is_deleted, order_status, tracking_status, date_updated) 
+	VALUES('$cust_id', '$total', '$shipping_address', '$billing_address', 0 , 1 , 'Pending' , now())";
+	$res =  mysqli_query($con, $sql);
+	$result= mysqli_insert_id($con);
+	echo json_encode($result);
 }
 
 //cart
@@ -113,6 +134,20 @@ function getCartCount($customer_id){
 	$cartcount = mysqli_query($con,$q1);
 	return mysqli_num_rows($cartcount);
 }
+
+function editQuantity($data){
+
+	include 'connection.php';
+
+	$cart_id = $data['cart_id'];
+	$field = $data['field'];
+    $value = $data['value']; 
+
+	$qty= "UPDATE cart SET $field = '$value' , date_updated = now() WHERE cart_id = $cart_id ";
+	return mysqli_query($con,$qty);
+
+}
+
 //Contact form
 
 function ContactFormMessage($data){

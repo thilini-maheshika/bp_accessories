@@ -117,6 +117,17 @@
                     <img style="margin-bottom:2%;" class="mt-2" width="200px" src="<?php echo $sub_img_src; ?>">
                 </div>
 
+                <!-- Contact Settings start -->
+
+                <div class="col-sm-9" style="border:1px solid gray; margin-top:30px; margin-bottom:2%; ">
+                    <h5 class="text" style="font-size:17px; margin-top:5%; margin-bottom:2%;">Order Settings</h5>
+                    <div class="mb-3">
+                        <label>Shipping Fee</label>
+                        <input type="text" name="ship_fee" id="ship_fee" class="form-control" onchange="quickUpdate(this,'ship_fee')" value="<?php echo $res['ship_fee']; ?>"
+                            required style="margin-bottom:2%;">
+                    </div>                  
+                </div>
+
             <?php } ?>
             </div>
         </div>
