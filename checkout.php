@@ -14,95 +14,47 @@
         <div class="row d-flex justify-content-center align-items-center h-100">
             <div class="col">
                 <form method="post" novalidateenctype="multipart/form">
-                    <div class="card shadow-2-strong mb-5 mb-lg-0" style="border-radius: 16px;">
-                        <div class="card-body p-4">
-
-                            <?php 
-                            
-                            while($row = mysqli_fetch_assoc($getCustomer)){
-
-                        ?>
-
-
-                            <div class="row">
-                                <div class="col-md-8 col-lg-4 col-xl-6">
-                                    <div class="col-12 col-xl-6" style="margin-left:150px;">
-
-                                            <h4>Shipping Info.</h4>
-
-                                            <div class="form-outline mb-4 mb-xl-5">
-                                                <label class="form-label" for="typeText">Address </label>
-                                                <textarea  name="address1" id="address1" required
-                                                     style="color:black; text-align:center;">
-                                               <?php echo $row['cust_address'] ?></textarea>
-                                            </div>
-
-                                            <input value="<?php echo $row['cust_id']; ?>" type="hidden"
-                                                    id="cust_id" name="cust_id" />
-                                    </div>
-                                </div>
-                                <div class="col-md-4 col-lg-4 col-xl-6">
-
-                                    <div class="col-12 col-xl-6" style="margin-left:50px;">
-
-                                            <h4>Billing Info.</h4>
-                                            <div class="form-outline mb-4 mb-xl-5">
-                                                <label class="form-label" for="typeText">Address</label>
-                                                <textarea  name="address2" id="address2" required
-                                                     style="color:black; text-align:center;">
-                                               <?php echo $row['cust_address'] ?></textarea>
-                                            </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                            <?php }?>
-
-                        </div>
-                    </div>
 
                     <div class="card shadow-2-strong mb-5 mb-lg-0" style="border-radius: 16px;">
                         <div class="card-body p-4">
 
                             <div class="row">
                                 <div class="col-md-6 col-lg-4 col-xl-3 mb-4 mb-md-0">
-                                    <form>
-                                        <div class="d-flex flex-row pb-3">
-                                            <div class="d-flex align-items-center pe-2">
-                                                <input class="form-check-input" type="radio" name="radioNoLabel"
-                                                    id="radioNoLabel1v" value="" aria-label="..." checked />
-                                            </div>
-                                            <div class="rounded border w-100 p-3">
-                                                <p class="d-flex align-items-center mb-0">
-                                                    <i class="fab fa-cc-mastercard fa-2x text-dark pe-2"></i>Credit
-                                                    Card
-                                                </p>
-                                            </div>
+                                    <div class="d-flex flex-row pb-3">
+                                        <div class="d-flex align-items-center pe-2">
+                                            <input class="form-check-input" type="radio" name="radioNoLabel"
+                                                id="radioNoLabel1v" value="" aria-label="..." checked />
                                         </div>
-                                        <div class="d-flex flex-row pb-3">
-                                            <div class="d-flex align-items-center pe-2">
-                                                <input class="form-check-input" type="radio" name="radioNoLabel"
-                                                    id="radioNoLabel2v" value="" aria-label="..." />
-                                            </div>
-                                            <div class="rounded border w-100 p-3">
-                                                <p class="d-flex align-items-center mb-0">
-                                                    <i class="fab fa-cc-visa fa-2x fa-lg text-dark pe-2"></i>Debit Card
-                                                </p>
-                                            </div>
+                                        <div class="rounded border w-100 p-3">
+                                            <p class="d-flex align-items-center mb-0">
+                                                <i class="fab fa-cc-mastercard fa-2x text-dark pe-2"></i>Credit
+                                                Card
+                                            </p>
                                         </div>
-                                        <div class="d-flex flex-row">
-                                            <div class="d-flex align-items-center pe-2">
-                                                <input class="form-check-input" type="radio" name="radioNoLabel"
-                                                    id="radioNoLabel3v" value="" aria-label="..." />
-                                            </div>
-                                            <div class="rounded border w-100 p-3">
-                                                <p class="d-flex align-items-center mb-0">
-                                                    <i class="fab fa-cc-amex fa-2x fa-lg text-dark pe-2"></i>American
-                                                    Express
-                                                </p>
-                                            </div>
+                                    </div>
+                                    <div class="d-flex flex-row pb-3">
+                                        <div class="d-flex align-items-center pe-2">
+                                            <input class="form-check-input" type="radio" name="radioNoLabel"
+                                                id="radioNoLabel2v" value="" aria-label="..." />
                                         </div>
-                                    </form>
+                                        <div class="rounded border w-100 p-3">
+                                            <p class="d-flex align-items-center mb-0">
+                                                <i class="fab fa-cc-visa fa-2x fa-lg text-dark pe-2"></i>Debit Card
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex flex-row">
+                                        <div class="d-flex align-items-center pe-2">
+                                            <input class="form-check-input" type="radio" name="radioNoLabel"
+                                                id="radioNoLabel3v" value="" aria-label="..." />
+                                        </div>
+                                        <div class="rounded border w-100 p-3">
+                                            <p class="d-flex align-items-center mb-0">
+                                                <i class="fab fa-cc-amex fa-2x fa-lg text-dark pe-2"></i>American
+                                                Express
+                                            </p>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="col-md-6 col-lg-4 col-xl-6">
 
@@ -140,15 +92,50 @@
                                             <!-- hidden part -->
                                             <?php if(isset($_REQUEST['total'])){ 
                                                    ?>
-                                            <input type="hidden" name='total' id='total' value="<?php echo $_REQUEST['total']; ?>">
+                                            <input type="hidden" name='total' id='total'
+                                                value="<?php echo $_REQUEST['total']; ?>">
                                             <?php  }?>
-                                            
+
 
                                             <!-- hidden part -->
 
                                         </div>
                                     </div>
-                                    <div class="col-lg-5 col-xl-4">
+
+                                    <div class="row">
+
+                                        <?php 
+                                        
+                                                while($row = mysqli_fetch_assoc($getCustomer)){
+
+                                            ?>
+                                        <div class="row ml-1">
+                                            <div class="col-md-6">
+                                                <label>Shipping Address.</label>
+                                                <div class="form-outline mb-4 mb-xl-5">
+                                                    <input type="text" name="address1" id="address1" required 
+                                                        style="color:black;" value="<?php echo $row['cust_address'] ?>" size="50"><br><br>
+                                               
+                                                </div>
+                                                <input value="<?php echo $row['cust_id']; ?>" type="hidden" id="cust_id"
+                                                    name="cust_id" />
+                                            </div>
+                                        </div>
+                                        <div class="row ml-1">
+                                            <div class="col-md-6">
+                                                <label>Billing Address.</label>
+                                                <div class="form-outline mb-4 mb-xl-5">
+                                                    <input type="text" name="address2" id="address2" required
+                                                        style="color:black; " value="<?php echo $row['cust_address'] ?>" size="50"><br><br>
+                                               
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <?php } ?>
+                                    </div>
+
+                                    <div class="col-lg-5 col-xl-6">
                                         <button type="button" class="btn btn-primary btn-block btn-md"
                                             onclick="placeOrder(this.form)">
                                             <div class="d-flex justify-content-center">

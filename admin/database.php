@@ -59,25 +59,54 @@ if (isset($_GET['function_code']) && $_GET['function_code'] == 'categoryAdd') {
 	deleteCartItems($_POST);
 }else if (isset($_GET['function_code']) && $_GET['function_code'] == 'qntEdit') {
 	editQuantity($_POST);
-}else if (isset($_GET['function_code']) && $_GET['function_code'] == 'placeOrder') {
-	orderPlace($_POST);
 }
 
 //order
-function orderPlace($data){
+function addOrders($cust_id, $shipping_address, $billing_address, $total){
 
 	include 'connection.php';
 
-	$cust_id = $data['cust_id'];
-    $shipping_address = $data['address1'];
-    $billing_address = $data['address2'];
-    $total = $data['total'];
-
-	$sql = "INSERT INTO order_products(cust_id, total, shipping_address, billing_address, is_deleted, order_status, tracking_status, date_updated) 
-	VALUES('$cust_id', '$total', '$shipping_address', '$billing_address', 0 , 1 , 'Pending' , now())";
+	$sql = "INSERT INTO order_products(cust_id, total, shipping_address, billing_address, is_deleted, order_status, tracking_status, date_updated) VALUES('$cust_id', '$total', '$shipping_address', '$billing_address', 0 , 1 , 'Pending' , now())";
 	$res =  mysqli_query($con, $sql);
-	$result= mysqli_insert_id($con);
-	echo json_encode($result);
+	return mysqli_insert_id($con);
+
+}
+
+function addOrderItems($order_id,$p_id,$qnt,$p_price){
+
+	include 'connection.php';
+
+	$sql = "INSERT INTO order_items(order_id, p_id, qnt, p_price) VALUES('$order_id', '$p_id', '$qnt', '$p_price')";
+	return mysqli_query($con, $sql);
+}
+
+function productQtyReduce($p_id, $qnt)
+{
+    include 'connection.php';
+
+	$getProducts = "SELECT * FROM products WHERE p_id = '$p_id'";
+	$res =  mysqli_query($con, $getProducts);
+	$row = mysqli_fetch_assoc($res);
+
+	$value = $row['p_qnt'] - $qnt;
+
+    $sql = "UPDATE products SET p_qnt = '$value', date_updated = now() WHERE p_id = $p_id";
+    return mysqli_query($con, $sql);	
+}
+
+function getAllOrdersByCustID($cust_id){
+
+	include 'connection.php';
+
+	$getord = "SELECT * FROM order_products WHERE cust_id = '$cust_id' AND is_deleted = '0' ORDER BY date_updated DESC";
+	return mysqli_query($con,$getord);
+}
+
+function getAllOrderItemsBYOrder($order_id){
+	include 'connection.php';
+
+	$viewcat = "SELECT * FROM order_items join products on order_items.p_id = products.p_id WHERE order_items.order_id = '$order_id'";
+	return mysqli_query($con,$viewcat);
 }
 
 //cart
@@ -108,6 +137,14 @@ function deleteCartItems($data){
 	$cart_id=$data['cart_id'];
 
 	$cart = "DELETE FROM cart where cart_id = $cart_id";
+    return mysqli_query($con, $cart);
+}
+
+function deleteAllCartItems($cust_id){
+
+	include 'connection.php';
+
+	$cart = "DELETE FROM cart where cust_id = $cust_id"; 
     return mysqli_query($con, $cart);
 }
 
@@ -247,6 +284,8 @@ function DeleteCustomer($data){
 	include 'connection.php';
 
 	$cust_id = $data['cust_id'];
+
+	deleteCartItems($cust_id);
 
 	$sql1 = "UPDATE customers SET is_deleted = '1' WHERE cust_id = $cust_id";
     return mysqli_query($con, $sql1);

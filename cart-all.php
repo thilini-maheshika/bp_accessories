@@ -110,6 +110,7 @@
 
                 </div>
 
+
                 <div class="card mb-2 mb-lg-0" style="border:none;">
                     <div class="card-body">
                         <p><strong>We accept</strong></p>

@@ -583,27 +583,6 @@ function searchProduct(ele){
     var key = formData.get('key');
     window.location.href="shop.php?keyword=" + key;
     
-    // $.ajax({
-    //     method: "POST",
-    //     url: "database.php?function_code=loginAdmin",
-    //     data: formData,
-    //     success: function($data){
-    //         if($data > 0){
-    //                 if(formData.get('email') === 'admin'){
-    //                     window.location.href='index.php';
-    //                 }else{
-    //                     window.location.href='../index.php';
-    //                 }
-    //             }else{
-    //                 sweetAlert2(warning,'Something Wrong.Try again!!');
-    //             }
-    //     },
-    //     contentType: false,
-    //     processData: false,
-    //     error: function(error){
-    //         console.log(`Error ${error}`);
-    //     }
-    // });
 }
 
 //settings
@@ -938,11 +917,12 @@ function placeOrder(form) {
 
                                 $.ajax({
                                     method: "POST",
-                                    url: "admin/database.php?function_code=placeOrder",
+                                    url: "orderall.php?function_code=orderAll",
                                     data: data,
                                     success: function ($data) {
-                                        console.log($data);
-                                        successToastwithRedirect();
+                                         console.log($data);
+                                         successToast1();
+                                         window.location.href="order.php";
                                     },
                                     error: function (error) {
                                         console.log(`Error ${error}`);
@@ -960,6 +940,10 @@ function placeOrder(form) {
 
 }
 
+function addtocart(p_id){
+
+    window.location.href="product.php?p_id=" + p_id;
+}
 
 
 // function profileImage(ele){
@@ -1114,13 +1098,13 @@ function successToast() {
     })
 }
 
-function successToastwithRedirect() {
+function successToast1() {
     iziToast.success({
         timeout: 1000,
         title: 'Saving..',
         message: 'Successfully Placed Order!',
         onClosing: function () {
-            window.location.href = 'order.php';
+            
         }
     })
 }

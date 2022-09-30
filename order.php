@@ -1,165 +1,272 @@
 <?php
 	include 'template/header.php';
 	include 'template/dependencies.php';
+    include 'auth/register/auth.php';
 ?>
 
-<?php 
-    $checkCustomer = checkCustomerByID($_SESSION['customer']);
-    if ($result = mysqli_fetch_assoc($checkCustomer)) { 
-?>
+<section class="py-5" style="margin-top: -50px; backgroud-color: gray;">
 
-<section class="vh-100 gradient-custom-2">
-    <div class="container py-5 h-100">
-        <div class="row d-flex justify-content-center align-items-center h-100">
-            <div class="col-md-10 col-lg-8 col-xl-6">
-                <div class="card card-stepper" style="border-radius: 16px;">
-                    <div class="card-header p-4">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                                <p class="text-muted mb-2"> Order ID <span class="fw-bold text-body">1222528743</span>
-                                </p>
-                                <p class="text-muted mb-0"> Place On <span class="fw-bold text-body">12,March
-                                        2019</span> </p>
+    <div class="card-body">
+        <div class="container">
+            <?php 
+                $getall = getAllOrdersByCustID($_SESSION['customer']);
+
+                while($row=mysqli_fetch_assoc($getall)){ 
+                    $order_id = $row['order_id'];
+                    ?>
+            <article class="card mt-5">
+                <header class="card-header"> Orders / Tracking </header>
+                <div class="card-body">
+                    <h6>Order ID: #<?php echo $row['order_id']; ?> </h6>
+                    <article class="card">
+                        <div class="card-body row">
+
+                            <div class="col"> <strong>Shipping TO:</strong>
+                                <br><?php echo $row['shipping_address']; ?>
                             </div>
-                            <div>
-                                <h6 class="mb-0"> <a href="#">View Details</a> </h6>
+                            <div class="col"> <strong>Billing TO:</strong>
+                                <br><?php echo $row['billing_address']; ?>
+                            </div>
+                            <div class="col"> <strong>Status:</strong>
+                                <br>
+                                <?php if($row['order_status'] == 1){
+                                            echo 'Order confirmed';
+                                        }else if($row['order_status'] == 2){
+                                            echo 'Prepare Order';
+                                        } else if($row['order_status'] == 3){
+                                            echo 'Shipped Order';
+                                        } else if($row['order_status'] == 4){
+                                            echo 'Deliverd';
+                                        } else if($row['order_status'] == 5){
+                                            echo 'Canceled';
+                                        } ?>
+                            </div>
+                            <div class="col"> <strong>Tracking #:</strong> <br>
+                                <?php if($row['tracking'] != 'Pending'){ echo $row['tracking']; }else{echo "Pending";}?>
+                            </div>
+                            <div class="col"> <strong>Order Purchase Date:</strong>
+                                <br><?php echo $row['date_updated']; ?>
                             </div>
                         </div>
-                    </div>
-                    <div class="card-body p-4">
-                        <div class="d-flex flex-row mb-4 pb-2">
-                            <div class="flex-fill">
-                                <h5 class="bold">Headphones Bose 35 II</h5>
-                                <p class="text-muted"> Qt: 1 item</p>
-                                <h4 class="mb-3"> $ 299 <span class="small text-muted"> via (COD) </span></h4>
-                                <p class="text-muted">Tracking Status on: <span class="text-body">11:30pm, Today</span>
-                                </p>
-                            </div>
-                            <div>
-                                <img class="align-self-center img-fluid"
-                                    src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/6.webp"
-                                    width="250">
-                            </div>
+                    </article>
+                    <?php if($row['order_status'] != 5) {?>
+                    <div class="track">
+
+                        <div
+                            class="step <?php if($row['order_status'] == 1 || $row['order_status'] == 2 || $row['order_status'] == 3 || $row['order_status'] == 4) {echo 'active';}?>">
+                            <span class="icon"> <i class="fa fa-check"></i> </span>
+                            <span class="text">Order confirmed</span>
                         </div>
-                        <ul id="progressbar-1" class="mx-0 mt-0 mb-5 px-0 pt-0 pb-4">
-                            <li class="step0 active" id="step1"><span
-                                    style="margin-left: 22px; margin-top: 12px;">PLACED</span></li>
-                            <li class="step0 active text-center" id="step2"><span>SHIPPED</span></li>
-                            <li class="step0 text-muted text-end" id="step3"><span
-                                    style="margin-right: 22px;">DELIVERED</span></li>
-                        </ul>
-                    </div>
-                    <div class="card-footer p-4">
-                        <div class="d-flex justify-content-between">
-                            <h5 class="fw-normal mb-0"><a href="#!">Track</a></h5>
-                            <div class="border-start h-100"></div>
-                            <h5 class="fw-normal mb-0"><a href="#!">Cancel</a></h5>
-                            <div class="border-start h-100"></div>
-                            <h5 class="fw-normal mb-0"><a href="#!">Pre-pay</a></h5>
-                            <div class="border-start h-100"></div>
-                            <h5 class="fw-normal mb-0"><a href="#!" class="text-muted"><i
-                                        class="fas fa-ellipsis-v"></i></a>
-                            </h5>
+                        <div
+                            class="step <?php if($row['order_status'] == 2 || $row['order_status'] == 3 || $row['order_status'] == 4) {echo 'active';}?>">
+                            <span class="icon"> <i class="fa fa-user"></i> </span>
+                            <span class="text">Prepare Order</span>
+                        </div>
+                        <div
+                            class="step <?php if($row['order_status'] == 3 || $row['order_status'] == 4) {echo 'active';}?>">
+                            <span class="icon"> <i class="fa fa-truck"></i> </span>
+                            <span class="text"> Shipped Order </span>
+                        </div>
+                        <div class="step <?php if($row['order_status'] == 4) {echo 'active';}?>"> <span class="icon"> <i
+                                    class="fa fa-box"></i> </span>
+                            <span class="text">Deliverd</span>
                         </div>
                     </div>
+                    <?php } ?>
+                    <hr>
+                    <ul class="row">
+                        <?php 
+                                $getdetails = getAllOrderItemsBYOrder($row['order_id']);
+
+                                while($row2=mysqli_fetch_assoc($getdetails)){
+                                    
+                                    $img = $row2['p_image'];
+                                    $img_src = "admin/upload/Products/".$img;?>
+                        <li class="col-md-4">
+                            <figure class="itemside mb-3">
+                                <div class="aside"><img src="<?php echo $img_src; ?>" class="img-sm border"></div>
+                                <figcaption class="info align-self-center">
+                                    <p class="title"><?php echo $row2['p_name']; ?> <br>
+                                        <?php echo $row2['p_des']; ?></p> <span class="text-muted">Rs.
+                                        <?php echo $row2['p_price']; ?> </span>
+                                </figcaption>
+                            </figure>
+                        </li>
+                        <?php } ?>
+                    </ul>
+                    <hr>
+                    <?php if ($row['order_status'] != "5") { ?>
+                    <div class="col-md-2">
+                        <button type="button" onclick='orderChangeCancel("<?php echo $order_id ; ?>","order_status")'
+                            class="btn btn-darkblue">Cancel Order</button>
+                    </div>
+                    <?php } ?>
                 </div>
-            </div>
+            </article>
+            <?php } ?>
         </div>
     </div>
+
 </section>
 
-<?php } ?>
 
 <style>
-.gradient-custom-2 {
-    /* fallback for old browsers */
-    background: #a1c4fd;
+@import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
 
-    /* Chrome 10-25, Safari 5.1-6 */
-    background: -webkit-linear-gradient(to right, rgba(161, 196, 253, 1), rgba(194, 233, 251, 1));
-
-    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-    background: linear-gradient(to right, rgba(161, 196, 253, 1), rgba(194, 233, 251, 1))
+body {
+    background-color: #eeeeee;
+    font-family: 'Open Sans', serif
 }
 
-#progressbar-1 {
-    color: #455A64;
+.container {
+    margin-top: 50px;
+    margin-bottom: 50px
 }
 
-#progressbar-1 li {
-    list-style-type: none;
-    font-size: 13px;
-    width: 33.33%;
-    float: left;
+.card {
     position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 0.10rem
 }
 
-#progressbar-1 #step1:before {
-    content: "1";
-    color: #fff;
-    width: 29px;
-    margin-left: 22px;
-    padding-left: 11px;
+.card-header:first-child {
+    border-radius: calc(0.37rem - 1px) calc(0.37rem - 1px) 0 0
 }
 
-#progressbar-1 #step2:before {
-    content: "2";
-    color: #fff;
-    width: 29px;
+.card-header {
+    padding: 0.75rem 1.25rem;
+    margin-bottom: 0;
+    background-color: #fff;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1)
 }
 
-#progressbar-1 #step3:before {
-    content: "3";
-    color: #fff;
-    width: 29px;
-    margin-right: 22px;
+.track {
+    position: relative;
+    background-color: #ddd;
+    height: 7px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    margin-bottom: 60px;
+    margin-top: 50px
+}
+
+.track .step {
+    -webkit-box-flex: 1;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+    width: 25%;
+    margin-top: -18px;
     text-align: center;
+    position: relative
 }
 
-#progressbar-1 li:before {
-    line-height: 29px;
-    display: block;
-    font-size: 12px;
-    background: #455A64;
-    border-radius: 50%;
-    margin: auto;
+.track .step.active:before {
+    background: #FF5722
 }
 
-#progressbar-1 li:after {
-    content: '';
-    width: 121%;
-    height: 2px;
-    background: #455A64;
+.track .step::before {
+    height: 7px;
     position: absolute;
-    left: 0%;
-    right: 0%;
-    top: 15px;
-    z-index: -1;
+    content: "";
+    width: 100%;
+    left: 0;
+    top: 18px
 }
 
-#progressbar-1 li:nth-child(2):after {
-    left: 50%
+.track .step.active .icon {
+    background: #ee5435;
+    color: #fff
 }
 
-#progressbar-1 li:nth-child(1):after {
-    left: 25%;
-    width: 121%
+.track .icon {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    position: relative;
+    border-radius: 100%;
+    background: #ddd
 }
 
-#progressbar-1 li:nth-child(3):after {
-    left: 25%;
-    width: 50%;
+.track .step.active .text {
+    font-weight: 400;
+    color: #000
 }
 
-#progressbar-1 li.active:before,
-#progressbar-1 li.active:after {
-    background: #1266f1;
+.track .text {
+    display: block;
+    margin-top: 7px
 }
 
-.card-stepper {
-    z-index: 0
+.itemside {
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    width: 100%
+}
+
+.itemside .aside {
+    position: relative;
+    -ms-flex-negative: 0;
+    flex-shrink: 0
+}
+
+.img-sm {
+    width: 80px;
+    height: 80px;
+    padding: 7px
+}
+
+ul.row,
+ul.row-sm {
+    list-style: none;
+    padding: 0
+}
+
+.itemside .info {
+    padding-left: 15px;
+    padding-right: 7px
+}
+
+.itemside .title {
+    display: block;
+    margin-bottom: 5px;
+    color: #212529
+}
+
+p {
+    margin-top: 0;
+    margin-bottom: 1rem
+}
+
+.btn-warning {
+    color: #ffffff;
+    background-color: #ee5435;
+    border-color: #ee5435;
+    border-radius: 1px
+}
+
+.btn-warning:hover {
+    color: #ffffff;
+    background-color: #ff2b00;
+    border-color: #ff2b00;
+    border-radius: 1px
 }
 </style>
+
 <?php
 	include 'template/footer.php';
 ?>

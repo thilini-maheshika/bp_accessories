@@ -115,17 +115,20 @@
                                         class="product_item discount d-flex flex-column align-items-center justify-content-center text-center">
                                         <div
                                             class="product_image d-flex flex-column align-items-center justify-content-center">
-                                            <img src="<?php echo $img_src ?>" width="200px"></div>
+                                            <img src="<?php echo $img_src ?>" width="200px">
+                                        </div>
                                         <div class="product_content">
                                             <div class="product_price discount">
-                                                <span>RS.<?php echo $row['p_price'] ?></span></div>
+                                                <span>RS.<?php echo $row['p_price'] ?></span>
+                                            </div>
                                             <div class="product_name">
                                                 <div><a
                                                         href="product.php?p_id=<?php echo $p_id; ?>"><?php echo $row['p_name'] ?></a>
                                                 </div>
                                             </div>
                                             <div class="product_extras">
-                                                <button class="product_cart_button">Add to Cart</button>
+                                                <button class="product_cart_button" onclick="addtocart(<?php echo $p_id?>)">Add to
+                                                    Cart</button>
                                             </div>
                                         </div>
                                     </div>
@@ -215,6 +218,8 @@
                                 $getFea= featuredProducts();
                                 while($row4 = mysqli_fetch_assoc($getFea)){
 
+                                    if(!$row4['p_qnt'] == 0){
+
                                     $p_id = $row4['p_id'];
                                     $img = $row4['p_img'];
                                     $img_src = "admin/upload/Products/".$img;
@@ -235,7 +240,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <?php } ?>
+                            <?php } } ?>
 
                         </div>
                     </div>

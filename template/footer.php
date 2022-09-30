@@ -45,9 +45,9 @@
                 <div class="footer_column">
                     <div class="footer_title">Customer Care</div>
                     <ul class="footer_list">
-                        <li><a href="#">My Account</a></li>
-                        <li><a href="#">Customer Services</a></li>
-                        <li><a href="#">Product Support</a></li>
+                        <li><a href="profile.php">My Account</a></li>
+                        <li><a href="order.php">Order Tracking</a></li>
+                        <li><a href="contact.php">Q&A</a></li>
                     </ul>
                 </div>
             </div>

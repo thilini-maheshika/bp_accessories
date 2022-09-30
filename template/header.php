@@ -89,9 +89,7 @@
                                         <form method="POST" class="header_search_form clearfix">
                                             <input type="text" class="header_search_input"
                                                 placeholder="Search for products..." name="key" id="key">
-                                            <button type="button" class="header_search_button trans_300" value="Submit"
-                                                onclick="searchProduct(this.form)"><img
-                                                    src="images/search.png"></button>
+                                            
 
                                             <div class="custom_dropdown">
                                                 <div class="custom_dropdown_list">
@@ -103,13 +101,16 @@
 														while($res1 = mysqli_fetch_assoc($fetchcat)){
                                                             $cat_id = $res1['cat_id'];
 													?>
-                                                        <li><a class="clc"
+                                                        <li><a class="clc" name="key" id="key"
                                                                 href="shop.php?cat_id=<?php echo $cat_id; ?>"><?php echo $res1['cat_name'] ?></a>
                                                         </li>
                                                         <?php } ?>
                                                     </ul>
                                                 </div>
                                             </div>
+                                            <button type="button" class="header_search_button trans_300" value="Submit"
+                                                onclick="searchProduct(this.form)"><img
+                                                    src="images/search.png"></button>
                                         </form>
 
                                     </div>
