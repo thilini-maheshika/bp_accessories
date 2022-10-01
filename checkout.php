@@ -94,7 +94,7 @@
                                                    ?>
                                             <input type="hidden" name='total' id='total'
                                                 value="<?php echo $_REQUEST['total']; ?>">
-                                            <?php  }?>
+                                                <?php  }?>
 
 
                                             <!-- hidden part -->
@@ -113,9 +113,10 @@
                                             <div class="col-md-6">
                                                 <label>Shipping Address.</label>
                                                 <div class="form-outline mb-4 mb-xl-5">
-                                                    <input type="text" name="address1" id="address1" required 
-                                                        style="color:black;" value="<?php echo $row['cust_address'] ?>" size="50"><br><br>
-                                               
+                                                    <input type="text" name="address1" id="address1" required
+                                                        style="color:black;" value="<?php echo $row['cust_address'] ?>"
+                                                        size="50"><br><br>
+
                                                 </div>
                                                 <input value="<?php echo $row['cust_id']; ?>" type="hidden" id="cust_id"
                                                     name="cust_id" />
@@ -126,8 +127,9 @@
                                                 <label>Billing Address.</label>
                                                 <div class="form-outline mb-4 mb-xl-5">
                                                     <input type="text" name="address2" id="address2" required
-                                                        style="color:black; " value="<?php echo $row['cust_address'] ?>" size="50"><br><br>
-                                               
+                                                        style="color:black; " value="<?php echo $row['cust_address'] ?>"
+                                                        size="50"><br><br>
+
                                                 </div>
                                             </div>
 
@@ -153,6 +155,55 @@
     </div>
 </section>
 
+<?php
+    if(isset($_REQUEST['cust_id'])){
+        $cust_id = $_REQUEST['cust_id'];
+        $getCustomer = checkCustomerByID($cust_id);
+     
+?>
+
+<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body ">
+                <div class="text-right"> <i class="fa fa-close close" data-dismiss="modal"></i> </div>
+
+                <div class="px-4 py-5">
+
+                    <?php               
+                        if($row1 = mysqli_fetch_assoc($getCustomer)){
+                    
+                     } ?>
+
+                    <h5 class="text-uppercase"><?php echo $row1['cust_name']; ?></h5>
+
+                    <h4 class="mt-5 theme-color mb-5">Thanks for your order</h4>
+
+                    <span class="theme-color">Payment Summary</span>
+                    <div class="mb-3">
+                        <hr class="new1">
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+                        <small>Shipping</small>
+                        <small> <?php echo $res['ship_fee'];?></small>
+                    </div>
+
+                    <div class="d-flex justify-content-between mt-3">
+                        <span class="font-weight-bold">Total</span>
+                        <span class="font-weight-bold theme-color"><?php echo $_REQUEST['total']; ?></span>
+                    </div>
+
+                    <div class="text-center mt-5">
+                        <button class="btn btn-primary" onclick="movetoorder(<?php echo $cust_id?>)">Track your order</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<?php } ?>
 
 <?php
 		include 'template/footer.php';

@@ -102,6 +102,7 @@
                     value="<?php echo $p_active; ?>">
                     <option value="1" <?php if ($row['p_active']=="1") echo "selected"; ?>>Active</option>
                     <option value="0" <?php if ($row['p_active']=="0") echo "selected"; ?>>Deactive</option>
+                    <option value="2" <?php if ($row['p_active']=="2") echo "selected"; ?>>Coming Soon</option>
                 </select>
             </div>
 

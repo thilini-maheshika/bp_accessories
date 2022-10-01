@@ -52,7 +52,7 @@
                         <tbody>
 
                             <?php
-                            $getpro= getAllProducts();
+                            $getpro= getAllProductsPre();
                             while($row=mysqli_fetch_assoc($getpro)){
 
                             $cat_id = $row['cat_id'];
@@ -124,6 +124,8 @@
                                             "selected"; ?>>Active</option>
                                         <option value='0' <?php if ($row['p_active'] == '0') echo
                                             "selected"; ?>>Deactive</option>
+                                            <option value='2' <?php if ($row['p_active'] == '2') echo
+                                            "selected"; ?>>Coming Soon</option>
                                     </select>
 
                                 </td>

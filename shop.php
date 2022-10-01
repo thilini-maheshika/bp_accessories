@@ -74,6 +74,62 @@
 
             <div class="col-lg-9">
 
+                <!-- coming soon -->
+                <div class="shop_content">
+                    <div class="shop_bar clearfix">
+                        <div class="shop_product_count">
+
+                            <h4>Coming Soon..</h4>
+                        </div>
+
+                    </div>
+
+                    <div class="product_grid">
+                        <div class="product_grid_border"></div>
+
+                        <?php
+                            $soon = comingsoonProducts();
+							while($row2 = mysqli_fetch_assoc($soon)){
+								$p_id = $row2['p_id'];
+								$img = $row2['p_img'];
+								$img_src = "admin/upload/Products/".$img;
+						?>
+
+                        <!-- Product Item -->
+                        <div class="product_item is_new">
+                            <div class="product_border"></div>
+                            <div class="product_image d-flex flex-column align-items-center justify-content-center"><img
+                                    src="<?php echo $img_src;?>"></div>
+
+                            <div class="product_content">
+                                <?php
+                                            if($row2['p_qnt'] == 0){ ?>
+                                <div class="badge bg-dark text-white position-absolute"
+                                    style="top: 0.5rem; right: 0.5rem">Out of
+                                    Stock
+                                </div>
+                                <?php  } ?>
+                                <div class="product_price">RS.<?php echo $row2['p_price']?></div>
+                                <div class="product_name">
+
+                                    <?php 
+                                            if(!$row2['p_qnt'] == 0){ ?>
+
+                                    <div><a href="product.php?p_id=<?php echo $p_id; ?>"
+                                            tabindex="0"><?php echo $row2['p_name']?></a></div>
+                                    <?php }else{ ?>
+                                    <div><a tabindex="0"><del><?php echo $row2['p_name']?></del></a></div>
+                                    <?php } ?>
+                                </div>
+                                <div style="width:100%;"><button class="btn btn-primary" style="width:100%;" >Pre Order</button></div>
+                            </div>
+                        </div>
+                        <?php } ?>
+                    </div>
+                </div>
+
+                <hr>
+
                 <!-- Shop Content -->
 
                 <div class="shop_content">
@@ -142,7 +198,7 @@
                                     <div><a href="product.php?p_id=<?php echo $p_id; ?>"
                                             tabindex="0"><?php echo $row2['p_name']?></a></div>
                                     <?php }else{ ?>
-                                        <div><a tabindex="0"><del><?php echo $row2['p_name']?></del></a></div>
+                                    <div><a tabindex="0"><del><?php echo $row2['p_name']?></del></a></div>
                                     <?php } ?>
                                 </div>
                             </div>
@@ -163,6 +219,7 @@
                         <?php } ?>
                     </div>
                 </div>
+
 
             </div>
         </div>

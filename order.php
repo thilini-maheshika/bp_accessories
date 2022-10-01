@@ -8,12 +8,15 @@
 
     <div class="card-body">
         <div class="container">
+
             <?php 
                 $getall = getAllOrdersByCustID($_SESSION['customer']);
 
                 while($row=mysqli_fetch_assoc($getall)){ 
                     $order_id = $row['order_id'];
-                    ?>
+
+            ?>
+
             <article class="card mt-5">
                 <header class="card-header"> Orders / Tracking </header>
                 <div class="card-body">
@@ -42,7 +45,7 @@
                                         } ?>
                             </div>
                             <div class="col"> <strong>Tracking #:</strong> <br>
-                                <?php if($row['tracking'] != 'Pending'){ echo $row['tracking']; }else{echo "Pending";}?>
+                                <?php if($row['tracking_status'] != 'Pending'){ echo $row['tracking_status']; }else{echo "Pending";}?>
                             </div>
                             <div class="col"> <strong>Order Purchase Date:</strong>
                                 <br><?php echo $row['date_updated']; ?>
@@ -80,7 +83,7 @@
 
                                 while($row2=mysqli_fetch_assoc($getdetails)){
                                     
-                                    $img = $row2['p_image'];
+                                    $img = $row2['p_img'];
                                     $img_src = "admin/upload/Products/".$img;?>
                         <li class="col-md-4">
                             <figure class="itemside mb-3">
@@ -97,7 +100,7 @@
                     <hr>
                     <?php if ($row['order_status'] != "5") { ?>
                     <div class="col-md-2">
-                        <button type="button" onclick='orderChangeCancel("<?php echo $order_id ; ?>","order_status")'
+                        <button type="button" onclick='cancelOrder("<?php echo $order_id ; ?>","order_status")'
                             class="btn btn-darkblue">Cancel Order</button>
                     </div>
                     <?php } ?>
@@ -111,17 +114,6 @@
 
 
 <style>
-@import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
-
-body {
-    background-color: #eeeeee;
-    font-family: 'Open Sans', serif
-}
-
-.container {
-    margin-top: 50px;
-    margin-bottom: 50px
-}
 
 .card {
     position: relative;

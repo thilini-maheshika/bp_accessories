@@ -921,8 +921,9 @@ function placeOrder(form) {
                                     data: data,
                                     success: function ($data) {
                                          console.log($data);
-                                         successToast1();
-                                         window.location.href="order.php";
+                                        //  successToast1();
+                                        $('#staticBackdrop').modal('show'); 
+                                        
                                     },
                                     error: function (error) {
                                         console.log(`Error ${error}`);
@@ -945,7 +946,124 @@ function addtocart(p_id){
     window.location.href="product.php?p_id=" + p_id;
 }
 
+function movetoorder(cust_id){
 
+    window.location.href="order.php?p_id=" + cust_id;
+}
+
+
+function cancelOrder(order_id, field) {
+
+
+    var data = {
+        order_id: order_id,
+        field: field,
+        value: "5",
+    }
+
+    $.ajax({
+        method: "POST",
+        url: "admin/database.php?function_code=orderChange",
+        data: data,
+        success: function ($data) {
+            console.log($data);
+            successToastorderStatusChange();
+        },
+        error: function (error) {
+            console.log(`Error ${error}`);
+        }
+    });
+}
+
+function orderChange(ele, order_id, field) {
+
+    var val = document.getElementById(ele.id).value;
+
+    var data = {
+        order_id: order_id,
+        field: field,
+        value: val,
+    }
+    
+    $.ajax({
+        method: "POST",
+        url: "database.php?function_code=orderChange",
+        data: data,
+        success: function ($data) {
+            console.log($data);
+            successToast();
+        },
+        error: function (error) {
+            console.log(`Error ${error}`);
+        }
+    });
+
+}
+
+function changePasswordadmin(form) {
+    
+    var formData = new FormData(form);
+    console.log(formData.get('cust_email'));
+    if (formData.get('current_password').trim() != '') {
+        if (formData.get('new_password').trim() != '') {
+            if (formData.get('confirm_new_password').trim() != '') {
+                if (formData.get('new_password') == formData.get('confirm_new_password')) {
+                    if (checkPasswordadmin(formData.get('current_password'), formData.get('cust_email')) > 0) {
+
+                        
+                        const data = {
+                            cust_email: formData.get('cust_email'),
+                            field: 'cust_password',
+                            value: formData.get('new_password'),
+                        }
+
+                            $.ajax({
+                                method: "POST",
+                                url: "database.php?function_code=CustomerEditAdmin",
+                                data: data,
+                                success:function($data){
+                                    console.log($data);
+                                    successToastwithAdminLogout();
+                                },
+                                error: function (error) {
+                                    console.log(`Error ${error}`);
+                                }
+                            });
+
+                    } else { errorMessage("Current Password is Wrong"); }
+                } else { errorMessage("Password is Not Match!"); }
+            } else { errorMessage("Please Confirm Your Password"); }
+        } else { errorMessage("Please Enter New Password"); }
+    } else { errorMessage("Please Enter Current Password"); }
+
+}
+
+function checkPasswordadmin(cust_password, cust_email) {
+ 
+    const data = {
+        cust_password: cust_password,
+        cust_email: cust_email,
+    }
+    var values;
+    console.log(values);
+
+    $.ajax({
+        method: "POST",
+        url: "database.php?function_code=checkPassAdmin",
+        data: data,
+        async: false,
+        success:function(data){
+            console.log(data);
+            values= data;
+        },
+        
+        error: function (error) {
+            console.log(`Error ${error}`);
+        }
+    });
+    return values;
+    
+}
 // function profileImage(ele){
  
 //     var formData = new FormData(ele);
@@ -1065,6 +1183,17 @@ function successToastwithLogout() {
     })
 }
 
+function successToastwithAdminLogout() {
+    iziToast.success({
+        timeout: 1000,
+        title: 'Saving..',
+        message: 'Your Changes saved Successfully!',
+        onClosing: function () {
+            window.location.href = 'pages/logout.php';
+        }
+    })
+}
+
 function successToastEdit() {
     iziToast.success({
         timeout: 1000,
@@ -1105,6 +1234,17 @@ function successToast1() {
         message: 'Successfully Placed Order!',
         onClosing: function () {
             
+        }
+    })
+}
+
+function successToastorderStatusChange() {
+    iziToast.success({
+        timeout: 1000,
+        title: 'Saving..',
+        message: 'Successfully canceled Order!!',
+        onClosing: function () {
+                      
         }
     })
 }

@@ -19,6 +19,7 @@
     <link rel="stylesheet" type="text/css" href="css/menu.css">
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
+    
 </head>
 
 <body>
@@ -59,7 +60,7 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="#"><i class="fa fa-eye"></i>View Orders</a></li>
+                    <li><a href="orders.php"><i class="fa fa-eye"></i>View Orders</a></li>
                 </ul>
             </li>
 
@@ -103,7 +104,7 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="#"><i class="fa fa-edit"></i>Edit Profile</a></li>
+                    <li><a href="editprofile.php"><i class="fa fa-edit"></i>Edit Profile</a></li>
                     <li><a href="pages/logout.php"><i class="fa fa-power-off"></i>Log Out</a></li>
                 </ul>
             </li>

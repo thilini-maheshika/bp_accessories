@@ -1,7 +1,5 @@
 <?php
     require_once 'pages/header.php';
-
-
 ?>
 
 <div class="container-fluid">
@@ -84,6 +82,7 @@
                                 id="product_active">
                                 <option value="1" selected>Active</option>
                                 <option value="0">Deactive</option>
+                                <option value="2">Coming Soon</option>
                             </select>
                         </div>
 

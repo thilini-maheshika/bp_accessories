@@ -47,8 +47,10 @@ if (isset($_GET['function_code']) && $_GET['function_code'] == 'categoryAdd') {
 	DeleteContactMsg($_POST);
 }else if (isset($_GET['function_code']) && $_GET['function_code'] == 'CustomerEdit') {
 	 EditCustomer($_POST);
-}else if (isset($_GET['function_code']) && $_GET['function_code'] == 'checkPass') {
-	PasswordCheckCust($_POST);
+}else if (isset($_GET['function_code']) && $_GET['function_code'] == 'CustomerEditAdmin') {
+	EditCustomerAdmin($_POST);
+}else if (isset($_GET['function_code']) && $_GET['function_code'] == 'checkPassAdmin') {
+	PasswordCheckadmin($_POST);
 }else if (isset($_GET['function_code']) && $_GET['function_code'] == 'emailCheck') {
 	EmailCheckCust($_POST);
 }else if (isset($_GET['function_code']) && $_GET['function_code'] == 'customerDelete') {
@@ -59,6 +61,8 @@ if (isset($_GET['function_code']) && $_GET['function_code'] == 'categoryAdd') {
 	deleteCartItems($_POST);
 }else if (isset($_GET['function_code']) && $_GET['function_code'] == 'qntEdit') {
 	editQuantity($_POST);
+}else if (isset($_GET['function_code']) && $_GET['function_code'] == 'orderChange') {
+	changeorder($_POST);
 }
 
 //order
@@ -105,8 +109,27 @@ function getAllOrdersByCustID($cust_id){
 function getAllOrderItemsBYOrder($order_id){
 	include 'connection.php';
 
-	$viewcat = "SELECT * FROM order_items join products on order_items.p_id = products.p_id WHERE order_items.order_id = '$order_id'";
-	return mysqli_query($con,$viewcat);
+	$all = "SELECT * FROM order_items join products on order_items.p_id = products.p_id WHERE order_items.order_id = '$order_id'";
+	return mysqli_query($con,$all);
+}
+
+function getAllOrders(){
+	include 'connection.php';
+
+	$getall = "SELECT * FROM order_products join customers on customers.cust_id = order_products.cust_id  WHERE order_products.is_deleted = '0' ORDER BY order_id DESC";
+	return mysqli_query($con,$getall);
+}
+
+function changeorder($data){
+
+	include 'connection.php';
+
+	$order_id = $data['order_id'];
+    $field = $data['field'];
+    $value = $data['value'];
+
+	$sql = "UPDATE order_products SET $field = '$value' where order_id = $order_id";
+    return mysqli_query($con, $sql);
 }
 
 //cart
@@ -304,6 +327,18 @@ function EditCustomer($data){
 
 }
 
+function EditCustomerAdmin($data){
+	include 'connection.php';
+
+	$cust_email = $data['cust_email'];
+	$field = $data['field'];
+	$value = $data['value'];
+
+	$sql = "UPDATE customers SET $field = '$value' where cust_email = '$cust_email'";
+    return mysqli_query($con, $sql);
+
+}
+
 function PasswordCheckCust($data){
 	include 'connection.php';
 
@@ -317,6 +352,18 @@ function PasswordCheckCust($data){
 	echo json_encode($count);
 }
 
+function PasswordCheckadmin($data){
+	include 'connection.php';
+
+	$cust_email = $data['cust_email'];
+	$cust_password = $data['cust_password'];
+
+	$q1 = "SELECT * FROM customers WHERE cust_email = '$cust_email' AND cust_password='$cust_password' ";
+	$check = mysqli_query($con,$q1);
+	$count= mysqli_num_rows($check);
+
+	echo json_encode($count);
+}
 function EmailCheckCust($data){
 	include 'connection.php';
 
@@ -543,7 +590,13 @@ function featuredProducts(){
 	return mysqli_query($con,$viewcat);
 }
 
+function comingsoonProducts(){
 
+	include 'connection.php';
+
+	$viewcat = "SELECT * FROM products join category on category.cat_id = products.cat_id WHERE products.is_deleted = 0 AND products.p_active = '2' ORDER BY products.date_updated DESC ";
+	return mysqli_query($con,$viewcat);
+}
 // Model //
 
 function getAllModelbyID($mod_id){
@@ -673,6 +726,7 @@ function getAllProductsByJoin(){
 
 }
 
+
 function getProductsByModel($mod_id){
 
 	include 'connection.php';
@@ -714,6 +768,14 @@ function getAllProducts(){
 	include 'connection.php';
 
 	$viewpro = "SELECT * FROM products WHERE is_deleted='0' AND products.p_active='1' ";
+	return mysqli_query($con,$viewpro);
+}
+
+function getAllProductsPre(){
+
+	include 'connection.php';
+
+	$viewpro = "SELECT * FROM products WHERE is_deleted='0' ";
 	return mysqli_query($con,$viewpro);
 }
 
