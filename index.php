@@ -59,7 +59,7 @@
 
                             <!-- Deals Item -->
                             <div class="owl-item deals_item">
-                                <div class="deals_image"><img src="<?php echo $img_src; ?>"></div>
+                                <div class="deals_image"><img src="<?php echo $img_src; ?>" width="200px" height="auto"></div>
                                 <div class="deals_content">
                                     <div class="deals_info_line d-flex flex-row justify-content-start">
                                     </div>
@@ -116,18 +116,18 @@
                                         class="product_item discount d-flex flex-column align-items-center justify-content-center text-center">
                                         <div
                                             class="product_image d-flex flex-column align-items-center justify-content-center">
-                                            <img src="<?php echo $img_src ?>" width="200px"></div>
+                                            <img src="<?php echo $img_src ?>" width="200px">
+                                        </div>
                                         <div class="product_content">
                                             <div class="product_price discount">
-                                                <span>RS.<?php echo $row['p_price'] ?></span></div>
+                                                <span>RS.<?php echo $row['p_price'] ?></span>
+                                            </div>
                                             <div class="product_name">
                                                 <div><a
                                                         href="product.php?p_id=<?php echo $p_id; ?>"><?php echo $row['p_name'] ?></a>
                                                 </div>
                                             </div>
-                                            <div class="product_extras">
-                                                <button class="product_cart_button">Add to Cart</button>
-                                            </div>
+                                            
                                         </div>
                                     </div>
                                 </div>
@@ -193,7 +193,7 @@
         </div>
     </div>
 
-    
+
     <!-- Hot New Arrivals -->
     <div class="viewed">
         <div class="container">

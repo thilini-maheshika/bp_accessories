@@ -75,13 +75,6 @@
             </div>
 
             <div class="form-group">
-                <label>Shipping Fee: Rs.</label>
-                <input type="text" value="<?php echo $row['ship_fee'] ?>"
-                    onChange="ProductEdit(this,<?php echo $row['p_id'];?>,'ship_fee')" id="ship_fee <?php echo $row['p_id']; ?>"
-                    name="ship_fee" class="form-control">
-            </div>
-
-            <div class="form-group">
                 <label>Stock Quantity</label>
                 <input type="text" value="<?php echo $row['p_qnt'] ?>"
                     onChange="ProductEdit(this,<?php echo $row['p_id'];?>,'p_qnt')" id="p_qnt <?php echo $row['p_id']; ?>"

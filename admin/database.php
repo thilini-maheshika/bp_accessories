@@ -381,18 +381,27 @@ function editProfileImage($data){
 
 	$cust_id = $data['cust_id'];
 	$field = $data['field'];
-	$image = $_FILES['file']['name'];
+	// $image = $_FILES['file']['name'];
 
 	include 'connection.php'; 
 
-		$target_dir = "auth/upload/";
+		// $target_dir = "auth/upload/";
+		// $target_file = $target_dir . basename($image);
+		// $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+		// $extensions_arr = array("jpg","jpeg","png","gif","jfif");
+		// move_uploaded_file($_FILES['file']['tmp_name'],$target_dir.$image);
+
+	
+
+		$img = $_FILES['file']['name'];
+		$target_dir = "../auth/upload/";
 		$target_file = $target_dir . basename($img);
 		$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
 		$extensions_arr = array("jpg","jpeg","png","gif","jfif");
 		move_uploaded_file($_FILES['file']['tmp_name'],$target_dir.$img);
 
 		if (in_array($imageFileType,$extensions_arr)) {
-			$sql = "UPDATE customers SET $field = '$image' WHERE cust_id = $cust_id";
+			$sql = "UPDATE customers SET $field = '$img' WHERE cust_id = $cust_id";
 			return mysqli_query($con, $sql);
 		}
 }

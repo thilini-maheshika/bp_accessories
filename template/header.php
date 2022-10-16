@@ -93,18 +93,14 @@
 
                                             <div class="custom_dropdown">
                                                 <div class="custom_dropdown_list">
-                                                    <span class="custom_dropdown_placeholder clc">All Categories</span>
+                                                    <span class="custom_dropdown_placeholder clc">Search</span>
 
                                                     <ul class="custom_list clc">
-                                                        <?php
-														$fetchcat = getAllCategory();
-														while($res1 = mysqli_fetch_assoc($fetchcat)){
-                                                            $cat_id = $res1['cat_id'];
-													?>
-                                                        <li><a class="clc" name="key" id="key"
-                                                                href="shop.php?cat_id=<?php echo $cat_id; ?>"><?php echo $res1['cat_name'] ?></a>
+                                                  
+														
+                                                        <li>
                                                         </li>
-                                                        <?php } ?>
+                                                      
                                                     </ul>
                                                 </div>
                                             </div>

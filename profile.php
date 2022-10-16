@@ -45,7 +45,8 @@
                             <div class="profile">
                                 <label>
                                 <input type="hidden" id="cust_id" name="cust_id" value="<?php echo $row['cust_id'];?>"/>
-                                    <input type="file" accept="image/*" name="new_img" id="new_img" onchange="profileImage(this.form)"><i
+                                <input type="hidden" id="field" name="field" value="cust_img"/>
+                                    <input type="file" name="file" id="file" onchange="profileImage(this.form)"><i
                                         class="fa fa-edit"></i>
                                 </label>
                             </div>

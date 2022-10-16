@@ -475,24 +475,40 @@ function galleryDelete(g_id){
 function contactForm(form) {
     var formData = new FormData(form);
 
-    $.ajax({
+    if (formData.get('name').trim() != '') {
+        if (formData.get('email').trim() != '') {
+            if (formData.get('phone').trim() != '') {
+                if (formData.get('message').trim() != '') {
+                        
+                        const data = {
+                            cust_id: formData.get('cust_id'),
+                            field: 'cust_password',
+                            value: formData.get('new_password'),
+                        }
+
+                        $.ajax({
         
-        method: "POST",
-        url: "admin/database.php?function_code=contactmsg",
-        data: formData,
-        success:function($data){
-            console.log($data);
-              sweetAlert4("Your message has sent. We will response soon.Thank You!!");
-              location.reload(true);  
-            
-        },
-            contentType: false,
-            processData: false,
-            error: function(error){
-                console.log(`Error ${error}`);
-                sweetAlert2(warning,'Something Wrong.Try again!!');
-            } 
-    });             
+                            method: "POST",
+                            url: "admin/database.php?function_code=contactmsg",
+                            data: formData,
+                            success:function($data){
+                                console.log($data);
+                                  sweetAlert4("Your message has sent. We will response soon.Thank You!!");
+                                //   location.reload(true);  
+                                
+                            },
+                                contentType: false,
+                                processData: false,
+                                error: function(error){
+                                    console.log(`Error ${error}`);
+                                    sweetAlert2(warning,'Something Wrong.Try again!!');
+                                } 
+                        });
+                } else { errorMessage("Please Enter Message"); }
+            } else { errorMessage("Please Enter Phone No."); }
+        } else { errorMessage("Please Enter Email Address"); }
+    } else { errorMessage("Please Enter Name"); }
+             
 }
 
 function NotifyMsgs(count){
@@ -582,6 +598,19 @@ function searchProduct(ele){
     var formData = new FormData(ele);
     var key = formData.get('key');
     window.location.href="shop.php?keyword=" + key;
+    
+}
+
+function searchByCategory(ele,cat_id){
+
+    var val = document.getElementById(ele.id).value;
+
+    const data = {
+        field: field,
+        value: val,
+    }
+
+    window.location.href="shop.php?keyword=" + value;
     
 }
 
@@ -1064,35 +1093,31 @@ function checkPasswordadmin(cust_password, cust_email) {
     return values;
     
 }
-// function profileImage(ele){
+function profileImage(ele){
  
-//     var formData = new FormData(ele);
-
-//     var data = {
-//         cust_id: formData.get('cust_id'),
-//         field: 'cust_img',
-//         value: formData.append("new_img",file),
-//     }
+    var formData = new FormData(ele);
     
-//     $.ajax({
+    $.ajax({
         
-//         method: "POST",
-//         url: "admin/database.php?function_code=profileImageEdit",
-//         data: data,
-//         success:function($data){
-//             console.log($data);
-//             //  loading("Image Uploading...");
+        method: "POST",
+        url: "admin/database.php?function_code=profileImageEdit",
+        data: formData,
+        success:function($data){
+            console.log($data);
+            //  loading("Image Uploading...");
             
-//         },
-//         cache: false,
+        },
+        cache: false,
+        contentType: false,
+        processData: false,
 
-//         error: function (error) {
-//             console.log(`Error ${error}`);
-//             sweetAlert2(warning,'Something Wrong.Try again!!');
-//         }  
-//     });
+        error: function (error) {
+            console.log(`Error ${error}`);
+            sweetAlert2(warning,'Something Wrong.Try again!!');
+        }  
+    });
     
-// }
+}
 
 
 //Sweet Alert Functions Zone

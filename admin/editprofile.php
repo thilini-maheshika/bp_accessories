@@ -36,10 +36,10 @@
                                     <input type="password" class="form-control" name="confirm_new_password"
                                         id="confirm_new_password" placeholder="Confirm New Password" required>
                                 </li>
-                                <li>
+                                
                                     <input type="hidden" class="form-control" name="cust_email"
                                         value="<?php echo $_SESSION['admin']; ?>" id="cust_email">
-                                </li>
+                                
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     <button type="button" onclick="changePasswordadmin(this.form)" class="btn btn-darkblue"
                                         style="margin-left:50px;">Save
