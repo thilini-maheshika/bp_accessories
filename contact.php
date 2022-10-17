@@ -83,6 +83,18 @@
 		include 'gallery.php';
 	?>
     <!-- Gallery -->
+
+    <!-- Map -->
+
+    <div class="contact_map">
+        <div id="google_map" class="google_map">
+            <div class="map_container">
+                <div id="map">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3961.100765790619!2d79.9880149!3d6.87853!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae251f75a088045%3A0x47317049c049208b!2sBp%20accessories!5e0!3m2!1sen!2slk!4v1665981141843!5m2!1sen!2slk" width="100%" height="80%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <?php
