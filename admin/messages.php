@@ -31,17 +31,9 @@
                                     <th>Contact Phone</th>
                                     <th>Message</th>
                                     <th>Date</th>
+                                    <th>Delete</th>
                                 </tr>
                             </thead>
-                            <tfoot>
-                                <tr>
-                                    <th>Contact Name</th>
-                                    <th>Contact Email</th>
-                                    <th>Contact Phone</th>
-                                    <th>Message</th>
-                                    <th>Date</th>
-                                </tr>
-                            </tfoot>
                             <tbody>
 
                                 <?php

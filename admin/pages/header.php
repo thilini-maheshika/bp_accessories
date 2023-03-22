@@ -121,7 +121,7 @@
             Copyright &copy; 2022 <a href="http://www.bpaccessories.com">bpaccessories.com</a> All rights reserved.
         </div>
         <div class="col-sm-6">
-            <span class="pull-right">Designed By : G.D.S.B.PERERA</span>
+            <span class="pull-right">Designed By : K.T.Maheshika</span>
         </div>
     </footer>
 

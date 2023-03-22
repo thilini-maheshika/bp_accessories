@@ -25,30 +25,16 @@
                             <tr>
                                 <th>Product Name</th>
                                 <th width="10%">Description</th>
-                                <th>Category</th>
+                                <th width="10%">Category</th>
                                 <th>Brand</th>
                                 <th>Image</th>
                                 <th width="10%">Price</th>
-                                <th width="10px">Stock Quantity</th>
+                                <th width="7px">Stock Quantity</th>
                                 <th>Waranty</th>
-                                <th>Product Active</th>
+                                <th width="15%">Product Active</th>
 
                             </tr>
                         </thead>
-                        <tfoot>
-                            <tr>
-                                <th>Product Name</th>
-                                <th width="10%">Description</th>
-                                <th>Category</th>
-                                <th>Brand</th>
-                                <th>Image</th>
-                                <th width="10%">Price</th>
-                                <th width="10px">Stock Quantity</th>
-                                <th>Waranty</th>
-                                <th>Product Active</th>
-
-                            </tr>
-                        </tfoot>
                         <tbody>
 
                             <?php
@@ -111,6 +97,7 @@
                                 </td>
 
                                 <td>
+                                
                                     <a href="#"><?php echo $row['p_waranty']; ?></a>
                                 </td>
 

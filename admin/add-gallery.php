@@ -38,12 +38,6 @@
                             <th>Image</th>
                         </tr>
                     </thead>
-                    <tfoot>
-                        <tr>
-                            <th>Title</th>
-                            <th>Image</th>
-                        </tr>
-                    </tfoot>
                     <tbody>
 
                         <?php 
