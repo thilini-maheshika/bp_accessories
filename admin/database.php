@@ -63,18 +63,43 @@ if (isset($_GET['function_code']) && $_GET['function_code'] == 'categoryAdd') {
 	editQuantity($_POST);
 }else if (isset($_GET['function_code']) && $_GET['function_code'] == 'orderChange') {
 	changeorder($_POST);
+}else if (isset($_GET['function_code']) && $_GET['function_code'] == 'preOrder') {
+	preOrder($_POST);
+}else if (isset($_GET['function_code']) && $_GET['function_code'] == 'orderChangePreOrder') {
+	orderChangePreOrder($_POST);
+}
+
+function orderChangePreOrder($data){
+
+	include 'connection.php';
+
+	$pre_order_id = $data['pre_order_id'];
+    $field = $data['field'];
+    $value = $data['value'];
+
+	$sql = "UPDATE pre_order SET $field = '$value' where pre_order_id = $pre_order_id";
+    return mysqli_query($con, $sql);
 }
 
 //order
-function addOrders($cust_id, $shipping_address, $billing_address, $total){
+function addOrders($data){
 
 	include 'connection.php';
+
+	$product_name = $data['product_name'];
+	$product_highlight = $data['product_highlight'];
+	$product_description = $data['product_description'];
+	$product_price = $data['product_price'];
+	$product_qty = $data['product_qty'];
+	$product_active = $data['product_active'];
+	$cat_id = $data['cat_id'];
 
 	$sql = "INSERT INTO order_products(cust_id, total, shipping_address, billing_address, is_deleted, order_status, tracking_status, date_updated) VALUES('$cust_id', '$total', '$shipping_address', '$billing_address', 0 , 1 , 'Pending' , now())";
 	$res =  mysqli_query($con, $sql);
 	return mysqli_insert_id($con);
 
 }
+
 
 function addOrderItems($order_id,$p_id,$qnt,$p_price){
 
@@ -94,7 +119,7 @@ function productQtyReduce($p_id, $qnt)
 
 	$value = $row['p_qnt'] - $qnt;
 
-    $sql = "UPDATE products SET p_qnt = '$value', date_updated = now() WHERE p_id = $p_id";
+    $sql = "UPDATE products SET p_qnt = '$value'WHERE p_id = $p_id";
     return mysqli_query($con, $sql);	
 }
 
@@ -186,6 +211,13 @@ function getAllCart($customer_id){
 	$q1= "SELECT * FROM cart join products on products.p_id = cart.p_id join customers on customers.cust_id = cart.cust_id WHERE cart.cust_id='$customer_id'";
 	return mysqli_query($con,$q1);
 }
+function getAllProductsbyID($p_id){
+
+	include 'connection.php';
+
+	$q1= "SELECT * FROM products WHERE p_id = '$p_id'";
+	return mysqli_query($con,$q1);
+}
 
 function getCartCount($customer_id){
 	include 'connection.php';
@@ -203,7 +235,7 @@ function editQuantity($data){
 	$field = $data['field'];
     $value = $data['value']; 
 
-	$qty= "UPDATE cart SET $field = '$value' , date_updated = now() WHERE cart_id = $cart_id ";
+	$qty= "UPDATE cart SET $field = '$value' WHERE cart_id = $cart_id ";
 	return mysqli_query($con,$qty);
 
 }
@@ -220,6 +252,22 @@ function ContactFormMessage($data){
 
 	$sql = "INSERT INTO contactform(contact_name,contact_email,contact_phone,contact_msg,status,date_updated) 
 	VALUES('$name','$email','$phone','$message', 0 ,now())";
+	return mysqli_query($con, $sql);
+		
+}
+
+function preOrder($data){
+	include 'connection.php';
+
+	$name = $data['name'];
+	$email = $data['email'];
+	$phone = $data['phone'];
+	$address = $data['address'];
+	$p_id = $data['p_id'];
+	$p_price = $data['p_price'];
+
+	$sql = "INSERT INTO pre_order(p_id ,customer_name,customer_email,customer_phone,customer_address,preorder_total,is_deleted,date_updated, pre_order_status) 
+	VALUES('$p_id','$name','$email','$phone','$address','$p_price', 0 ,now(), 1)";
 	return mysqli_query($con, $sql);
 		
 }
@@ -241,6 +289,21 @@ function getAllMessages(){
 	$msg = "SELECT * FROM contactform ";
 	return mysqli_query($con,$msg);
 }
+function getAllpre_order(){
+
+	include 'connection.php';
+
+	$msg = "SELECT * FROM pre_order join products on products.p_id = pre_order.p_id WHERE pre_order.is_deleted = 0 ";
+	return mysqli_query($con,$msg);
+}
+
+// function getAllpre_orderByCustomer($cust_id){
+
+// 	include 'connection.php';
+
+// 	$msg = "SELECT * FROM pre_order join products on products.p_id = pre_order.p_id WHERE pre_order.is_deleted = 0 AND pre_order.cust_id = '$cust_id' ";
+// 	return mysqli_query($con,$msg);
+// }
 
 function getAllMessagesByBell(){
 
@@ -379,31 +442,22 @@ function EmailCheckCust($data){
 
 function editProfileImage($data){
 
-	$cust_id = $data['cust_id'];
-	$field = $data['field'];
-	// $image = $_FILES['file']['name'];
-
 	include 'connection.php'; 
 
-		// $target_dir = "auth/upload/";
-		// $target_file = $target_dir . basename($image);
-		// $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-		// $extensions_arr = array("jpg","jpeg","png","gif","jfif");
-		// move_uploaded_file($_FILES['file']['tmp_name'],$target_dir.$image);
+	$cust_id = $data['cust_id'];
+	$field = $data['field'];
 
-	
+	$img = $_FILES['file']['name'];
+	$target_dir = "../auth/upload/";
+	$target_file = $target_dir . basename($img);
+	$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+	$extensions_arr = array("jpg","jpeg","png","gif","jfif");
+	move_uploaded_file($_FILES['file']['tmp_name'],$target_dir.$img);
 
-		$img = $_FILES['file']['name'];
-		$target_dir = "../auth/upload/";
-		$target_file = $target_dir . basename($img);
-		$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-		$extensions_arr = array("jpg","jpeg","png","gif","jfif");
-		move_uploaded_file($_FILES['file']['tmp_name'],$target_dir.$img);
-
-		if (in_array($imageFileType,$extensions_arr)) {
-			$sql = "UPDATE customers SET $field = '$img' WHERE cust_id = $cust_id";
-			return mysqli_query($con, $sql);
-		}
+	if (in_array($imageFileType,$extensions_arr)) {
+		$sql = "UPDATE customers SET $field = '$img' WHERE cust_id = '$cust_id'";
+		return mysqli_query($con, $sql);
+	}
 }
 
 //customer register
@@ -451,6 +505,14 @@ function getAllCustomers(){
 	include 'connection.php';
 
 	$customer = "SELECT * FROM customers WHERE is_deleted='0'";
+	return mysqli_query($con,$customer);
+}
+
+function getAllCustomersByID($cust_id){
+
+	include 'connection.php';
+
+	$customer = "SELECT * FROM customers WHERE is_deleted='0' AND cust_id = '$cust_id'";
 	return mysqli_query($con,$customer);
 }
 
@@ -544,7 +606,7 @@ function deleteCategory($data){
 
 	$cat_id = $data['cat_id'];
 
-	$delcat="UPDATE category SET is_deleted = 1 , date_updated = now() WHERE cat_id=$cat_id";
+	$delcat="UPDATE category SET is_deleted = 1 WHERE cat_id=$cat_id";
 	return mysqli_query($con,$delcat);
 }
 
@@ -557,7 +619,7 @@ function editCategory($data){
     $value = $data['value']; 
 
 		
-	$sql1 = "UPDATE category SET $field='$value' , date_updated = now()  WHERE cat_id='$cat_id'";
+	$sql1 = "UPDATE category SET $field='$value'  WHERE cat_id='$cat_id'";
 	return mysqli_query($con, $sql1);
 
 }
@@ -576,7 +638,7 @@ function editCategoryImage($data){
 		move_uploaded_file($_FILES['file']['tmp_name'],$target_dir.$img);
 
 		if (in_array($imageFileType,$extensions_arr)) {
-			$sql = "UPDATE category SET cat_img='$img' , date_updated = now()  WHERE cat_id='$cat_id'";
+			$sql = "UPDATE category SET cat_img='$img'  WHERE cat_id='$cat_id'";
 			return mysqli_query($con, $sql);
 		}
 
@@ -677,7 +739,7 @@ function deleteModel($data){
 
 	$mod_id = $data['mod_id'];
 
-	$delmod="UPDATE model SET is_deleted = 1 , date_updated = now() WHERE mod_id=$mod_id";
+	$delmod="UPDATE model SET is_deleted = 1 WHERE mod_id=$mod_id";
 	return mysqli_query($con,$delmod);
 }
 
@@ -690,7 +752,7 @@ function editModel($data){
     $value = $data['value']; 
 
 		
-	$sql1 = "UPDATE model SET $field='$value' , date_updated = now()  WHERE mod_id='$mod_id'";
+	$sql1 = "UPDATE model SET $field='$value'  WHERE mod_id='$mod_id'";
 	return mysqli_query($con, $sql1);
 
 }
@@ -710,7 +772,7 @@ function editModelImage($data){
 		move_uploaded_file($_FILES['file']['tmp_name'],$target_dir.$img);
 
 		if (in_array($imageFileType,$extensions_arr)) {
-			$sql = "UPDATE model SET mod_img='$img' , date_updated = now()  WHERE mod_id='$mod_id'";
+			$sql = "UPDATE model SET mod_img='$img'  WHERE mod_id='$mod_id'";
 			return mysqli_query($con, $sql);
 		}
 }
@@ -831,14 +893,6 @@ function deleteProduct($data){
 	
 	$delpro="UPDATE products SET is_deleted = 1  WHERE p_id=$p_id";
 	return mysqli_query($con,$delpro);
-}
-
-function getAllProductsbyID($p_id){
-
-	include 'connection.php';
-
-	$viewPro = "SELECT * FROM products WHERE p_id='$p_id' AND is_deleted='0'";
-	return mysqli_query($con,$viewPro);
 }
 
 function editProduct($data){

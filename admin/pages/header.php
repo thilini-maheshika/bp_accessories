@@ -19,6 +19,8 @@
     <link rel="stylesheet" type="text/css" href="css/menu.css">
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
+
+    <link rel="icon" href="../images/logo.jpg" type="image/png">
     
 </head>
 
@@ -61,6 +63,7 @@
                 </a>
                 <ul class="treeview-menu">
                     <li><a href="orders.php"><i class="fa fa-eye"></i>View Orders</a></li>
+                    <li><a href="pre_order.php"><i class="fa fa-eye"></i>Pre Orders</a></li>
                 </ul>
             </li>
 

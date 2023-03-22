@@ -5,7 +5,7 @@
 ?>
 
 <?php
-    $getall = checkCustomerByID($_SESSION['customer']);
+    $getall = getAllCustomersByID($_SESSION['customer']);
 
         $row=mysqli_fetch_assoc($getall);
 ?>
@@ -24,8 +24,7 @@
         </div>
 
         <?php
-		$getall = getAllCustomers($_SESSION['customer']);
-
+		$getall = getAllCustomersByID($_SESSION['customer']);
 		$row=mysqli_fetch_assoc($getall);
 
 			$img = $row['cust_img'];

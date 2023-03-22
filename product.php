@@ -50,6 +50,7 @@
                         <form action="#">
                             <div class="clearfix" style="z-index: 1000;">
 
+                                <?php if(!isset($_REQUEST['p_active'])) :?>
                                 <!-- Product Quantity -->
                                 <div class="product_quantity clearfix">
                                     <span>Quantity: </span>
@@ -58,13 +59,18 @@
 											<div id="quantity_inc_button" class="quantity_inc quantity_control"><i class="fas fa-chevron-up"></i></div>
 											<div id="quantity_dec_button" class="quantity_dec quantity_control"><i class="fas fa-chevron-down"></i></div>
 										</div>
-                                </div>
-                                
+                                    </div>
+                                <?php endif; ?>
+                                    
                             </div>
 
                             <div class="product_price">RS. <?php echo $row2['p_price']; ?></div>
                             <div class="button_container">
-                                <button type="button" class="button cart_button" onclick="addtoCartwithQty(<?php echo $p_id; ?>, <?php echo $row2['p_price']; ?>)">Add to Cart</button>
+                                <?php if(isset($_REQUEST['p_active'])) :?>
+                                    <a href="preorder.php?p_id=<?php echo $row2['p_id'] ?>" class="button cart_button">Pre Order</a>
+                                <?php else:?>
+                                    <button type="button" class="button cart_button" onclick="addtoCartwithQty(<?php echo $p_id; ?>, <?php echo $row2['p_price']; ?>)">Add to Cart</button>
+                                <?php endif; ?>
                             </div>
 
                         </form>

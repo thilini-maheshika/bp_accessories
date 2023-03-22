@@ -13,31 +13,31 @@ var error = "error";
 var success = "success";
 var warning = "warning";
 
-function catForm(){
+function catForm() {
 
-    let formDetails= document.getElementById('fileinfo');
+    let formDetails = document.getElementById('fileinfo');
     let fd = new FormData(formDetails);
 
-    if(document.getElementById('cat_name').value == ''){
-         sweetAlert1(error,"Please Enter Category Name");
-    }else if(document.getElementById('cat_des').value == ''){
-        sweetAlert1(error,"Please Enter Category Description!");
-    }else if(document.getElementById('file').value == ''){
+    if (document.getElementById('cat_name').value == '') {
+        sweetAlert1(error, "Please Enter Category Name");
+    } else if (document.getElementById('cat_des').value == '') {
+        sweetAlert1(error, "Please Enter Category Description!");
+    } else if (document.getElementById('file').value == '') {
         sweetAlert1(error, "Please Select Image!");
-    }else{
+    } else {
 
         $.ajax({
 
             method: "POST",
             url: "database.php?function_code=categoryAdd",
             data: fd,
-            success:function($data){
+            success: function ($data) {
                 console.log($data);
 
-                if($data > 0){
-                    sweetAlert1(warning,"This Category Already Exists..");
-                }else{
-                    sweetAlert2(success,'Your work has been saved');
+                if ($data > 0) {
+                    sweetAlert1(warning, "This Category Already Exists..");
+                } else {
+                    sweetAlert2(success, 'Your work has been saved');
                 }
             },
             cache: false,
@@ -45,18 +45,18 @@ function catForm(){
             processData: false,
             error: function (error) {
                 console.log(`Error ${error}`);
-                sweetAlert2(warning,'Something Wrong.Try again!!');
+                sweetAlert2(warning, 'Something Wrong.Try again!!');
             }
 
-            
+
         });
     }
 }
 
-function CategoryDelete(cat_id){
+function CategoryDelete(cat_id) {
 
     const data = {
-        cat_id : cat_id
+        cat_id: cat_id
     }
 
     Swal.fire({
@@ -68,13 +68,13 @@ function CategoryDelete(cat_id){
         cancelButtonColor: '#d33',
         confirmButtonText: 'Yes, delete it!'
 
-      }).then((result) => {
+    }).then((result) => {
         if (result.isConfirmed) {
             $.ajax({
                 method: "POST",
                 url: "database.php?function_code=categoryDelete",
                 data: data,
-                success:function($data){
+                success: function ($data) {
                     console.log($data);
                     sweetAlert3();
                     location.reload(this);
@@ -84,11 +84,12 @@ function CategoryDelete(cat_id){
                 }
             });
         }
-      })
-    
+    })
+
 }
 
-function CategoryEdit(ele, cat_id ,field){
+
+function CategoryEdit(ele, cat_id, field) {
 
     var itemid = ele.id;
     var val = document.getElementById(ele.id).value;
@@ -103,7 +104,7 @@ function CategoryEdit(ele, cat_id ,field){
         method: "POST",
         url: "database.php?function_code=categoryEdit",
         data: data,
-        success:function($data){
+        success: function ($data) {
             console.log($data);
             location.reload(this);
         },
@@ -122,46 +123,46 @@ const CategoryEditImage = (ele) => {
         method: "POST",
         url: "database.php?function_code=categoryImageEdit",
         data: formData,
-        success:function($data){
+        success: function ($data) {
             console.log($data);
             loading("Image Uploading...");
-            
+
         },
         cache: false,
         contentType: false,
         processData: false,
         error: function (error) {
             console.log(`Error ${error}`);
-            sweetAlert2(warning,'Something Wrong.Try again!!');
-        }  
+            sweetAlert2(warning, 'Something Wrong.Try again!!');
+        }
     })
 }
 
 //Model
 
-function modForm(){
+function modForm() {
 
-    let formDetails= document.getElementById('modinfo');
+    let formDetails = document.getElementById('modinfo');
     let fd = new FormData(formDetails);
 
-    if(document.getElementById('mod_name').value == ''){
-         sweetAlert1(error,"Please Enter Model Name");
-    }else if(document.getElementById('file').value == ''){
+    if (document.getElementById('mod_name').value == '') {
+        sweetAlert1(error, "Please Enter Model Name");
+    } else if (document.getElementById('file').value == '') {
         sweetAlert1(error, "Please Select Image!");
-    }else{
+    } else {
 
         $.ajax({
 
             method: "POST",
             url: "database.php?function_code=modelAdd",
             data: fd,
-            success:function($data){
+            success: function ($data) {
                 console.log($data);
 
-                if($data > 0){
-                    sweetAlert1(warning,"This Model Already Exists..");
-                }else{
-                    sweetAlert2(success,'Your work has been saved');
+                if ($data > 0) {
+                    sweetAlert1(warning, "This Model Already Exists..");
+                } else {
+                    sweetAlert2(success, 'Your work has been saved');
                 }
             },
             cache: false,
@@ -169,18 +170,18 @@ function modForm(){
             processData: false,
             error: function (error) {
                 console.log(`Error ${error}`);
-                sweetAlert2(warning,'Something Wrong.Try again!!');
+                sweetAlert2(warning, 'Something Wrong.Try again!!');
             }
 
-            
+
         });
     }
 }
 
-function ModelDelete(mod_id){
+function ModelDelete(mod_id) {
 
     const data = {
-        mod_id : mod_id
+        mod_id: mod_id
     }
 
     Swal.fire({
@@ -192,13 +193,13 @@ function ModelDelete(mod_id){
         cancelButtonColor: '#d33',
         confirmButtonText: 'Yes, delete it!'
 
-      }).then((result) => {
+    }).then((result) => {
         if (result.isConfirmed) {
             $.ajax({
                 method: "POST",
                 url: "database.php?function_code=modelDelete",
                 data: data,
-                success:function($data){
+                success: function ($data) {
                     console.log($data);
                     sweetAlert3();
                     location.reload(this);
@@ -208,97 +209,97 @@ function ModelDelete(mod_id){
                 }
             });
         }
-      })
-    
+    })
+
 }
 
-function ModelEdit(ele, mod_id ,field){
+function ModelEdit(ele, mod_id, field) {
 
-        var itemid = ele.id;
-        var val = document.getElementById(ele.id).value;
-    
-        const data = {
-            mod_id: mod_id,
-            field: field,
-            value: val,
-        }
-    
-        $.ajax({
-            method: "POST",
-            url: "database.php?function_code=modelEdit",
-            data: data,
-            success:function($data){
-                console.log($data);
-                //location.reload(this);
-            },
-            error: function (error) {
-                console.log(`Error ${error}`);
-            }
-        });
-}
+    var itemid = ele.id;
+    var val = document.getElementById(ele.id).value;
 
-function ModelEditImage(ele){
- 
-    var formData = new FormData(ele);
-    
+    const data = {
+        mod_id: mod_id,
+        field: field,
+        value: val,
+    }
+
     $.ajax({
-        
+        method: "POST",
+        url: "database.php?function_code=modelEdit",
+        data: data,
+        success: function ($data) {
+            console.log($data);
+            //location.reload(this);
+        },
+        error: function (error) {
+            console.log(`Error ${error}`);
+        }
+    });
+}
+
+function ModelEditImage(ele) {
+
+    var formData = new FormData(ele);
+
+    $.ajax({
+
         method: "POST",
         url: "database.php?function_code=modelImageEdit",
         data: formData,
-        success:function($data){
+        success: function ($data) {
             console.log($data);
             loading("Image Uploading...");
-            
+
         },
         cache: false,
         contentType: false,
         processData: false,
         error: function (error) {
             console.log(`Error ${error}`);
-            sweetAlert2(warning,'Something Wrong.Try again!!');
-        }  
+            sweetAlert2(warning, 'Something Wrong.Try again!!');
+        }
     })
-    
+
 }
 
 //Products
 
-function productForm(){
+function productForm() {
 
-    let formDetails= document.getElementById('productinfo');
+    let formDetails = document.getElementById('productinfo');
     let fd = new FormData(formDetails);
 
-    if(document.getElementById('p_name').value == ''){
-         sweetAlert1(error,"Please Enter Product Name");
-    }else if(document.getElementById('p_des').value == ''){
-        sweetAlert1(error,"Please Enter Product Description!");
-    }else if(document.getElementById('cat_name').value == ''){
-        sweetAlert1(error,"Please Select Product Category!");
-    }else if(document.getElementById('brand').value == ''){
-        sweetAlert1(error,"Please Select Product Brand!");
-    }else if(document.getElementById('p_price').value == ''){
-        sweetAlert1(error,"Please Enter Product Price!");
-    }else if(document.getElementById('p_qnt').value == ''){
-        sweetAlert1(error,"Please Enter Stock Quantity!");
-    }else if(document.getElementById('product_active').value == ''){
-        sweetAlert1(error,"Please Select Product in-stock state!");
-    }else if(document.getElementById('file').value == ''){
+    if (document.getElementById('p_name').value == '') {
+        sweetAlert1(error, "Please Enter Product Name");
+    } else if (document.getElementById('p_des').value == '') {
+        sweetAlert1(error, "Please Enter Product Description!");
+    } else if (document.getElementById('cat_name').value == '') {
+        sweetAlert1(error, "Please Select Product Category!");
+    } else if (document.getElementById('brand').value == '') {
+        sweetAlert1(error, "Please Select Product Brand!");
+    } else if (document.getElementById('p_price').value == '') {
+        sweetAlert1(error, "Please Enter Product Price!");
+    } else if (document.getElementById('p_qnt').value == '') {
+        sweetAlert1(error, "Please Enter Stock Quantity!");
+    } else if (document.getElementById('product_active').value == '') {
+        sweetAlert1(error, "Please Select Product in-stock state!");
+    } else if (document.getElementById('file').value == '') {
         sweetAlert1(error, "Please Select Image!");
-    }else{
+    } else {
 
         $.ajax({
 
             method: "POST",
             url: "database.php?function_code=ProductAdd",
             data: fd,
-            success:function($data){
+            success: function ($data) {
                 console.log($data);
 
-                if($data > 0){
-                    sweetAlert1(warning,"This Product Already Exists..");
-                }else{
-                    sweetAlert2(success,'Your work has been saved');
+                if ($data > 0) {
+                    sweetAlert1(warning, "This Product Already Exists..");
+                } else {
+                    sweetAlert2(success, 'Your work has been saved');
                 }
             },
             cache: false,
@@ -306,17 +307,17 @@ function productForm(){
             processData: false,
             error: function (error) {
                 console.log(`Error ${error}`);
-                sweetAlert2(warning,'Something Wrong.Try again!!');
+                sweetAlert2(warning, 'Something Wrong.Try again!!');
             }
 
-            
+
         });
     }
 }
 
-function ProductDelete(p_id){
+function ProductDelete(p_id) {
     const data = {
-        p_id : p_id
+        p_id: p_id
     }
 
     Swal.fire({
@@ -328,13 +329,13 @@ function ProductDelete(p_id){
         cancelButtonColor: '#d33',
         confirmButtonText: 'Yes, delete it!'
 
-      }).then((result) => {
+    }).then((result) => {
         if (result.isConfirmed) {
             $.ajax({
                 method: "POST",
                 url: "database.php?function_code=proDelete",
                 data: data,
-                success:function($data){
+                success: function ($data) {
                     console.log($data);
                     sweetAlert3();
                     location.reload(this);
@@ -344,10 +345,10 @@ function ProductDelete(p_id){
                 }
             });
         }
-      })
+    })
 }
 
-function ProductEdit(ele, p_id ,field){
+function ProductEdit(ele, p_id, field) {
 
     var val = document.getElementById(ele.id).value;
 
@@ -361,7 +362,7 @@ function ProductEdit(ele, p_id ,field){
         method: "POST",
         url: "database.php?function_code=productEdit",
         data: data,
-        success:function($data){
+        success: function ($data) {
             console.log($data);
             location.reload(this);
         },
@@ -371,56 +372,56 @@ function ProductEdit(ele, p_id ,field){
     });
 }
 
-function ProductEditImage(ele){
- 
+function ProductEditImage(ele) {
+
     var formData = new FormData(ele);
-    
+
     $.ajax({
-        
+
         method: "POST",
         url: "database.php?function_code=productImageEdit",
         data: formData,
-        success:function($data){
+        success: function ($data) {
             console.log($data);
             loading("Image Uploading...");
-            
+
         },
         cache: false,
         contentType: false,
         processData: false,
         error: function (error) {
             console.log(`Error ${error}`);
-            sweetAlert2(warning,'Something Wrong.Try again!!');
-        }  
+            sweetAlert2(warning, 'Something Wrong.Try again!!');
+        }
     });
-    
+
 }
 
 //gallery
 
-function galleryForm(){
+function galleryForm() {
 
-    let formDetails= document.getElementById('gallery');
+    let formDetails = document.getElementById('gallery');
     let fd = new FormData(formDetails);
 
-    if(document.getElementById('title').value == ''){
-         sweetAlert1(error,"Please Enter Image Title");
-    }else if(document.getElementById('file').value == ''){
+    if (document.getElementById('title').value == '') {
+        sweetAlert1(error, "Please Enter Image Title");
+    } else if (document.getElementById('file').value == '') {
         sweetAlert1(error, "Please Select Image!");
-    }else{
+    } else {
 
         $.ajax({
 
             method: "POST",
             url: "database.php?function_code=galleryImageAdd",
             data: fd,
-            success:function($data){
+            success: function ($data) {
                 console.log($data);
 
-                if($data > 0){
-                    sweetAlert1(warning,"This Gallery Image Already Exists..");
-                }else{
-                    sweetAlert2(success,'Your work has been saved');
+                if ($data > 0) {
+                    sweetAlert1(warning, "This Gallery Image Already Exists..");
+                } else {
+                    sweetAlert2(success, 'Your work has been saved');
                 }
             },
             cache: false,
@@ -428,18 +429,18 @@ function galleryForm(){
             processData: false,
             error: function (error) {
                 console.log(`Error ${error}`);
-                sweetAlert2(warning,'Something Wrong.Try again!!');
+                sweetAlert2(warning, 'Something Wrong.Try again!!');
             }
 
-            
+
         });
     }
 }
 
-function galleryDelete(g_id){
+function galleryDelete(g_id) {
 
     const data = {
-        g_id : g_id
+        g_id: g_id
     }
 
     Swal.fire({
@@ -451,13 +452,13 @@ function galleryDelete(g_id){
         cancelButtonColor: '#d33',
         confirmButtonText: 'Yes, delete it!'
 
-      }).then((result) => {
+    }).then((result) => {
         if (result.isConfirmed) {
             $.ajax({
                 method: "POST",
                 url: "database.php?function_code=galleryDelete",
                 data: data,
-                success:function($data){
+                success: function ($data) {
                     console.log($data);
                     sweetAlert3();
                     location.reload(this);
@@ -467,7 +468,7 @@ function galleryDelete(g_id){
                 }
             });
         }
-      })
+    })
 }
 
 //contact form messages
@@ -479,61 +480,116 @@ function contactForm(form) {
         if (formData.get('email').trim() != '') {
             if (formData.get('phone').trim() != '') {
                 if (formData.get('message').trim() != '') {
-                        
-                        const data = {
-                            cust_id: formData.get('cust_id'),
-                            field: 'cust_password',
-                            value: formData.get('new_password'),
-                        }
 
-                        $.ajax({
-        
-                            method: "POST",
-                            url: "admin/database.php?function_code=contactmsg",
-                            data: formData,
-                            success:function($data){
-                                console.log($data);
-                                  sweetAlert4("Your message has sent. We will response soon.Thank You!!");
-                                //   location.reload(true);  
-                                
-                            },
-                                contentType: false,
-                                processData: false,
-                                error: function(error){
-                                    console.log(`Error ${error}`);
-                                    sweetAlert2(warning,'Something Wrong.Try again!!');
-                                } 
-                        });
+                    const data = {
+                        cust_id: formData.get('cust_id'),
+                        field: 'cust_password',
+                        value: formData.get('new_password'),
+                    }
+
+                    $.ajax({
+
+                        method: "POST",
+                        url: "admin/database.php?function_code=contactmsg",
+                        data: formData,
+                        success: function ($data) {
+                            console.log($data);
+                            sweetAlert4("Your message has sent. We will response soon.Thank You!!");
+                            //   location.reload(true);  
+
+                        },
+                        contentType: false,
+                        processData: false,
+                        error: function (error) {
+                            console.log(`Error ${error}`);
+                            sweetAlert2(warning, 'Something Wrong.Try again!!');
+                        }
+                    });
                 } else { errorMessage("Please Enter Message"); }
             } else { errorMessage("Please Enter Phone No."); }
         } else { errorMessage("Please Enter Email Address"); }
     } else { errorMessage("Please Enter Name"); }
-             
+
+}
+//preorder form messages
+
+function preOrder(form) {
+    var formData = new FormData(form);
+
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You want to Pre Order this product?!",
+        icon: 'info',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, Make Order it!'
+
+    }).then((result) => {
+        if (result.isConfirmed) {
+            if (formData.get('name').trim() != '') {
+                if (formData.get('email').trim() != '') {
+                    if (formData.get('phone').trim() != '') {
+                        if (formData.get('address').trim() != '') {
+
+                            const data = {
+                                cust_id: formData.get('cust_id'),
+                                field: 'cust_password',
+                                value: formData.get('new_password'),
+                            }
+
+
+                            $.ajax({
+
+                                method: "POST",
+                                url: "admin/database.php?function_code=preOrder",
+                                data: formData,
+                                success: function ($data) {
+                                    console.log($data);
+                                    sweetAlert4("Your Pre Order is Sent. We will response soon.Thank You!!");
+                                    //   location.reload(true);  
+
+                                },
+                                contentType: false,
+                                processData: false,
+                                error: function (error) {
+                                    console.log(`Error ${error}`);
+                                    sweetAlert2(warning, 'Something Wrong.Try again!!');
+                                }
+                            });
+
+
+                        } else { errorMessage("Please Enter Address"); }
+                    } else { errorMessage("Please Enter Phone No."); }
+                } else { errorMessage("Please Enter Email Address"); }
+            } else { errorMessage("Please Enter Name"); }
+        }
+    })
 }
 
-function NotifyMsgs(count){
+function NotifyMsgs(count) {
 
-    if(count > 0){
+    if (count > 0) {
         $.ajax({
-        
+
             method: "POST",
             url: "database.php?function_code=msgnotify",
-            success:function(){
+            success: function () {
                 console.log("Success");
                 location.reload(this);
             },
-                contentType: false,
-                processData: false,
-                error: function(error){
-                    console.log(`Error ${error}`);
-                } 
+            contentType: false,
+            processData: false,
+            error: function (error) {
+                console.log(`Error ${error}`);
+            }
         });
     }
 }
 
-function MessageDelete(contact_id){
+function MessageDelete(contact_id) {
     const data = {
-        contact_id : contact_id
+        contact_id: contact_id
     }
 
     Swal.fire({
@@ -545,13 +601,13 @@ function MessageDelete(contact_id){
         cancelButtonColor: '#d33',
         confirmButtonText: 'Yes, delete it!'
 
-      }).then((result) => {
+    }).then((result) => {
         if (result.isConfirmed) {
             $.ajax({
                 method: "POST",
                 url: "database.php?function_code=msgDelete",
                 data: data,
-                success:function($data){
+                success: function ($data) {
                     console.log($data);
                     sweetAlert3();
                     location.reload(this);
@@ -561,32 +617,32 @@ function MessageDelete(contact_id){
                 }
             });
         }
-      })
+    })
 }
 
 //login
 
-function loginForm(ele){
+function loginForm(ele) {
     var formData = new FormData(ele);
-    
+
     $.ajax({
         method: "POST",
         url: "database.php?function_code=loginAdmin",
         data: formData,
-        success: function($data){
-            if($data > 0){
-                    if(formData.get('email') === 'admin'){
-                        window.location.href='index.php';
-                    }else{
-                        window.location.href='../index.php';
-                    }
-                }else{
-                    sweetAlert2(warning,'Something Wrong.Try again!!');
+        success: function ($data) {
+            if ($data > 0) {
+                if (formData.get('email') === 'admin') {
+                    window.location.href = 'index.php';
+                } else {
+                    window.location.href = '../index.php';
                 }
+            } else {
+                sweetAlert2(warning, 'Something Wrong.Try again!!');
+            }
         },
         contentType: false,
         processData: false,
-        error: function(error){
+        error: function (error) {
             console.log(`Error ${error}`);
         }
     });
@@ -594,14 +650,14 @@ function loginForm(ele){
 
 //search
 
-function searchProduct(ele){
+function searchProduct(ele) {
     var formData = new FormData(ele);
     var key = formData.get('key');
-    window.location.href="shop.php?keyword=" + key;
-    
+    window.location.href = "shop.php?keyword=" + key;
+
 }
 
-function searchByCategory(ele,cat_id){
+function searchByCategory(ele, cat_id) {
 
     var val = document.getElementById(ele.id).value;
 
@@ -610,12 +666,12 @@ function searchByCategory(ele,cat_id){
         value: val,
     }
 
-    window.location.href="shop.php?keyword=" + value;
-    
+    window.location.href = "shop.php?keyword=" + value;
+
 }
 
 //settings
-function quickUpdate(ele,field){
+function quickUpdate(ele, field) {
 
     var val = document.getElementById(ele.id).value;
 
@@ -628,7 +684,7 @@ function quickUpdate(ele,field){
         method: "POST",
         url: "database.php?function_code=updateSettings",
         data: data,
-        success:function($data){
+        success: function ($data) {
             console.log($data);
             location.reload(this);
         },
@@ -638,34 +694,34 @@ function quickUpdate(ele,field){
     });
 }
 
-function quickUpdateImageSetting(ele){
- 
+function quickUpdateImageSetting(ele) {
+
     var formData = new FormData(ele);
-    
+
     $.ajax({
-        
+
         method: "POST",
         url: "database.php?function_code=updateSettingsImage",
         data: formData,
-        success:function($data){
+        success: function ($data) {
             console.log($data);
             loading("Image Uploading...");
-            
+
         },
         cache: false,
         contentType: false,
         processData: false,
         error: function (error) {
             console.log(`Error ${error}`);
-            sweetAlert2(warning,'Something Wrong.Try again!!');
-        }  
+            sweetAlert2(warning, 'Something Wrong.Try again!!');
+        }
     });
-    
+
 }
 
 //profile setting
 function changePassword(form) {
-    
+
     var formData = new FormData(form);
 
     if (formData.get('current_password').trim() != '') {
@@ -674,25 +730,25 @@ function changePassword(form) {
                 if (formData.get('new_password') == formData.get('confirm_new_password')) {
                     if (checkPassword(formData.get('current_password'), formData.get('cust_id')) > 0) {
 
-                        
+
                         const data = {
                             cust_id: formData.get('cust_id'),
                             field: 'cust_password',
                             value: formData.get('new_password'),
                         }
 
-                            $.ajax({
-                                method: "POST",
-                                url: "admin/database.php?function_code=CustomerEdit",
-                                data: data,
-                                success:function($data){
-                                    console.log($data);
-                                    successToastwithLogout();
-                                },
-                                error: function (error) {
-                                    console.log(`Error ${error}`);
-                                }
-                            });
+                        $.ajax({
+                            method: "POST",
+                            url: "admin/database.php?function_code=CustomerEdit",
+                            data: data,
+                            success: function ($data) {
+                                console.log($data);
+                                successToastwithLogout();
+                            },
+                            error: function (error) {
+                                console.log(`Error ${error}`);
+                            }
+                        });
 
                     } else { errorMessage("Current Password is Wrong"); }
                 } else { errorMessage("Password is Not Match!"); }
@@ -703,7 +759,7 @@ function changePassword(form) {
 }
 
 function checkPassword(cust_password, cust_id) {
- 
+
     const data = {
         cust_password: cust_password,
         cust_id: cust_id,
@@ -716,22 +772,22 @@ function checkPassword(cust_password, cust_id) {
         url: "admin/database.php?function_code=checkPass",
         data: data,
         async: false,
-        success:function(data){
+        success: function (data) {
             console.log(data);
-            values= data;
+            values = data;
         },
-        
+
         error: function (error) {
             console.log(`Error ${error}`);
         }
     });
     return values;
-    
+
 }
 
-function changeEmail(form){
+function changeEmail(form) {
 
-    var formData=new FormData(form);
+    var formData = new FormData(form);
 
     if (formData.get('current_email').trim() != '') {
         if (formData.get('new_email').trim() != '') {
@@ -786,33 +842,33 @@ function checkEmail(cust_email, cust_id) {
     return values;
 }
 
-function changeCustomers(ele,cust_id,field){
+function changeCustomers(ele, cust_id, field) {
 
     var value = document.getElementById(ele.id).value;
-    
-        const data = {
-            cust_id: cust_id,
-            field: field,
-            value: value,
+
+    const data = {
+        cust_id: cust_id,
+        field: field,
+        value: value,
+    }
+
+    $.ajax({
+        method: "POST",
+        url: "admin/database.php?function_code=CustomerEdit",
+        data: data,
+        success: function ($data) {
+            console.log($data);
+            successToastEdit();
+        },
+        error: function (error) {
+            console.log(`Error ${error}`);
         }
-    
-        $.ajax({
-            method: "POST",
-            url: "admin/database.php?function_code=CustomerEdit",
-            data: data,
-            success:function($data){
-                console.log($data);
-                 successToastEdit();
-            },
-            error: function (error) {
-                console.log(`Error ${error}`);
-            }
-        });
+    });
 }
 
-function deleteCustomer(cust_id){
+function deleteCustomer(cust_id) {
     const data = {
-        cust_id : cust_id
+        cust_id: cust_id
     }
 
     Swal.fire({
@@ -824,28 +880,28 @@ function deleteCustomer(cust_id){
         cancelButtonColor: '#d33',
         confirmButtonText: 'Yes, delete it!'
 
-      }).then((result) => {
+    }).then((result) => {
         if (result.isConfirmed) {
             $.ajax({
                 method: "POST",
                 url: "admin/database.php?function_code=customerDelete",
                 data: data,
-                success:function($data){
+                success: function ($data) {
                     console.log($data);
                     sweetAlert3();
-                    window.location.href="auth/logout.php";
+                    window.location.href = "auth/logout.php";
                 },
                 error: function (error) {
                     console.log(`Error ${error}`);
                 }
             });
         }
-      })
+    })
 }
 
 //cart
 
-function addtoCartwithQty(p_id,p_price){
+function addtoCartwithQty(p_id, p_price) {
 
     var qnt = document.getElementById('quantity_input').value;
 
@@ -864,7 +920,7 @@ function addtoCartwithQty(p_id,p_price){
             if ($data === '"Fail"') {
                 window.location.href = 'admin/login.php';
             } else {
-                sweetAlert2(success,'Product added to cart');
+                sweetAlert2(success, 'Product added to cart');
                 window.location.href = 'cart.php?cart_id=' + $data;
             }
         },
@@ -877,7 +933,7 @@ function addtoCartwithQty(p_id,p_price){
     });
 }
 
-function deleteCart(cart_id){
+function deleteCart(cart_id) {
 
     var data = {
         cart_id: cart_id,
@@ -889,8 +945,8 @@ function deleteCart(cart_id){
         data: data,
         success: function ($data) {
             console.log($data);
-             sweetAlert3();
-             window.location.href = 'index.php';
+            sweetAlert3();
+            window.location.href = 'index.php';
         },
         error: function (error) {
             console.log(`Error ${error}`);
@@ -899,7 +955,7 @@ function deleteCart(cart_id){
 
 }
 
-function quantityChange(ele,cart_id,field){
+function quantityChange(ele, cart_id, field) {
 
     var value = document.getElementById(ele.id).value;
 
@@ -932,52 +988,52 @@ function placeOrder(form) {
         if (formData.get('typeExp').trim() != '') {
             if (formData.get('typeText').trim() != '') {
 
-                    if (formData.get('address1').trim() != '') {
-                        if (formData.get('address2').trim() != '') {
+                if (formData.get('address1').trim() != '') {
+                    if (formData.get('address2').trim() != '') {
 
-                            if (formData.get('total') > 0) {
+                        if (formData.get('total') > 0) {
 
-                                var data = {
-                                    cust_id: formData.get('cust_id'),
-                                    address1: formData.get('address1'),
-                                    address2: formData.get('address2'),
-                                    total: formData.get('total'),
+                            var data = {
+                                cust_id: formData.get('cust_id'),
+                                address1: formData.get('address1'),
+                                address2: formData.get('address2'),
+                                total: formData.get('total'),
+                            }
+
+                            $.ajax({
+                                method: "POST",
+                                url: "orderall.php?function_code=orderAll",
+                                data: data,
+                                success: function ($data) {
+                                    console.log($data);
+                                    //  successToast1();
+                                    $('#staticBackdrop').modal('show');
+
+                                },
+                                error: function (error) {
+                                    console.log(`Error ${error}`);
                                 }
+                            });
 
-                                $.ajax({
-                                    method: "POST",
-                                    url: "orderall.php?function_code=orderAll",
-                                    data: data,
-                                    success: function ($data) {
-                                         console.log($data);
-                                        //  successToast1();
-                                        $('#staticBackdrop').modal('show'); 
-                                        
-                                    },
-                                    error: function (error) {
-                                        console.log(`Error ${error}`);
-                                    }
-                                });
+                        } else { errorMessage("Please Select Atleast one Item to Buy!"); }
 
-                            } else { errorMessage("Please Select Atleast one Item to Buy!"); }
+                    } else { errorMessage("Please Enter Billing Address"); }
+                } else { errorMessage("Please Enter Shipping Address"); }
 
-                        } else { errorMessage("Please Enter Billing Address"); }
-                    } else { errorMessage("Please Enter Shipping Address"); }
-  
             } else { errorMessage("Please Enter Card Number"); }
         } else { errorMessage("Please Enter Expire Details"); }
     } else { errorMessage("Please Enter Holder Name"); }
 
 }
 
-function addtocart(p_id){
+function addtocart(p_id) {
 
-    window.location.href="product.php?p_id=" + p_id;
+    window.location.href = "product.php?p_id=" + p_id;
 }
 
-function movetoorder(cust_id){
+function movetoorder(cust_id) {
 
-    window.location.href="order.php?p_id=" + cust_id;
+    window.location.href = "order.php?p_id=" + cust_id;
 }
 
 
@@ -1013,7 +1069,7 @@ function orderChange(ele, order_id, field) {
         field: field,
         value: val,
     }
-    
+
     $.ajax({
         method: "POST",
         url: "database.php?function_code=orderChange",
@@ -1028,9 +1084,33 @@ function orderChange(ele, order_id, field) {
     });
 
 }
+function orderChangePreOrder(ele, pre_order_id, field) {
+
+    var val = document.getElementById(ele.id).value;
+
+    var data = {
+        pre_order_id: pre_order_id,
+        field: field,
+        value: val,
+    }
+
+    $.ajax({
+        method: "POST",
+        url: "database.php?function_code=orderChangePreOrder",
+        data: data,
+        success: function ($data) {
+            console.log($data);
+            successToast();
+        },
+        error: function (error) {
+            console.log(`Error ${error}`);
+        }
+    });
+
+}
 
 function changePasswordadmin(form) {
-    
+
     var formData = new FormData(form);
     console.log(formData.get('cust_email'));
     if (formData.get('current_password').trim() != '') {
@@ -1039,25 +1119,25 @@ function changePasswordadmin(form) {
                 if (formData.get('new_password') == formData.get('confirm_new_password')) {
                     if (checkPasswordadmin(formData.get('current_password'), formData.get('cust_email')) > 0) {
 
-                        
+
                         const data = {
                             cust_email: formData.get('cust_email'),
                             field: 'cust_password',
                             value: formData.get('new_password'),
                         }
 
-                            $.ajax({
-                                method: "POST",
-                                url: "database.php?function_code=CustomerEditAdmin",
-                                data: data,
-                                success:function($data){
-                                    console.log($data);
-                                    successToastwithAdminLogout();
-                                },
-                                error: function (error) {
-                                    console.log(`Error ${error}`);
-                                }
-                            });
+                        $.ajax({
+                            method: "POST",
+                            url: "database.php?function_code=CustomerEditAdmin",
+                            data: data,
+                            success: function ($data) {
+                                console.log($data);
+                                successToastwithAdminLogout();
+                            },
+                            error: function (error) {
+                                console.log(`Error ${error}`);
+                            }
+                        });
 
                     } else { errorMessage("Current Password is Wrong"); }
                 } else { errorMessage("Password is Not Match!"); }
@@ -1068,7 +1148,7 @@ function changePasswordadmin(form) {
 }
 
 function checkPasswordadmin(cust_password, cust_email) {
- 
+
     const data = {
         cust_password: cust_password,
         cust_email: cust_email,
@@ -1081,79 +1161,79 @@ function checkPasswordadmin(cust_password, cust_email) {
         url: "database.php?function_code=checkPassAdmin",
         data: data,
         async: false,
-        success:function(data){
+        success: function (data) {
             console.log(data);
-            values= data;
+            values = data;
         },
-        
+
         error: function (error) {
             console.log(`Error ${error}`);
         }
     });
     return values;
-    
+
 }
-function profileImage(ele){
- 
+function profileImage(ele) {
+
     var formData = new FormData(ele);
-    
+
     $.ajax({
-        
+
         method: "POST",
         url: "admin/database.php?function_code=profileImageEdit",
         data: formData,
-        success:function($data){
+        success: function ($data) {
             console.log($data);
-            //  loading("Image Uploading...");
-            
+              loading("Image Uploading...");
+
         },
-        cache: false,
+        cache: true,
         contentType: false,
         processData: false,
 
         error: function (error) {
             console.log(`Error ${error}`);
-            sweetAlert2(warning,'Something Wrong.Try again!!');
-        }  
+            sweetAlert2(warning, 'Something Wrong.Try again!!');
+        }
     });
-    
+
 }
 
 
 //Sweet Alert Functions Zone
 
-function sweetAlert1($icon, $data){
+function sweetAlert1($icon, $data) {
     Swal.fire({
-      icon: $icon,
-      title: 'Sorry',
-      text: $data,
+        icon: $icon,
+        title: 'Sorry',
+        text: $data,
     }).then((result) => {
         location.reload(true);
     })
 }
 
 
-function sweetAlert2($icon,$data){
+function sweetAlert2($icon, $data) {
     Swal.fire({
         position: 'center',
         icon: $icon,
         title: $data,
         showConfirmButton: false,
-        timer: 5000
+        timer: 2000
     }).then((result) => {
         location.reload(true);
     })
 }
 
-function sweetAlert3(){
+function sweetAlert3() {
     Swal.fire(
         'Deleted!',
         'Your file has been deleted.',
         'success'
-        )
-    }
-    
-function sweetAlert4($data){
+    )
+}
+
+function sweetAlert4($data) {
     Swal.fire({
         title: $data,
         showClass: {
@@ -1162,30 +1242,30 @@ function sweetAlert4($data){
         hideClass: {
             popup: 'animate__animated animate__fadeOutUp'
         }
-        })
+    })
 }
-function loading(gettitle){
+function loading(gettitle) {
     let timerInterval
     Swal.fire({
-      title: gettitle,
-      html: 'Loading.. <b></b> Ms.',
-      timer: 2000,
-      timerProgressBar: true,
-      didOpen: () => {
-        Swal.showLoading()
-        const b = Swal.getHtmlContainer().querySelector('b')
-        timerInterval = setInterval(() => {
-          b.textContent = Swal.getTimerLeft()
-        }, 100)
-      },
-      willClose: () => {
-        clearInterval(timerInterval)
-      }
+        title: gettitle,
+        html: 'Loading.. <b></b> Ms.',
+        timer: 2000,
+        timerProgressBar: true,
+        didOpen: () => {
+            Swal.showLoading()
+            const b = Swal.getHtmlContainer().querySelector('b')
+            timerInterval = setInterval(() => {
+                b.textContent = Swal.getTimerLeft()
+            }, 100)
+        },
+        willClose: () => {
+            clearInterval(timerInterval)
+        }
     }).then((result) => {
-      if (result.dismiss === Swal.DismissReason.timer) {
-        console.log('Loading');
-        location.reload(true);
-      }
+        if (result.dismiss === Swal.DismissReason.timer) {
+            console.log('Loading');
+            location.reload(true);
+        }
     })
 }
 
@@ -1236,7 +1316,7 @@ function successToastCart() {
         title: 'Saving..',
         message: 'Product added to cart!',
         onClosing: function () {
-                      
+
         }
     })
 }
@@ -1258,7 +1338,7 @@ function successToast1() {
         title: 'Saving..',
         message: 'Successfully Placed Order!',
         onClosing: function () {
-            
+
         }
     })
 }
@@ -1269,7 +1349,7 @@ function successToastorderStatusChange() {
         title: 'Saving..',
         message: 'Successfully canceled Order!!',
         onClosing: function () {
-                      
+
         }
     })
 }

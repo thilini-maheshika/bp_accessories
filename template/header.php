@@ -15,6 +15,7 @@
     <link rel="stylesheet" type="text/css" href="plugins/slick-1.8.0/slick.css">
     <link rel="stylesheet" type="text/css" href="styles/main_styles.css">
     <link rel="stylesheet" type="text/css" href="styles/responsive.css">
+    <link rel="icon" href="images/logo.jpg" type="image/png">
 
 
 </head>
@@ -49,18 +50,23 @@
                         <div class="col d-flex flex-row">
                             <div class="top_bar_contact_item">
                                 <div class="top_bar_icon"><img src="images/phone.png"></div>
-                                <?php echo $res['com_phone'] ?>
+                                <a
+                                    href="tell:+94<?php echo $res['com_phone'] ?>"><?php echo $res['com_phone'] ?></a>
                             </div>
                             <div class="top_bar_contact_item">
                                 <div class="top_bar_icon"><img src="images/mail.png" alt=""></div><a
-                                    href=""><?php echo $res['com_email'] ?></a>
+                                    href="mailto:<?php echo $res['com_email'] ?>"><?php echo $res['com_email'] ?></a>
                             </div>
                             <div class="top_bar_content ml-auto">
                                 <div class="top_bar_user">
-                                    <div class="user_icon"><a href="profile.php"><i class="fa fa-user"></i></a></div>
+                                    <?php if(isset($_SESSION['customer'])) : ?>
+                                    <div><a href="profile.php">Profile</a></div> | 
+                                    <div><a href="admin/pages/logout.php">Sign Out</a></div>
+                                    <?php else: ?>
+                                    <div><a href="admin/login.php">Sign in</a></div> | 
                                     <div><a href="auth/register/reg.php">Register</a></div>
-                                    <div><a href="admin/login.php">Sign in</a></div>
-
+                                    <?php endif; ?>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -77,7 +83,7 @@
                         <!-- Logo -->
                         <div class="col-lg-2 col-sm-3 col-3 order-1">
                             <div class="logo_container">
-                                <div class="logo"><a href="#">BP Acc</a></div>
+                                <div class="logo"><a href="index.php"><img width="200px" src="images/logo.jpg" alt=""></a></div>
                             </div>
                         </div>
 
@@ -212,6 +218,7 @@
                                         <li class="hassubs">
                                             <a href="order.php">Order Tracking</a>
                                         </li>
+                         
                                     </ul>
                                 </div>
 

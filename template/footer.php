@@ -7,7 +7,7 @@
             <div class="col-lg-3 footer_col">
                 <div class="footer_column footer_contact">
                     <div class="logo_container">
-                        <div class="logo"><a href="#">BP Mobile</a></div>
+                        <div class="logo"><a href="#"><img width="200px" src="images/logo.jpg" alt=""></a></div>
                     </div>
 
                     <div class="footer_phone"><?php echo $res['com_phone'] ?></div>

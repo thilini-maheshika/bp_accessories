@@ -96,32 +96,25 @@
 						?>
 
                         <!-- Product Item -->
-                        <div class="product_item is_new">
+                        <div class="product_item is_new" style="margin: 0px 10px;">
                             <div class="product_border"></div>
                             <div class="product_image d-flex flex-column align-items-center justify-content-center"><img
                                     src="<?php echo $img_src;?>"></div>
 
                             <div class="product_content">
-                                <?php
-                                            if($row2['p_qnt'] == 0){ ?>
-                                <div class="badge bg-dark text-white position-absolute"
-                                    style="top: 0.5rem; right: 0.5rem">Out of
-                                    Stock
-                                </div>
-                                <?php  } ?>
                                 <div class="product_price">RS.<?php echo $row2['p_price']?></div>
                                 <div class="product_name">
 
                                     <?php 
                                             if(!$row2['p_qnt'] == 0){ ?>
 
-                                    <div><a href="product.php?p_id=<?php echo $p_id; ?>"
+                                    <div><a href="product.php?p_id=<?php echo $p_id; ?>&p_active=<?php echo $row2['p_active'] ?>"
                                             tabindex="0"><?php echo $row2['p_name']?></a></div>
                                     <?php }else{ ?>
                                     <div><a tabindex="0"><del><?php echo $row2['p_name']?></del></a></div>
                                     <?php } ?>
                                 </div>
-                                <div style="width:100%;"><button class="btn btn-primary" style="width:100%;" >Pre Order</button></div>
+                                <div style="width:100%;"><a href="preorder.php?p_id=<?php echo $p_id; ?>" class="btn btn-primary" style="width:100%;" >Pre Order</a></div>
                             </div>
                         </div>
                         <?php } ?>
